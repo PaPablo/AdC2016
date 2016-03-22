@@ -40,10 +40,11 @@ void inspecciona1 (void)
 	{
 		encendido1 = encendido1 ^ hayCambio1;	//Se prende/apaga el led
 		PORTAbits.RA0 = encendido1;
+		anterior1 = actual1;
 	}
 	
-	anterior1 = actual1;
 }
+
 void inspecciona2 (void)
 {
 	actual2 = PORTDbits.RD7;
@@ -54,9 +55,9 @@ void inspecciona2 (void)
 	{
 		encendido2 = encendido2 ^ hayCambio2;
 		PORTAbits.RA1 = encendido2;
+		anterior2 = actual2;
 	}
 	
-	anterior2 = actual2;
 }
 
 int main(int argc, char** argv) 
