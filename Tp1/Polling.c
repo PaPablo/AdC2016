@@ -25,7 +25,7 @@ int hayCambio2 = 1;
 
 void config (void)
 {
-    TRISD = 192; //1100 0000
+    TRISD = 192; //Se configuran los pines 6 y 7 para salida
     TRISA = 0;
     PORTA = 0;  //Se configura el PORTA para salidas
 }
