@@ -1,6 +1,8 @@
 /* 
  * File:   Polling.c
- * Author: Luciano
+ * Author: GRIFFITHS, Anahí 
+ *         SERRUYA ALOISI, Luciano
+ *         TOLEDO MARGALEF, Pablo
  *
  * Created on 19 de marzo de 2016, 14:40
  */
@@ -9,68 +11,63 @@
 #include <stdlib.h>
 #include "p33FJ256GP710.h"
 
-/*
- * 
- */
+/*Variables globales*/
 
+int encendido1 = 0;
+int encendido2 = 0;
+int anterior1 = 1;
+int actual1 = 1;
+int anterior2 = 1;
+int actual2 = 1;
+int hayCambio1 = 1;
+int hayCambio2 = 1;
 
 
 void config (void)
 {
-    TRISD = 192; //1100 0000
+    TRISD = 192; //Se configuran los pines 6 y 7 para salida
     TRISA = 0;
-    PORTA = 0;  //Inicializamos el puerto en cero
+    PORTA = 0;  //Se configura el PORTA para salidas
 }
 
 void inspecciona1 (void)
 {
-    
-    if (PORTDbits.RD6 == 0) // Pregunta si el botón está pulsado
-    {
-        while (PORTDbits.RD6 == 0); //Espera hasta que se suelte
-        if (PORTAbits.RA0 == 0)
-        {
-            PORTAbits.RA0 = 1; //Si está apagado lo prende
-        }
-        else
-        {
-            PORTAbits.RA0 = 0; //Si está prendido, lo apaga
-        }
-    }
-    
-
+	actual1 = PORTDbits.RD6;
+	hayCambio1 = anterior1 ^ actual1;		//Se consulta si el estado del pin cambió de la 
+											//última vez que se analizó
+		
+	if (hayCambio1) 						//Si hubo un cambio
+	{
+		encendido1 = encendido1 ^ hayCambio1;	//Se prende/apaga el led
+		PORTAbits.RA0 = encendido1;
+		anterior1 = actual1;
+	}
+	
 }
+
 void inspecciona2 (void)
 {
-
-    
-    if (PORTDbits.RD7 == 0)
-    {
-        while (PORTDbits.RD7 == 0);
-        if (PORTAbits.RA1 == 0)
-        {
-            PORTAbits.RA1 = 1;
-        }
-        else
-        {
-            PORTAbits.RA1 = 0;
-        }
-    }
-    
+	actual2 = PORTDbits.RD7;
+	hayCambio2 = anterior2 ^ actual2;
+		
+		
+	if (hayCambio2) 
+	{
+		encendido2 = encendido2 ^ hayCambio2;
+		PORTAbits.RA1 = encendido2;
+		anterior2 = actual2;
+	}
+	
 }
-
-
 
 int main(int argc, char** argv) 
 {
-    
     config();
     
     while(1)
     {   
-        inspecciona1();
-        inspecciona2();
-        
+		inspecciona1();
+		inspecciona2();
     }
     
     return (EXIT_SUCCESS);
