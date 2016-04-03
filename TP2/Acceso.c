@@ -65,10 +65,7 @@ typedef struct
 const int MAXENTRADAS = 100;
 
 const int PRSTD = 5000;     //1000 microseg
-const int ESPERA1 = 500;    //100 microseg
-const int ESPERA2 = 1000;   //200 microseg
-const int ESPERA3 = 2000;   //400 microseg
-const int ESPERA4 = 4000;   //800 microseg
+const int ESPERA = 500;    //100 microseg
 
 tEntrada datos[100];
 
@@ -92,7 +89,7 @@ void config(){
 	TRISD = 0x4000; //se configura solamente el pin14 como entrada
 
 	T1CON = 0;				// limpio el timer
-	T1CONbits.TCKPS = 1;	// prescaler a 1:256
+	T1CONbits.TCKPS = 1;	// prescaler a 1:8
 	PR1 = PRSTD;				// 1000 microsegundos
 
 	IFS0bits.T1IF = 0;		// bajo la bandera de interrupción
@@ -113,16 +110,16 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void ) {
 		if (PORTDbits.RD14) {
            
             if (PR1 == PRSTD) {
-                PR1 = ESPERA1;
+                PR1 = ESPERA;						// Se configura el PR para que el TMR1 interrumpa a los 100 microsegundos
             } else {
-                if (PR1 == ESPERA1){
-                    PR1 = (ESPERA2);
+                if (PR1 == ESPERA){
+                    PR1 = (ESPERA * 2); 			// 200 microsegundos
                 } else {
-                    if (PR1 == ESPERA2){
-                        PR1 = ESPERA3;
+                    if (PR1 == (ESPERA * 2)){
+                        PR1 = (ESPERA * 4);			// 400 microsegundos
                     } else {
-                        if (PR1 == ESPERA3){
-                            PR1 = ESPERA4;
+                        if (PR1 == (ESPERA * 3)){
+                            PR1 = (ESPERA * 8);		// 800 microsegundos
                         }
                     }
                 }
