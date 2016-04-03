@@ -118,7 +118,7 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void ) {
                     if (PR1 == (ESPERA * 2)){
                         PR1 = (ESPERA * 4);			// 400 microsegundos
                     } else {
-                        if (PR1 == (ESPERA * 3)){
+                        if (PR1 == (ESPERA * 4)){
                             PR1 = (ESPERA * 8);		// 800 microsegundos
                         }
                     }
