@@ -10,19 +10,14 @@
 #include <stdlib.h>
 #include "p33FJ256GP710.h"
 
-/*
- * 
- * 
- *
- */
-
 
 int iBuffer = 0; 
+
 typedef struct {
 
 		unsigned int esNuevo:1; //1 bit para la bandera que indica un caracter nuevo en buffer
 		unsigned char carac: 8;	// el caracter en esa posicion del buffer
-		unsigned : 7;			//resto del campo inaccesible;
+		unsigned : 7;			//resto del campo inaccesible
 
 	} tBuffer;
     
@@ -34,7 +29,8 @@ unsigned char tabla[1000];  //Tabla en memoria para tirar valores ingresados por
 void config (void){
     
     int i;
-    AD1PCFGL = 0xFFFF;
+    
+    AD1PCFGL = 0xFFFF;  //Configuración del PORTA
     AD1PCFGH = 0xFFFF;
     AD2PCFGL = 0xFFFF;
     TRISA = 0X00FF;
@@ -53,7 +49,6 @@ void config (void){
 
 }
 
-//extern int iBuffer;
 
 void __attribute__((interrupt, auto_psv)) _INT0Interrupt( void ) {
 
@@ -68,23 +63,19 @@ void __attribute__((interrupt, auto_psv)) _INT0Interrupt( void ) {
         iBuffer++;          // En caso contrario incrementa.
     }
     
-    
-    
-    
 }
 
 
 int main(int argc, char** argv) {
+    
     config();
     int j = 0;
     int i;
 	while(1){
         
-        
-        
-        for(i = 0; i < MAXBUFFER; i++) {
-            if(buffer[i].esNuevo){
-                
+        for(i = 0; i < MAXBUFFER; i++) { // recorre el buffer buscando caracteres nuevos
+            if(buffer[i].esNuevo){       // en caso de encontrar, los desposita en la tabla
+                                         // en memoria
                 tabla[j] = buffer[i].carac;
                 buffer[i].esNuevo = 0;
                 
@@ -93,11 +84,6 @@ int main(int argc, char** argv) {
             }
         }  
  
-
-			// recorre el buffer buscando caracteres nuevos
-			// en caso de encontrar, los desposita en la tabla
-			// en memoria
-
 	}
     return (EXIT_SUCCESS);
 }
