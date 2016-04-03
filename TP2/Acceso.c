@@ -63,6 +63,7 @@ typedef struct
 } tEntrada;
 
 const int MAXENTRADAS = 100;
+
 const int PRSTD = 5000;     //1000 microseg
 const int ESPERA1 = 500;    //100 microseg
 const int ESPERA2 = 1000;   //200 microseg
@@ -110,24 +111,23 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void ) {
 		IFS0bits.T1IF = 0;
 
 		if (PORTDbits.RD14) {
-			
-			switch (PR1) {
-				PRSTD: PR1 = ESPERA1;		// espera igual a 100 microseg
-								break;
-
-				ESPERA1: PR1 = ESPERA2;     // espera igual a 200 microseg
-								break;
-
-				ESPERA2: PR1 = ESPERA3;     // espera igual a 400 microseg
-								break;
-
-				ESPERA3: PR1 = ESPERA4;     // espera igual a 800 microseg
-								break;
-
-				// En caso de que ya esté esperando 800 microseg
-				// se mantiene en ese tiempo indefinidamente
-			}
-
+           
+            if (PR1 == PRSTD) {
+                PR1 = ESPERA1;
+            } else {
+                if (PR1 == ESPERA1){
+                    PR1 = (ESPERA2);
+                } else {
+                    if (PR1 == ESPERA2){
+                        PR1 = ESPERA3;
+                    } else {
+                        if (PR1 == ESPERA3){
+                            PR1 = ESPERA4;
+                        }
+                    }
+                }
+            }
+            
 		} else {
 
 			PORTDbits.RD15 = 1;
