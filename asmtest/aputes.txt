@@ -1,0 +1,28 @@
+al interrumpir
+	PUSH RCOUNT
+	
+	MOV.D W0, [W15++]
+	MOV.D W2, [W15++]
+	MOV.D W4, [W15++]
+	MOV.D W6, [W15++]
+	Resguarda registros w0-w7 utilizando movimientos de 32 bits
+	
+	PUSH PSVPAG	(la menor idea de qué hace, creemos que te permite leer memoria de programa como datos)
+
+
+						Stack
+							·
+							·
+							·
+							INICIO DE PILA ANTERIOR
+							PSVPAG
+							W6-W7
+							W4-W5
+							W2-W3
+							W0-W1
+							RCOUNT(8bits)
+							COSO RARO (0X0300?)
+							dirRetorno
+							var3
+							var2
+INICIO PILA ANTERIOR ->		var1

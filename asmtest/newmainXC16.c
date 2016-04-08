@@ -27,6 +27,7 @@ void config(){
 }
 
 void __attribute__((interrupt, auto_psv)) _T1Interrupt( void ) {
+    
     int i= -2;
     for (i ;i<5;i++)
     __asm("POP w2");
@@ -49,10 +50,16 @@ void rutB() {
 void rutA(void){
     int x,y,z;
     x= 1;
-    y=1;
+    y=2;
+    z=0;
+    __asm("MOV #0x3, W0");
+    __asm("MOV #0x4, W2");
+    __asm("MOV #0x5, W4");
+    __asm("MOV #0x6, W6");
+    
     while(1){
       
-        z=x+y;
+       
         
     }
  
