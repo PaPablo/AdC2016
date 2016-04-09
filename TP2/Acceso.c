@@ -88,7 +88,7 @@ void config(){
     TRISA = 0X00FF;	// byte bajo como entrada
 	TRISD = 0x4000; //se configura solamente el pin14 como entrada
 
-	T1CON = 0;				// limpio el timer
+	T1CON = 0;				// Ponemos en 0 todo el registro de configuracion y modificamos los que nos interesan	
 	T1CONbits.TCKPS = 1;	// prescaler a 1:8
 	PR1 = PRSTD;				// 1000 microsegundos
 
