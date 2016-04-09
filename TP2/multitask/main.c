@@ -8,7 +8,7 @@ Completar el código faltante.
 #include <stdlib.h>
 #include "kernel.h"
 
-unsigned int Proc1, Proc2, Proc3, Actual;
+unsigned int Proc2, Proc3;
 
 void procesoA(void)
 {
@@ -59,8 +59,8 @@ void procesoC(void)
 
 int main(int argc, char** argv) {
       
-    Proc2 = procesoB;
-    Proc3 = procesoC;
+    Proc2 = procesoB; 
+    Proc3 = procesoC;   //Se obtiene la direccion de la primer instruccion de cada proceso
 
     
     boot();

@@ -1,6 +1,8 @@
 #include <p33FJ256GP710.h>
 #include "kernel.h"
 
+
+
 typedef struct {
 	unsigned int var1;
 	unsigned int var2;
@@ -17,14 +19,14 @@ typedef struct {
     unsigned int W6;
     unsigned int W7;
     unsigned int PSVPAG;
-    unsigned int SPLIM; //WREG15 - 0X20 en este caso, puede variar si cambiamos el nro de variables
+    unsigned int SPLIM;
 } resguardo;
 
 resguardo procs[3];
 
-
-extern unsigned int Proc1, Proc2, Proc3, *Actual;
-unsigned int *gilada;
+const int MAX_QUANTUM = 3;
+extern unsigned int Proc2, Proc3;
+unsigned int *puntPila;
 int contQuantum = 0;
 int iProc = 0;
 
@@ -51,24 +53,19 @@ void init(void)
         procs[i].PSVPAG = 0;
     }
 
-	//fijar direcciones de retorno a interrupciones, en la primera vez ? ponele
 }
 
 void confReloj(void)
 {
     
     T1CON = 0;
-    T1CONbits.TCKPS = 1; //Prescales 1:1
-    PR1 = 100; // 
+    T1CONbits.TCKPS = 1;    //Prescales 1:8
+    PR1 = 5000;             //Espera 1000 micro seg
     
-    IFS0bits.T1IF = 0; //Bajamos bandera de interrupcion
-    IEC0bits.T1IE = 1; //habilitamos interrupcion del timer
+    IFS0bits.T1IF = 0;      //Bajamos bandera de interrupcion
+    IEC0bits.T1IE = 1;      //habilitamos interrupcion del timer
     
-    T1CONbits.TON = 1; //Ponemos a correr el timer
-/*
-* 	Configurar Timer (ya sabemos duh...)
-*	Configurar el Quantum
-*/	
+    T1CONbits.TON = 1;       //Ponemos a correr el timer
 }
 
 void boot(void)
@@ -81,33 +78,13 @@ void boot(void)
 void planificador(void)
 {
     if (iProc == 2){
-        iProc = 0;
+        iProc = 0;      //Cambia el indice de arreglo de los procesos
     }
-    else
+    else                
     {
-        iProc++;
+        iProc++;        //Pasa del A al B, del B al C, y del C al A
     }
-        
-        /*
-*	Cuando lo invoca
-*
-*		Poder referenciar o llamar a un value
-*		
-*		segun el value
-*			resguardarEstadoActual
-*			recuperarEstadoProceso
-*			procesoA
-*			
-*			resguardarEstadoActual
-*			recuperarEstadoProceso
-*			procesoB
-*			
-*			resguardarEstadoActual
-*			recuperarEstadoProceso
-*			procesoC
-*
-*/
-
+       
 }
 
 void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
@@ -116,99 +93,80 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
     
    
     
-    if (contQuantum >= 1)
+    if (contQuantum >= MAX_QUANTUM)                   
     {  
         contQuantum = 0;
-        gilada = WREG15;
-        --gilada;
-        procs[iProc].SPLIM = *gilada;
-        gilada--;
-        procs[iProc].PSVPAG = *gilada;
-        gilada--;
-        procs[iProc].W7 = *gilada;
-        gilada--;
-        procs[iProc].W6 = *gilada;
-        gilada--;
-        procs[iProc].W5 = *gilada;
-        gilada--;
-        procs[iProc].W4 = *gilada;
-        gilada--;
-        procs[iProc].W3 = *gilada;
-        gilada--;
-        procs[iProc].W2 = *gilada;
-        gilada--;
-        procs[iProc].W1 = *gilada;
-        gilada--;
-        procs[iProc].W0 = *gilada;
-        gilada--;
-        procs[iProc].RCOUNT = *gilada;
-        gilada--;
-        procs[iProc].IPL = *gilada;
-        gilada--;
-        procs[iProc].dirRetorno = *gilada;
-        gilada--;
-        procs[iProc].var3 = *gilada;
-        gilada--;
-        procs[iProc].var2 = *gilada;
-        gilada--;
-        procs[iProc].var1 = *gilada;
+        puntPila = WREG15;
+        --puntPila;
+        procs[iProc].SPLIM = *puntPila;         //Se hace el respaldo del proceso activo
+        puntPila--;
+        procs[iProc].PSVPAG = *puntPila;
+        puntPila--;
+        procs[iProc].W7 = *puntPila;
+        puntPila--;
+        procs[iProc].W6 = *puntPila;
+        puntPila--;
+        procs[iProc].W5 = *puntPila;
+        puntPila--;
+        procs[iProc].W4 = *puntPila;
+        puntPila--;
+        procs[iProc].W3 = *puntPila;
+        puntPila--;
+        procs[iProc].W2 = *puntPila;
+        puntPila--;
+        procs[iProc].W1 = *puntPila;
+        puntPila--;
+        procs[iProc].W0 = *puntPila;
+        puntPila--;
+        procs[iProc].RCOUNT = *puntPila;
+        puntPila--;
+        procs[iProc].IPL = *puntPila;
+        puntPila--;
+        procs[iProc].dirRetorno = *puntPila;
+        puntPila--;
+        procs[iProc].var3 = *puntPila;
+        puntPila--;
+        procs[iProc].var2 = *puntPila;
+        puntPila--;
+        procs[iProc].var1 = *puntPila;
         
         planificador();
         
-        procs[iProc].SPLIM = gilada;
-        *gilada = procs[iProc].var1;
-        gilada++;
-        *gilada = procs[iProc].var2;
-        gilada++;
-        *gilada = procs[iProc].var3;
-        gilada++;
-        *gilada = procs[iProc].dirRetorno;
-        gilada++;
-        *gilada = procs[iProc].IPL;
-        gilada++;
-        *gilada = procs[iProc].RCOUNT;
-        gilada++;
-        *gilada = procs[iProc].W0;
-        gilada++;
-        *gilada = procs[iProc].W1;
-        gilada++;
-        *gilada = procs[iProc].W2;
-        gilada++;
-        *gilada = procs[iProc].W3;
-        gilada++;
-        *gilada = procs[iProc].W4;
-        gilada++;
-        *gilada = procs[iProc].W5;
-        gilada++;
-        *gilada = procs[iProc].W6;
-        gilada++;
-        *gilada = procs[iProc].W7;
-        gilada++;
-        *gilada = procs[iProc].PSVPAG;
-        gilada++;
-        *gilada = procs[iProc].SPLIM;
+        procs[iProc].SPLIM = puntPila;          //Se restaura el contexto del proceso siguiente
+        *puntPila = procs[iProc].var1;
+        puntPila++;
+        *puntPila = procs[iProc].var2;
+        puntPila++;
+        *puntPila = procs[iProc].var3;
+        puntPila++;
+        *puntPila = procs[iProc].dirRetorno;
+        puntPila++;
+        *puntPila = procs[iProc].IPL;
+        puntPila++;
+        *puntPila = procs[iProc].RCOUNT;
+        puntPila++;
+        *puntPila = procs[iProc].W0;
+        puntPila++;
+        *puntPila = procs[iProc].W1;
+        puntPila++;
+        *puntPila = procs[iProc].W2;
+        puntPila++;
+        *puntPila = procs[iProc].W3;
+        puntPila++;
+        *puntPila = procs[iProc].W4;
+        puntPila++;
+        *puntPila = procs[iProc].W5;
+        puntPila++;
+        *puntPila = procs[iProc].W6;
+        puntPila++;
+        *puntPila = procs[iProc].W7;
+        puntPila++;
+        *puntPila = procs[iProc].PSVPAG;
+        puntPila++;
+        *puntPila = procs[iProc].SPLIM;
     }
     else
     {
         contQuantum++;
     }    
-    /*
-	*	Contar interrupciones
-	
-	*	llamar planificador si es necesario
-    */
-
 }
-
-
-/*
-	EN ASM?
-		keonda?
-		- almacenar las variables locales de cada proceso en estruct
-		- switch
-
-		- handle para la direccion para ir a la rutina
-
-
-
-*/
