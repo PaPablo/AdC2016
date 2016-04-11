@@ -3,63 +3,59 @@
 
 
 
-typedef struct {
-	unsigned int var1;
-	unsigned int var2;
-	unsigned int var3;
-    unsigned int dirRetorno;
-    unsigned int IPL;
-    unsigned int RCOUNT;
-    unsigned int W0;
-    unsigned int W1;
-    unsigned int W2;
-    unsigned int W3;
-    unsigned int W4;
-    unsigned int W5;
-    unsigned int W6;
-    unsigned int W7;
-    unsigned int PSVPAG;
-    unsigned int SPLIM;
-} resguardo;
+unsigned int procs[3][16]; //3 procedimientos, 16 registros a almacenar
 
-resguardo procs[3];
+/*0 - 2: variables
+ 3: dirRetorno
+ 4: IPL/SR????
+ 5: RCOUNT
+ 6 - 13: W0 - W7
+ 14: PSVPAG
+ 15: SPLIM*/
 
 const int MAX_QUANTUM = 3;
+const int MAX_PILA = 15;
 extern unsigned int Proc2, Proc3;
 unsigned int *puntPila;
 int contQuantum = 0;
-int iProc = 0;
+int iProc, iReg = 0;
 
 void init(void)
 {    
-    int i;
+    int i, j;
     for(i = 1; i <= 2; i++){
-        if (i == 1){
-            procs[i].dirRetorno = Proc2;
+        for(j = 0; j <= (MAX_PILA); j++){
+            if (i == 1){
+                if (j == 3){
+                    procs[i][j] = Proc2;        //Si el indice esta en la posicion de la direccion de retorno 
+                }
+                /*else if (j == 4){
+                    procs[i][j] = 0x0100;
+                }*/
+                else{
+                    procs[i][j] = 0;
+                }
+            }
+            else{
+                if (j == 3){
+                    procs[i][j] = Proc3;        //almacenamos la direccion de la primer instruccion de cada proceso
+                }
+                /*else if(j == 4){
+                    procs[i][j] = 0x0100;
+                }*/
+                else{
+                    procs[i][j] = 0;
+                }
+            }
         }
-        else{
-            procs[i].dirRetorno = Proc3;
-        }
-        procs[i].W0 = 0;
-        procs[i].W1 = 0;
-        procs[i].W2 = 0;
-        procs[i].W3 = 0;
-        procs[i].W4 = 0;
-        procs[i].W5 = 0;
-        procs[i].W6 = 0;
-        procs[i].W7 = 0;
-        procs[i].RCOUNT = 0;
-        procs[i].IPL = 0x0100;
-        procs[i].PSVPAG = 0;
     }
-
 }
 
 void confReloj(void)
 {
     
     T1CON = 0;
-    T1CONbits.TCKPS = 1;    //Prescales 1:8
+    T1CONbits.TCKPS = 1;    //Prescaler 1:8
     PR1 = 5000;             //Espera 1000 micro seg
     
     IFS0bits.T1IF = 0;      //Bajamos bandera de interrupcion
@@ -96,74 +92,31 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
     if (contQuantum >= MAX_QUANTUM)                   
     {  
         contQuantum = 0;
-        puntPila = WREG15;
+        iReg = MAX_PILA;                                //Empieza en la ultima posicion
+        puntPila = WREG15;                              //Conseguimos a lo que apunta W15 y nos paramos en la posicion anterior
+        --puntPila;         
+        procs[iProc][iReg] = *puntPila;                 //Tiramos el SPLIM a la ultima posicion del arreglo
         --puntPila;
-        procs[iProc].SPLIM = *puntPila;         //Se hace el respaldo del proceso activo
-        puntPila--;
-        procs[iProc].PSVPAG = *puntPila;
-        puntPila--;
-        procs[iProc].W7 = *puntPila;
-        puntPila--;
-        procs[iProc].W6 = *puntPila;
-        puntPila--;
-        procs[iProc].W5 = *puntPila;
-        puntPila--;
-        procs[iProc].W4 = *puntPila;
-        puntPila--;
-        procs[iProc].W3 = *puntPila;
-        puntPila--;
-        procs[iProc].W2 = *puntPila;
-        puntPila--;
-        procs[iProc].W1 = *puntPila;
-        puntPila--;
-        procs[iProc].W0 = *puntPila;
-        puntPila--;
-        procs[iProc].RCOUNT = *puntPila;
-        puntPila--;
-        procs[iProc].IPL = *puntPila;
-        puntPila--;
-        procs[iProc].dirRetorno = *puntPila;
-        puntPila--;
-        procs[iProc].var3 = *puntPila;
-        puntPila--;
-        procs[iProc].var2 = *puntPila;
-        puntPila--;
-        procs[iProc].var1 = *puntPila;
-        
+        --iReg;             
+        while (puntPila >= procs[iProc][MAX_PILA]){     //Resguardo de contexto
+            procs[iProc][iReg] = *puntPila;             
+            --puntPila;                                 //Mientras que la direccion a la que apunta puntPila sea mayor o igual al SPLIM
+            --iReg;                                     //Hace los resguardos
+        }
         planificador();
-        
-        procs[iProc].SPLIM = puntPila;          //Se restaura el contexto del proceso siguiente
-        *puntPila = procs[iProc].var1;
         puntPila++;
-        *puntPila = procs[iProc].var2;
-        puntPila++;
-        *puntPila = procs[iProc].var3;
-        puntPila++;
-        *puntPila = procs[iProc].dirRetorno;
-        puntPila++;
-        *puntPila = procs[iProc].IPL;
-        puntPila++;
-        *puntPila = procs[iProc].RCOUNT;
-        puntPila++;
-        *puntPila = procs[iProc].W0;
-        puntPila++;
-        *puntPila = procs[iProc].W1;
-        puntPila++;
-        *puntPila = procs[iProc].W2;
-        puntPila++;
-        *puntPila = procs[iProc].W3;
-        puntPila++;
-        *puntPila = procs[iProc].W4;
-        puntPila++;
-        *puntPila = procs[iProc].W5;
-        puntPila++;
-        *puntPila = procs[iProc].W6;
-        puntPila++;
-        *puntPila = procs[iProc].W7;
-        puntPila++;
-        *puntPila = procs[iProc].PSVPAG;
-        puntPila++;
-        *puntPila = procs[iProc].SPLIM;
+        iReg++;
+        if (iProc != 0){                                //Pregunta que proceso hay que recuperar y carga el SPLIM correspondiente
+            procs[iProc][MAX_PILA] = procs[iProc - 1][MAX_PILA] ;  
+        }
+        else{
+            procs[iProc][MAX_PILA] = procs[2][MAX_PILA] ;       //EN ESTE CASO ES SIEMPRE EL MISMO
+        }
+        while(*puntPila != procs[iProc][MAX_PILA]){     //Cargamos los datos del proceso
+            *puntPila = procs[iProc][iReg];     
+            puntPila++;                                 //Mientras que lo APUTADO por puntPila sea distinto del SPLIM, se cargan los valores
+            iReg++;
+        }
     }
     else
     {
