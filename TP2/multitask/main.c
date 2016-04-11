@@ -1,7 +1,9 @@
 /* 
-Arquitectura de Computadoras 2016
-Ejercicio multitasking con interrupciones.
-Completar el código faltante.
+ * File:   main.c
+ * Author: GRIFFITHS, Anahí 
+ *         SERRUYA ALOISI, Luciano
+ *         TOLEDO MARGALEF, Pablo
+ * Created on 9 de abril de 2016, 16:09
  */
 #include <p33FJ256GP710.h>
 #include <stdio.h>
