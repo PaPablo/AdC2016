@@ -59,8 +59,11 @@ void rutA(void){
     
     while(1){
       
-       
-        
+        if (z != 0){
+            z = x*y;
+            
+        }
+        z = 1;
     }
  
 }

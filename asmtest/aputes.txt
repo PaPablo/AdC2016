@@ -21,7 +21,7 @@ al interrumpir
 							W2-W3
 							W0-W1
 							RCOUNT(8bits)
-							COSO RARO (0X0300?)
+							IPL
 							dirRetorno
 							var3
 							var2
