@@ -30,7 +30,7 @@ void config (void){
     
     int i;
     
-    AD1PCFGL = 0xFFFF;  //Configuración del PORTA
+    AD1PCFGL = 0xFFFF;  	//Configuración del PORTA
     AD1PCFGH = 0xFFFF;
     AD2PCFGL = 0xFFFF;
     TRISA = 0X00FF;

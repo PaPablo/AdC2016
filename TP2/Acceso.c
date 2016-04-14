@@ -11,49 +11,6 @@
 #include <stdlib.h>
 #include "p33FJ256GP710.h"
 
-
-/*
-	Configurar el timer
-		habilitar
-		bajar bandera
-		fijar tope   pr = 1000
-		prescaler
-
-	main
-		iniciar el timer
-		polling sobre PORTA
-			deposita valores en un arreglo en caso de que sean distintos con respecto al valor anterior
-			repite esto hasta que salta el TMR1
-		
-	Cuando interrumpe
-		bajar la bandera
-		TMR1 = 0
-
-		si rd14 == 0
-			rd15 = 1
-			envia por el byte bajo del PORTD
-			rd15 = 0
-			limpiararreglo
-			pr = 1000
-						
-		si no
-			si esta en 1000
-				pr = 100
-			si esta en 100
-				pr = 200
-			si esta en 200 
-				pr = 400
-			si esta en 400
-				pr = 800
-			si esta en 800
-				nada
-			fincoso
-		finsi
-		TMR1 = 0
-		TON = 1
-
-
-*/
 typedef struct
 {
 	unsigned int activo : 1;
@@ -85,12 +42,12 @@ void config(){
     AD1PCFGH = 0xFFFF;
     AD2PCFGL = 0xFFFF;
 
-    TRISA = 0X00FF;	// byte bajo como entrada
-	TRISD = 0x4000; //se configura solamente el pin14 como entrada
+    TRISA = 0X00FF;			// byte bajo como entrada
+	TRISD = 0x4000; 		// se configura solamente el pin14 como entrada
 
 	T1CON = 0;				// Ponemos en 0 todo el registro de configuracion y modificamos los que nos interesan	
 	T1CONbits.TCKPS = 1;	// prescaler a 1:8
-	PR1 = PRSTD;				// 1000 microsegundos
+	PR1 = PRSTD;			// 1000 microsegundos
 
 	IFS0bits.T1IF = 0;		// bajo la bandera de interrupción
 	IEC0bits.T1IE = 1;		// habilito la interrupción

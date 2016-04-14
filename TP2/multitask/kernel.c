@@ -17,7 +17,7 @@ typedef struct {
 	unsigned int var2;
 	unsigned int var3;
     unsigned int dirRetorno;
-    unsigned int IPL;
+    unsigned int SR;
     unsigned int RCOUNT;
     unsigned int W0;
     unsigned int W1;
@@ -33,7 +33,7 @@ typedef struct {
 
 resguardo procs[3];
 
-const int MAX_QUANTUM = 3;
+const int MAX_QUANTUM = 20;
 extern unsigned int Proc2, Proc3;
 unsigned int *puntPila;
 int contQuantum = 0;
@@ -58,7 +58,7 @@ void init(void)
         procs[i].W6 = 0;
         procs[i].W7 = 0;
         procs[i].RCOUNT = 0;
-        procs[i].IPL = 0x0100;
+        procs[i].SR = 0;
         procs[i].PSVPAG = 0;
     }
 
@@ -68,7 +68,7 @@ void confReloj(void)
 {
     
     T1CON = 0;
-    T1CONbits.TCKPS = 1;    //Prescales 1:8
+    T1CONbits.TCKPS = 1;    //Prescaler 1:8
     PR1 = 5000;             //Espera 1000 micro seg
     
     IFS0bits.T1IF = 0;      //Bajamos bandera de interrupcion
@@ -129,7 +129,7 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
         puntPila--;
         procs[iProc].RCOUNT = *puntPila;
         puntPila--;
-        procs[iProc].IPL = *puntPila;
+        procs[iProc].SR = *puntPila;
         puntPila--;
         procs[iProc].dirRetorno = *puntPila;
         puntPila--;
@@ -150,7 +150,7 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
         puntPila++;
         *puntPila = procs[iProc].dirRetorno;
         puntPila++;
-        *puntPila = procs[iProc].IPL;
+        *puntPila = procs[iProc].SR;
         puntPila++;
         *puntPila = procs[iProc].RCOUNT;
         puntPila++;
