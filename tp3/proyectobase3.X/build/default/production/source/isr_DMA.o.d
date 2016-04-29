@@ -1,0 +1,3 @@
+build/default/production/source/isr_DMA.o:  \
+source/isr_DMA.c  \
+ source/p33FJ256GP710.h 
