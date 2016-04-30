@@ -1,6 +1,8 @@
 /* 
- * File:   lecturaAnalog.c
- * Author: Luciano
+ * File:    lecturaAnalog.c
+ * Author:  GRIFFITHS, Anahi
+ *          SERRUYA ALOISI, Luciano
+ *          TOLEDO MARGALEF, Pablo
  *
  * Created on 29 de abril de 2016, 19:07
  */
@@ -8,12 +10,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "p33FJ256GP710.h"
-
-#include "common.h" //quetepario
+#include "common.h"
 #include "lcd.h"
-
 #include <xc.h>
 #include "confbits.h"
+
+
 #define ESPERA 39062
 #define MAX_CARAC 16
 int cantInterrpt = 0;
@@ -60,20 +62,17 @@ void config (void)
  */
 
 void conversion(void){
-    int x;
     int i = 0;
     int j;
     if(valorADC1 > 99){
         valorADC1 = 99;
     }
-    while(valorADC1 > 10){
-        valorADC1 = (valorADC1 / 10);
-        x = valorADC1  + 0x0030;
-        temp[i] = x;
-        i++;
-    }
-    temp[i] = valorADC1  + 0x0030;
+    
+    temp[i] = (valorADC1 / 10) + 0x30;
     i++;
+    temp[i] = (valorADC1 % 10) + 0x30;
+    i++;    
+    
     for (j = 0; j < 3; j++){
         temp[i] = cadena[j];
         i++;
