@@ -7,14 +7,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "p33FJ256GP710.h"
-#include "common.h"
+
+#include "common.h" //quetepario
 #include "lcd.h"
-#include "config.h"
+
 #include <xc.h>
 #include "confbits.h"
-#include "delay.h"
 #define ESPERA 39062
 #define MAX_CARAC 16
 int cantInterrpt = 0;
@@ -53,7 +52,8 @@ void config (void)
 	IFS0bits.T1IF = 0;		// bajo la bandera de interrupción
 	IEC0bits.T1IE = 1;		// habilito la interrupción
 
-	T1CONbits.TON = 1;	    
+	T1CONbits.TON = 1;
+    Init_LCD();
 }
 /*
  * 
@@ -81,7 +81,6 @@ void conversion(void){
 }
 int main(int argc, char** argv) {
 
-    valorADC1 = 33;
     config();
     
     
