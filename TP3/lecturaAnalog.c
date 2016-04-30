@@ -16,7 +16,7 @@
 #include "confbits.h"
 
 
-#define ESPERA 39062
+#define ESPERA 39062       //39062
 #define MAX_CARAC 16
 int cantInterrpt = 0;
 unsigned int valorADC1;
@@ -47,6 +47,8 @@ void config (void)
     AD1CON3 = 0;
     AD1CHS0 = 0x0005;
     AD1CON1bits.ADON = 1;
+    AD1CON1bits.FORM = 1;
+    ADC1BUF0 = 0;
     
     T1CON = 0;				// Ponemos en 0 todo el registro de configuracion y modificamos los que nos interesan	
 	T1CONbits.TCKPS = 3;	// prescaler a 1:256
