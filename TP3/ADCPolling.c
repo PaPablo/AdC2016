@@ -23,11 +23,16 @@
 #define CONFIG_PCFGL 0xFFCD
 #define CONFIG_TRISD 0x20C0
 
-#define SIGN_MASK_AN1 0x0200 //Mascaras para comprobar si el valor leido por ADC es negativo
-#define SIGN_MASK_AN4 0x0800
+#define SIGN_MASK_AN1 0x0400 //Mascaras para comprobar si el valor leido por ADC es negativo
+#define SIGN_MASK_AN4 0x1000
 
 #define RELLENO_AN1 0xFC00  //Valores para transformar los valores de 10 o 12 bits del ADC a 16 bits 
 #define RELLENO_AN4 0xF000 
+
+#define RESTA_AN1 0xFE00	//Valores para obtener el valor original que se ingreso
+#define RESTA_AN2 0xF800
+
+#define OFFSET_CARAC 0x0030 //Valor a sumar para conseguir el caracter correspondiente a un valor 0-9
 
 /*
  * 
@@ -64,8 +69,8 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
         cad[i++] = '6';
         cad[i++] = ':';
         cad[i++] = ' ';
-        int asdas = valorADC & SIGN_MASK_AN1;
-        if(asdas >= 0x0100){
+        //int asdas = valorADC & SIGN_MASK_AN1;
+        if(!(valorADC & SIGN_MASK_AN1)){
             //el valor es negativo
             cad[i++] = '-';
             valorADC = valorADC + RELLENO_AN1;
@@ -73,11 +78,11 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
         }
         else{
             cad[i++] = ' ';
-            valorADC = valorADC - 0xFE00;
+            valorADC = valorADC - RESTA_AN1; 
         }
-        cad[i++] = (valorADC / 100) + 0x0030;
-        cad[i++] = ((valorADC / 10) % 10) + 0x0030;
-        cad[i++] = (valorADC % 10) + 0x0030;
+        cad[i++] = (valorADC / 100) + OFFSET_CARAC;
+        cad[i++] = ((valorADC / 10) % 10) + OFFSET_CARAC;
+        cad[i++] = (valorADC % 10) + OFFSET_CARAC; 
     }
     else if (CON == CON1_AN4){
         //es 12 bits signado
@@ -88,7 +93,7 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
         cad[i++] = '7';
         cad[i++] = ':';
         cad[i++] = ' ';
-        if(valorADC & SIGN_MASK_AN4){
+        if(!(valorADC & SIGN_MASK_AN4)){
             //el valor es negativo
             cad[i++] = '-';
             valorADC = valorADC + RELLENO_AN4;
@@ -96,11 +101,12 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
         }
         else{
             cad[i++] = ' ';
+            valorADC = valorADC - RESTA_AN2; 
         }
-        cad[i++] = (valorADC / 1000) + 0x0030;
-        cad[i++] = ((valorADC % 1000) / 100) + 0x0030;
-        cad[i++] = ((valorADC % 100) / 10) + 0x0030;
-        cad[i++] = (valorADC % 10) + 0x0030;
+        cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
+        cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
+        cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
+        cad[i++] = (valorADC % 10) + OFFSET_CARAC;
     }
     else{
         cad[i++] = 'R';
@@ -109,10 +115,10 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
         cad[i++] = '3';
         cad[i++] = ':';
         cad[i++] = ' ';
-        cad[i++] = (valorADC / 1000) + 0x0030;
-        cad[i++] = ((valorADC % 1000) / 100) + 0x0030;
-        cad[i++] = ((valorADC % 100) / 10) + 0x0030;
-        cad[i++] = (valorADC % 10) + 0x0030;
+        cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
+        cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
+        cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
+        cad[i++] = (valorADC % 10) + OFFSET_CARAC;
     }
     
     //MOSTRAR EN LED LA CAD
