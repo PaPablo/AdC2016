@@ -43,9 +43,78 @@ void config (void){
     TRISD = CONFIG_TRISD;
 }
 
+void Pulsador_RD6(unsigned int valor, char *cad, int i){
 
-void rutinaADC(unsigned int CON, unsigned int CH0){
-    unsigned int valorADC;
+	//es 10 bits signado
+	//ahora tenemos que convertir ese valor a una cadena
+	//y mostrarlo por el lcd
+	cad[i++] = 'R';
+	cad[i++] = 'D';
+	cad[i++] = '6';
+	cad[i++] = ':';
+	cad[i++] = ' ';
+	if(!(valorADC & SIGN_MASK_AN1)){
+		//el valor es negativo
+		cad[i++] = '-';
+		valorADC = valorADC + RELLENO_AN1;
+		valorADC = -(valorADC); //COMPLEMENTO A 2
+	}
+	else{
+		cad[i++] = ' ';
+		valorADC = valorADC - RESTA_AN1; 
+	}
+	cad[i++] = (valorADC / 100) + OFFSET_CARAC;
+	cad[i++] = ((valorADC / 10) % 10) + OFFSET_CARAC;
+	cad[i++] = (valorADC % 10) + OFFSET_CARAC; 
+}
+
+void Pulsador_RD7 (unsigned int valor, char *cad, int i){
+
+	//es 12 bits signado
+	//ahora tenemos que convertir ese valor a una cadena
+	//y mostrarlo por el lcd
+	cad[i++] = 'R';
+	cad[i++] = 'D';
+	cad[i++] = '7';
+	cad[i++] = ':';
+	cad[i++] = ' ';
+	if(!(valorADC & SIGN_MASK_AN4)){
+		//el valor es negativo
+		cad[i++] = '-';
+		valorADC = valorADC + RELLENO_AN4;
+		valorADC = -(valorADC); //COMPLEMENTO A 2
+	}
+	else{
+		cad[i++] = ' ';
+		valorADC = valorADC - RESTA_AN2; 
+	}
+	cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
+	cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
+	cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
+	cad[i++] = (valorADC % 10) + OFFSET_CARAC;
+}
+
+void Pulsador_RD13(unsigned int valor, char *cad, int i){
+
+	//12 bits no signado
+	cad[i++] = 'R';
+	cad[i++] = 'D';
+	cad[i++] = '1';
+	cad[i++] = '3';
+	cad[i++] = ':';
+	cad[i++] = ' ';
+	cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
+	cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
+	cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
+	cad[i++] = (valorADC % 10) + OFFSET_CARAC;
+	
+}
+
+
+void rutinaADC(unsigned int CON, unsigned int CH0, pulsador)
+    void (*pulsador)(){
+	
+	unsigned int valorADC;
     char cad[16];
     int i = 0;
     AD1CON1 = CON;
@@ -59,67 +128,10 @@ void rutinaADC(unsigned int CON, unsigned int CH0){
     while(!AD1CON1bits.DONE);
     
     valorADC = ADC1BUF0;
+	
+	*pulsador(valorADC, cad)		//Ejecutamos la funcion que se paso por parametro en el main
     
-    if(CON == CON1_AN1){
-        //es 10 bits signado
-        //ahora tenemos que convertir ese valor a una cadena
-        //y mostrarlo por el lcd
-        cad[i++] = 'R';
-        cad[i++] = 'D';
-        cad[i++] = '6';
-        cad[i++] = ':';
-        cad[i++] = ' ';
-        //int asdas = valorADC & SIGN_MASK_AN1;
-        if(!(valorADC & SIGN_MASK_AN1)){
-            //el valor es negativo
-            cad[i++] = '-';
-            valorADC = valorADC + RELLENO_AN1;
-            valorADC = -(valorADC); //COMPLEMENTO A 2
-        }
-        else{
-            cad[i++] = ' ';
-            valorADC = valorADC - RESTA_AN1; 
-        }
-        cad[i++] = (valorADC / 100) + OFFSET_CARAC;
-        cad[i++] = ((valorADC / 10) % 10) + OFFSET_CARAC;
-        cad[i++] = (valorADC % 10) + OFFSET_CARAC; 
-    }
-    else if (CON == CON1_AN4){
-        //es 12 bits signado
-        //ahora tenemos que convertir ese valor a una cadena
-        //y mostrarlo por el lcd
-        cad[i++] = 'R';
-        cad[i++] = 'D';
-        cad[i++] = '7';
-        cad[i++] = ':';
-        cad[i++] = ' ';
-        if(!(valorADC & SIGN_MASK_AN4)){
-            //el valor es negativo
-            cad[i++] = '-';
-            valorADC = valorADC + RELLENO_AN4;
-            valorADC = -(valorADC); //COMPLEMENTO A 2
-        }
-        else{
-            cad[i++] = ' ';
-            valorADC = valorADC - RESTA_AN2; 
-        }
-        cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
-        cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
-        cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
-        cad[i++] = (valorADC % 10) + OFFSET_CARAC;
-    }
-    else{
-        cad[i++] = 'R';
-        cad[i++] = 'D';
-        cad[i++] = '1';
-        cad[i++] = '3';
-        cad[i++] = ':';
-        cad[i++] = ' ';
-        cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
-        cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
-        cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
-        cad[i++] = (valorADC % 10) + OFFSET_CARAC;
-    }
+    
     
     //MOSTRAR EN LED LA CAD
     home_clr();
@@ -131,13 +143,13 @@ int main(int argc, char** argv) {
     
     while(1){
         if(PORTDbits.RD6){
-            rutinaADC(CON1_AN1, CHS0_AN1);
+            rutinaADC(CON1_AN1, CHS0_AN1, Pulsador_RD6);
         }
         if(PORTDbits.RD7){
-            rutinaADC(CON1_AN4, CHS0_AN4);
+            rutinaADC(CON1_AN4, CHS0_AN4, Pulsador_RD7);
         }
         if(PORTDbits.RD13){
-            rutinaADC(CON1_AN5, CHS0_AN5);
+            rutinaADC(CON1_AN5, CHS0_AN5, Pulsador_RD13);
         }
         
     }
