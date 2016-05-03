@@ -34,17 +34,17 @@
 
 #define OFFSET_CARAC 0x0030 //Valor a sumar para conseguir el caracter correspondiente a un valor 0-9
 
-/*
- * 
- */
+typedef void (*FUNCION_PULSADOR)(unsigned int, char*, int);
+
+
 void config (void){
     
     AD1PCFGL = CONFIG_PCFGL;
     TRISD = CONFIG_TRISD;
 }
 
-void Pulsador_RD6(unsigned int valor, char *cad, int i){
-
+void Pulsador_RD6(unsigned int valor, char* cad, int i){
+    
 	//es 10 bits signado
 	//ahora tenemos que convertir ese valor a una cadena
 	//y mostrarlo por el lcd
@@ -53,22 +53,23 @@ void Pulsador_RD6(unsigned int valor, char *cad, int i){
 	cad[i++] = '6';
 	cad[i++] = ':';
 	cad[i++] = ' ';
-	if(!(valorADC & SIGN_MASK_AN1)){
+	if(!(valor & SIGN_MASK_AN1)){
 		//el valor es negativo
 		cad[i++] = '-';
-		valorADC = valorADC + RELLENO_AN1;
-		valorADC = -(valorADC); //COMPLEMENTO A 2
+		valor = valor + RELLENO_AN1;
+		valor = -(valor); //COMPLEMENTO A 2
 	}
 	else{
 		cad[i++] = ' ';
-		valorADC = valorADC - RESTA_AN1; 
+		valor = valor - RESTA_AN1; 
 	}
-	cad[i++] = (valorADC / 100) + OFFSET_CARAC;
-	cad[i++] = ((valorADC / 10) % 10) + OFFSET_CARAC;
-	cad[i++] = (valorADC % 10) + OFFSET_CARAC; 
+	cad[i++] = (valor / 100) + OFFSET_CARAC;
+	cad[i++] = ((valor / 10) % 10) + OFFSET_CARAC;
+	cad[i++] = (valor % 10) + OFFSET_CARAC; 
+
 }
 
-void Pulsador_RD7 (unsigned int valor, char *cad, int i){
+void Pulsador_RD7 (unsigned int valor, char* cad, int i){
 
 	//es 12 bits signado
 	//ahora tenemos que convertir ese valor a una cadena
@@ -78,23 +79,24 @@ void Pulsador_RD7 (unsigned int valor, char *cad, int i){
 	cad[i++] = '7';
 	cad[i++] = ':';
 	cad[i++] = ' ';
-	if(!(valorADC & SIGN_MASK_AN4)){
+	if(!(valor & SIGN_MASK_AN4)){
 		//el valor es negativo
 		cad[i++] = '-';
-		valorADC = valorADC + RELLENO_AN4;
-		valorADC = -(valorADC); //COMPLEMENTO A 2
+		valor = valor + RELLENO_AN4;
+		valor = -(valor); //COMPLEMENTO A 2
 	}
 	else{
 		cad[i++] = ' ';
-		valorADC = valorADC - RESTA_AN2; 
+		valor = valor - RESTA_AN2; 
 	}
-	cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
-	cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
-	cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
-	cad[i++] = (valorADC % 10) + OFFSET_CARAC;
+	cad[i++] = (valor / 1000) + OFFSET_CARAC;
+	cad[i++] = ((valor % 1000) / 100) + OFFSET_CARAC;
+	cad[i++] = ((valor % 100) / 10) + OFFSET_CARAC;
+	cad[i++] = (valor % 10) + OFFSET_CARAC;
+    
 }
 
-void Pulsador_RD13(unsigned int valor, char *cad, int i){
+void Pulsador_RD13(unsigned int valor, char* cad, int i){
 
 	//12 bits no signado
 	cad[i++] = 'R';
@@ -103,16 +105,16 @@ void Pulsador_RD13(unsigned int valor, char *cad, int i){
 	cad[i++] = '3';
 	cad[i++] = ':';
 	cad[i++] = ' ';
-	cad[i++] = (valorADC / 1000) + OFFSET_CARAC;
-	cad[i++] = ((valorADC % 1000) / 100) + OFFSET_CARAC;
-	cad[i++] = ((valorADC % 100) / 10) + OFFSET_CARAC;
-	cad[i++] = (valorADC % 10) + OFFSET_CARAC;
+	cad[i++] = (valor / 1000) + OFFSET_CARAC;
+	cad[i++] = ((valor % 1000) / 100) + OFFSET_CARAC;
+	cad[i++] = ((valor % 100) / 10) + OFFSET_CARAC;
+	cad[i++] = (valor % 10) + OFFSET_CARAC;
+    
 	
 }
 
 
-void rutinaADC(unsigned int CON, unsigned int CH0, pulsador)
-    void (*pulsador)(){
+void rutinaADC(unsigned int CON, unsigned int CH0, FUNCION_PULSADOR pulsador){
 	
 	unsigned int valorADC;
     char cad[16];
@@ -129,7 +131,7 @@ void rutinaADC(unsigned int CON, unsigned int CH0, pulsador)
     
     valorADC = ADC1BUF0;
 	
-	*pulsador(valorADC, cad)		//Ejecutamos la funcion que se paso por parametro en el main
+	pulsador(valorADC, cad, i);	//Ejecutamos la funcion que se paso por parametro en el main
     
     
     
@@ -141,18 +143,24 @@ int main(int argc, char** argv) {
 
     config();
     
+    FUNCION_PULSADOR pulsador6, pulsador7, pulsador13;
+    pulsador6 = Pulsador_RD6;
+    pulsador7 = Pulsador_RD7;
+    pulsador13 = Pulsador_RD13;
+    
     while(1){
         if(PORTDbits.RD6){
-            rutinaADC(CON1_AN1, CHS0_AN1, Pulsador_RD6);
+            rutinaADC(CON1_AN1, CHS0_AN1, pulsador6);
         }
         if(PORTDbits.RD7){
-            rutinaADC(CON1_AN4, CHS0_AN4, Pulsador_RD7);
+            rutinaADC(CON1_AN4, CHS0_AN4, pulsador7);
         }
         if(PORTDbits.RD13){
-            rutinaADC(CON1_AN5, CHS0_AN5, Pulsador_RD13);
+            rutinaADC(CON1_AN5, CHS0_AN5, pulsador13);
         }
         
     }
+
     
     return (EXIT_SUCCESS);
 }
