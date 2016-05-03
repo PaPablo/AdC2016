@@ -18,6 +18,9 @@
 
 #define ESPERA 39062       //39062
 #define MAX_CARAC 16
+
+#define OFFSET_CARAC 0x0030
+
 int cantInterrpt = 0;
 unsigned int valorADC1;
 
@@ -70,9 +73,9 @@ void conversion(void){
         valorADC1 = 99;
     }
     
-    temp[i] = (valorADC1 / 10) + 0x30;
+    temp[i] = (valorADC1 / 10) + OFFSET_CARAC;
     i++;
-    temp[i] = (valorADC1 % 10) + 0x30;
+    temp[i] = (valorADC1 % 10) + OFFSET_CARAC;
     i++;    
     
     for (j = 0; j < 3; j++){
