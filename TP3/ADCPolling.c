@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <math.h>
 #include <stdlib.h>
 #include "p33FJ256GP710.h"
 #include "common.h"
@@ -43,6 +44,39 @@ void config (void){
     TRISD = CONFIG_TRISD;
 }
 
+int digitos(unsigned int num){
+/*Cuenta cuantos digitos tiene un numero*/
+	
+	int contador=1;
+    while(num/10>0)
+    {
+        num=num/10;
+        contador++;
+    }
+	return contador;
+}
+
+
+void EntACad (unsigned int num, char* cad, int cant, int i){
+	
+	cant--;
+    int x;
+	
+	while (cant >= 0){
+        x = pow(10, cant);
+		cad[i++] = (num / x) + OFFSET_CARAC;
+        num = num % x;
+        cant--;
+		
+	}
+
+}
+
+
+
+
+
+
 void Pulsador_RD6(unsigned int valor, char* cad, int i){
     
 	//es 10 bits signado
@@ -63,9 +97,11 @@ void Pulsador_RD6(unsigned int valor, char* cad, int i){
 		cad[i++] = ' ';
 		valor = valor - RESTA_AN1; 
 	}
-	cad[i++] = (valor / 100) + OFFSET_CARAC;
+	
+	EntACad (valor, cad, digitos(valor), i);
+	/*cad[i++] = (valor / 100) + OFFSET_CARAC;
 	cad[i++] = ((valor / 10) % 10) + OFFSET_CARAC;
-	cad[i++] = (valor % 10) + OFFSET_CARAC; 
+	cad[i++] = (valor % 10) + OFFSET_CARAC;*/ 
 
 }
 
@@ -89,10 +125,11 @@ void Pulsador_RD7 (unsigned int valor, char* cad, int i){
 		cad[i++] = ' ';
 		valor = valor - RESTA_AN2; 
 	}
-	cad[i++] = (valor / 1000) + OFFSET_CARAC;
+    EntACad (valor, cad, digitos(valor), i);
+	/*cad[i++] = (valor / 1000) + OFFSET_CARAC;
 	cad[i++] = ((valor % 1000) / 100) + OFFSET_CARAC;
 	cad[i++] = ((valor % 100) / 10) + OFFSET_CARAC;
-	cad[i++] = (valor % 10) + OFFSET_CARAC;
+	cad[i++] = (valor % 10) + OFFSET_CARAC;*/
     
 }
 
@@ -105,10 +142,13 @@ void Pulsador_RD13(unsigned int valor, char* cad, int i){
 	cad[i++] = '3';
 	cad[i++] = ':';
 	cad[i++] = ' ';
-	cad[i++] = (valor / 1000) + OFFSET_CARAC;
+    
+    EntACad (valor, cad, digitos(valor), i);
+	
+    /*cad[i++] = (valor / 1000) + OFFSET_CARAC;
 	cad[i++] = ((valor % 1000) / 100) + OFFSET_CARAC;
 	cad[i++] = ((valor % 100) / 10) + OFFSET_CARAC;
-	cad[i++] = (valor % 10) + OFFSET_CARAC;
+	cad[i++] = (valor % 10) + OFFSET_CARAC;*/
     
 	
 }
