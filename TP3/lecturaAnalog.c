@@ -9,23 +9,32 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "p33FJ256GP710.h"
 #include "common.h"
 #include "lcd.h"
 #include <xc.h>
 #include "confbits.h"
 
+#define OFFSET_CARAC        0x0030
+#define ESPERA              39062
+#define MAX_CARAC           16
 
+<<<<<<< HEAD
 #define ESPERA 39062       //39062
 #define MAX_CARAC 16
 
 #define OFFSET_CARAC 0x0030
 
+=======
+#define MAX_TEMP            99
+#define MAX_10BITS_UNSIGNED 1023
+>>>>>>> refs/remotes/origin/PunterosAFunciones
 int cantInterrpt = 0;
 unsigned int valorADC1;
 
 char temp[MAX_CARAC];
-char cadena[] = " °C";
+char cadena[4] = " °C";
 
 void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
 {
@@ -66,7 +75,40 @@ void config (void)
  * 
  */
 
-void conversion(void){
+
+int digitos(unsigned int num){
+/*Cuenta cuantos digitos tiene un numero*/
+	
+	int contador=1;
+    while(num/10>0)
+    {
+        num=num/10;
+        contador++;
+    }
+	return contador;
+}
+
+
+void EntACad (unsigned int num, char* cad, int cant){
+	
+	cant--;
+    int i = 0;
+    int x;
+	
+	while (cant >= 0){
+        x = pow(10, cant);
+		cad[i++] = (num / x) + OFFSET_CARAC;
+        num = num % x;
+        cant--;
+		
+	}
+    int j;
+    for(j = 0; cadena[j] != 0; j++){
+        cad[i++] = cadena[j];
+    }
+
+}
+/*void conversion(void){
     int i = 0;
     int j;
     if(valorADC1 > 99){
@@ -82,7 +124,7 @@ void conversion(void){
         temp[i] = cadena[j];
         i++;
     }
-}
+}*/
 int main(int argc, char** argv) {
 
     config();
@@ -92,7 +134,8 @@ int main(int argc, char** argv) {
         while(!AD1CON1bits.DONE);     //espera a que termine de convertir
         AD1CON1bits.DONE = 0;
         valorADC1 = ADC1BUF0;
-        conversion();
+        valorADC1 = (valorADC1 * MAX_TEMP) / MAX_10BITS_UNSIGNED;       //Regla de 3 simple para convertir valor
+        EntACad(valorADC1, temp, digitos(valorADC1));
         home_clr();
         puts_lcd( (unsigned char*) &temp[0], sizeof(temp) -1 );
         
