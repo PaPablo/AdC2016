@@ -14,7 +14,7 @@
 #include <xc.h>
 #include "confbits.h"
 #include "delay.h"
-
+#define MAX_CARAC 16
 #define CON1_AN1 0x0100     //Configura el ADC1 para 10 bits entero signado
 #define CON1_AN4 0x0500     //Configura el ADC1 para 12 bits entero signado
 #define CON1_AN5 0x0400     //Configura el ADC1 para 12 bits entero no signado
@@ -157,7 +157,7 @@ void Pulsador_RD13(unsigned int valor, char* cad, int i){
 void rutinaADC(unsigned int CON, unsigned int CH0, FUNCION_PULSADOR pulsador){
 	
 	unsigned int valorADC;
-    char cad[16];
+    char cad[MAX_CARAC];
     int i = 0;
     AD1CON1 = CON;
     AD1CHS0 = CH0;
