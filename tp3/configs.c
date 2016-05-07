@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 #include "p33FJ256GP710.h"
-=======
 #define CONFIG_TRISD 0x20C0
->>>>>>> origin/master
+
 
 void configADC(void) {
 //COMENTARIOS CON L ADELANTE SON DE "LOS HIZO LUCIANO"	
