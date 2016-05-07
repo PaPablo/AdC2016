@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "p33FJ256GP710.h"
+=======
+#define CONFIG_TRISD 0x20C0
+>>>>>>> origin/master
 
 void configADC(void) {
 //COMENTARIOS CON L ADELANTE SON DE "LOS HIZO LUCIANO"	
@@ -38,18 +42,20 @@ void configADC(void) {
 	//Always uses channel input selects for Sample A
 	AD1CON2bits.ALTS = 0;										//L: SI TAMBIEN
 
-	//3 tads de sampleo 
-	AD1CON3bits.SAMC = 3;			
+	//4 tads de sampleo = 1 microsegundo
+	AD1CON3bits.SAMC = 4;			
 																/*ESTOS DOS ME PARECE QUE HABRIA QUE DARLE 
 																UN POQUITO MAS DE TIEMPO DE SAMPLEO*/
-	//3 * TCY = TAD
-	AD1CON3bits.ADCS = 2;		
+	//(7+1) * TCY = TAD = 0.2 microsegundos
+	AD1CON3bits.ADCS = 7;		
 
 	//DONE SE PONEN EN UNO CUANDO TERMINARON TODAS LAS CONVERSIONES DEL ADC (en nuestro caso cuando termina AN0 y AN1)
 
 	//necesitamos 1 buffer de 2 words
-	AD1CON4bits.DMABL = 0;										/*L: ESTO ME PARECE QUE TENDRIA QUE ESTAR EN 1 SI VAMOS A TRABAJAR
+	AD1CON4bits.DMABL = 1;										/*L: ESTO ME PARECE QUE TENDRIA QUE ESTAR EN 1 SI VAMOS A TRABAJAR
 																CON UN SOLO BLOQUE, DE 1 BUFFER Y 2 WORDS*/
+																
+	TRISD = CONFIG_TRISD;															
 
 	// No queremos que el ADC interrumpa
 	// Clear the A/D interrupt flag bit
@@ -75,7 +81,7 @@ void Init_DMA( void )
 
     // Configure DMA for Peripheral indirect mode
     DMA0CONbits.AMODE = 2;						
-    // Configure DMA for Continuous Ping-Pong mode
+    // Configure DMA for Continuous mode
     DMA0CONbits.MODE = 0;										//L: SI TRABAJMOS CON UN SOLO BLOQUE DE MEMORIA PARA ALMACENAR, ESTO QUEDARIA ASI.
 																//L: MODO CONTINUO, PING PONG DESHABILITADO
 
