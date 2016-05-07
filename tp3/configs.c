@@ -1,3 +1,5 @@
+#include "p33FJ256GP710.h"
+
 void configADC(void) {
 //COMENTARIOS CON L ADELANTE SON DE "LOS HIZO LUCIANO"	
 	
