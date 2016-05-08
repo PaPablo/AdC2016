@@ -6,10 +6,12 @@
 void configADC(void) {
 //COMENTARIOS CON L ADELANTE SON DE "LOS HIZO LUCIANO"	
 	
-	
-	
 	// ---------- CONFIGURACION ADC ----------
-	//seleccionar fuente de comienzo de sampling (comienzo automatico cuando el contador termina los tads)
+	
+    //10bits sin sing
+    AD1CON1bits.AD12B = 0; 
+    
+    //seleccionar fuente de comienzo de sampling (comienzo automatico cuando el contador termina los tads)
 	
 	AD1CON1bits.SSRC = 7;										//L: ESTO ESTA RE BIEN
 
@@ -54,9 +56,6 @@ void configADC(void) {
 	AD1CON4bits.DMABL = 1;										/*L: ESTO ME PARECE QUE TENDRIA QUE ESTAR EN 1 SI VAMOS A TRABAJAR
 																CON UN SOLO BLOQUE, DE 1 BUFFER Y 2 WORDS*/
 							
-    //configuramos PORTD
-    //RD6 RD7 RD13 digital input
-	TRISD = CONFIG_TRISD;															
 
 	// No queremos que el ADC interrumpa
 	// Clear the A/D interrupt flag bit
@@ -65,45 +64,9 @@ void configADC(void) {
 	IEC0bits.AD1IE = 0;
 }
 
-//buffer: 1 buffer de 2 words
-struct {
-	unsigned int Adc1Ch0[2];
-} BufferA __attribute__((space(dma)));
+void confPort(void){
+	    //configuramos PORTD
+    //RD6 RD7 RD13 digital input
+	TRISD = CONFIG_TRISD;															
 
-
-void Init_DMA( void )
-{
-// ---------- CONFIGURACION DMA ----------
-    // DMA0 configuration
-    // Direction: Read from peripheral address 0-x300 (ADC1BUF0) and write to DMA RAM
-    // AMODE: Peripheral Indirect Addressing Mode
-    // MODE: Continuous
-    // IRQ: ADC Interrupt
-
-    // Configure DMA for Peripheral indirect mode
-    DMA0CONbits.AMODE = 2;						
-    // Configure DMA for Continuous mode
-    DMA0CONbits.MODE = 0;										//L: SI TRABAJMOS CON UN SOLO BLOQUE DE MEMORIA PARA ALMACENAR, ESTO QUEDARIA ASI.
-																//L: MODO CONTINUO, PING PONG DESHABILITADO
-
-    // Point DMA to ADC1BUF0
-    DMA0PAD = (unsigned int)&ADC1BUF0;
-    
-    // 2 requerimientos de DMA (1 buffer ; 2 words)
-    DMA0CNT = 1;
-    // Select ADC1 as DMA Request source
-    DMA0REQ = 13;												/*ESTA TODO RE BIEN*/
-
-    //localizo el buffer
-    DMA0STA = __builtin_dmaoffset(&BufferA);
-
-    //Clear the DMA interrupt flag bit
-    IFS0bits.DMA0IF = 0;
-
-    //Clear the DMA interrupt enable bit
-    //No queremos que interrumpa cuando lo complete
-    IEC0bits.DMA0IE = 0;
-    
-    // Enable DMA
-    DMA0CONbits.CHEN=1;
 }

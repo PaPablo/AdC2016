@@ -14,10 +14,6 @@
 *
 **********************************************************************/
 
-/* variables used in Timer 1 ISR */
-extern volatile unsigned char hours;
-extern volatile unsigned char minutes;
-extern volatile unsigned char seconds;
 
 /* variables used in raw ADC data to hex */
 extern void advolt( unsigned int adc_conv_data );

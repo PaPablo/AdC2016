@@ -177,31 +177,5 @@ void hexdec( unsigned char count )
 }
 
 
-/*---------------------------------------------------------------------
-  Function Name: Update_Time
-  Description:   Update LCD for real-time clock data
-  Inputs:        None
-  Returns:       None
------------------------------------------------------------------------*/
-void Update_Time( void )
-{
 
-   	/* position LCD cursor at column, row */
-  	home_it();
-	hexdec( hours );
-	lcd_data(tens + 0x30);
-	lcd_data(ones + 0x30);
-    
-    hexdec( minutes );
-    /* position LCD cursor at column, row */
-    cursor_right();
-	lcd_data(tens + 0x30);
-	lcd_data(ones + 0x30);
-	 
-  	hexdec( seconds );
-	/* position LCD cursor at column, row */
-    cursor_right();
-	lcd_data(tens + 0x30);
-	lcd_data(ones + 0x30);
-}
 #endif // USAR_LCD
