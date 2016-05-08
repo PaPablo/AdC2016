@@ -21,8 +21,8 @@ void configADC(void) {
 	//Sampleo comienza automaticamente luego de la ultima conversion
 	AD1CON1bits.ASAM = 1;
 
-	//Buffer DMA es escrito en orden de conversión
-	AD1CON1bits.ADDMABM = 1;
+	//Buffer DMA es escrito en modo Scatter/Gather
+	AD1CON1bits.ADDMABM = 0;
 
 	//Convierte CH0 (pero al tener el scan lee AN0 y AN1)
 	AD1CON2bits.CHPS = 0;

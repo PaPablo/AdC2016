@@ -3,7 +3,7 @@
 //buffer: 1 buffer de 2 words
 struct {
 	unsigned int Adc1Ch0[2];
-} BufferA __attribute__((space(dma)));
+} BufferA __attribute__((space(dma), aligned(4)));
 
 
 void Init_DMA( void )
@@ -32,8 +32,7 @@ void Init_DMA( void )
     DMA0REQ = 13;											
 
     //localizo el buffer
-    DMA0STA = __builtin_dmaoffset(&BufferA);
-    
+    DMA0STA = __builtin_dmaoffset(&BufferA);    
     
 
     //Clear the DMA interrupt flag bit
