@@ -62,15 +62,15 @@ int main(void) {
     while(1){
         if(PORTDbits.RD6){
             promedioDMA(); //promedio de los valores en buffer de DMA
-            mostrar(TITULO_RD6, promedio);
+            mostrar(TITULO_RD6, promedio);  //mostramos titulo y el valor
          
         } else if (PORTDbits.RD7){
             mayorDMA(); //mayor de los valores en buffer DMA
-            mostrar(TITULO_RD7, mayor);
+            mostrar(TITULO_RD7, mayor); //mostramos titulo y el valor
 
         } else if (PORTDbits.RD13) {
             menorDMA(); //menor de los valores en buffer DMA
-            mostrar(TITULO_RD13, menor);
+            mostrar(TITULO_RD13, menor);    //mostramos titulo y el valor
         }
         
         
