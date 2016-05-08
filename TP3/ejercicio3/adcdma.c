@@ -56,8 +56,10 @@ int main(void) {
  
     
     //configuracion de ADC, DMA y PORT
-    configADC();    
+    configADC();
+    confPort();    
     Init_DMA();
+    
    
     while(1){
         if(PORTDbits.RD6){

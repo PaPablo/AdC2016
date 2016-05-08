@@ -17,9 +17,11 @@ void Init_DMA( void )
 
     // Configure DMA for Peripheral indirect mode
     DMA0CONbits.AMODE = 2;						
-    // Configure DMA for Continuous mode
-    DMA0CONbits.MODE = 0;										//L: SI TRABAJMOS CON UN SOLO BLOQUE DE MEMORIA PARA ALMACENAR, ESTO QUEDARIA ASI.
-																//L: MODO CONTINUO, PING PONG DESHABILITADO
+    // Configure DMA for Continuous mode, Ping Pong disabled
+    DMA0CONbits.MODE = 0;	
+    
+    //Se lee del periferico y se tira en memoria
+    DMA0CONbits.DIR = 0;
 
     // Point DMA to ADC1BUF0
     DMA0PAD = (unsigned int)&ADC1BUF0;
@@ -27,10 +29,12 @@ void Init_DMA( void )
     // 2 requerimientos de DMA (1 buffer ; 2 words)
     DMA0CNT = 1;
     // Select ADC1 as DMA Request source
-    DMA0REQ = 13;												/*ESTA TODO RE BIEN*/
+    DMA0REQ = 13;											
 
     //localizo el buffer
     DMA0STA = __builtin_dmaoffset(&BufferA);
+    
+    
 
     //Clear the DMA interrupt flag bit
     IFS0bits.DMA0IF = 0;
@@ -69,6 +73,7 @@ void mayorDMA(){
         if(mayor < BufferA.Adc1Ch0[i]){
             mayor = BufferA.Adc1Ch0[i];
         }
+		i++;
     }
 
 }
@@ -82,5 +87,6 @@ void menorDMA(){
         if(menor > BufferA.Adc1Ch0[i]){
             menor = BufferA.Adc1Ch0[i];
         }
+		i++;
     }
 }
