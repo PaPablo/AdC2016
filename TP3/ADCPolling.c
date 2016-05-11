@@ -87,7 +87,7 @@ void Pulsador_RD6(unsigned int valor, char* cad, int i){
 	cad[i++] = '6';
 	cad[i++] = ':';
 	cad[i++] = ' ';
-	if(!(valor & SIGN_MASK_AN1)){
+	/*if(!(valor & SIGN_MASK_AN1)){
 		//el valor es negativo
 		cad[i++] = '-';
 		valor = valor + RELLENO_AN1;
@@ -96,7 +96,7 @@ void Pulsador_RD6(unsigned int valor, char* cad, int i){
 	else{
 		cad[i++] = ' ';
 		valor = valor - RESTA_AN1; 
-	}
+	}*/
 	
 	EntACad (valor, cad, digitos(valor), i);
 	/*cad[i++] = (valor / 100) + OFFSET_CARAC;
@@ -157,7 +157,7 @@ void Pulsador_RD13(unsigned int valor, char* cad, int i){
 void rutinaADC(unsigned int CON, unsigned int CH0, FUNCION_PULSADOR pulsador){
 	
 	unsigned int valorADC;
-    char cad[MAX_CARAC];
+    char cad[MAX_CARAC] = "";
     int i = 0;
     AD1CON1 = CON;
     AD1CHS0 = CH0;

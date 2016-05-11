@@ -17,6 +17,8 @@
 #include "confAdcPort.h"
 #include "confRutDMA.h"
 
+#define OFFSET_CARAC 0x0030
+
 
 //cadenas a modo de titulo para el display lcd
 char TITULO_RD6[8] = "Promedio";
@@ -31,10 +33,10 @@ char aMostrar[4];
 
 
 void encadenar(int nro){
-    aMostrar[3] = nro % 10;             //unidad
-    aMostrar[2] = ((nro %100) / 10);    //decena
-    aMostrar[1] = ((nro / 100) % 10);    //centena
-    aMostrar[0] = nro / 1000;           //millar
+    aMostrar[3] = nro % 10 + OFFSET_CARAC;             //unidad
+    aMostrar[2] = ((nro %100) / 10) + OFFSET_CARAC;    //decena
+    aMostrar[1] = ((nro / 100) % 10) + OFFSET_CARAC;    //centena
+    aMostrar[0] = nro / 1000 + OFFSET_CARAC;           //millar
 }
 
 
