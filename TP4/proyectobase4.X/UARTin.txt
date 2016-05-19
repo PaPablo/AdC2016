@@ -1,0 +1,8 @@
+// wait for 0 seconds, then packet "abc"
+wait 0 sec
+04 41 42 43
+
+// wait for 0 miliseconds, then packet "def"
+wait 0 ms
+"def"
+
