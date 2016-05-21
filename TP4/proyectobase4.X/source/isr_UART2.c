@@ -55,6 +55,7 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
     }
     if (i == (cantChar - 1)){       //Preguntamos si ya termino de encadenar el msj
         i = 0;                      //(ya recibimos todo el marco)
+		Delay(6250);        		//Espera de 1 segundo
         IFS1bits.U2TXIF = 1;        //Obligo Tx*/
     }
 }
@@ -67,17 +68,20 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
 void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
 {
     IFS1bits.U2TXIF = 0;
-    Delay(6250);        //Espera de 1 segundo
-    while(cantChar > 0)
+    
+    if(cantChar > 0)
     {
         --cantChar;
         U2TXREG = cadena[i++];	//Simple ECO, enviamos el marco recibido
-        Delay_Us(ESPERA_1BYTE); /*No se si hace falta,
+        /*Delay_Us(ESPERA_1BYTE); No se si hace falta,
                                 esperar a que se envie un byte
                                 para enviar el otro*/
     }
-    uart_lcd_update = 1;
-    i = 0;
+	else{
+		uart_lcd_update = 1;	//Recien cuando se envia todo el marco se lo muestra por LCD
+		i = 0;
+	}
+
 }
 
 /*---------------------------------------------------------------------
@@ -107,9 +111,13 @@ void InitUART2(void)
 
 	U2MODEbits.UARTEN = 1;	// And turn the peripheral on
 	U2STAbits.UTXEN = 1;	// Empieza a transmitir. Se dispara el Flag TXIF
+	U2STAbits.UTXISEL = 0; 	// Se genera interrupcion del transmisor cuando se serializa 
+							// y se comienza a enviar un caracter
+	U2STAbits.URXISEL = 0;	// Se genera interrupcion del receptor cuando se recibe un caracter
 
 	IFS1bits.U2TXIF = 0;	// Clear the Transmit Interrupt Flag
 	IEC1bits.U2TXIE = 1;	// Enable Transmit Interrupts
     
-    Delay_Us(ESPERA_1BIT);
+    Delay_Us(ESPERA_1BIT);	// Esperamos lo que lleva enviar un byte antes de empezar a transmitir
+							// para asegurar que la deteccion del bit de comienzo
 }

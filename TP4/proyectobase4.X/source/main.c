@@ -36,7 +36,7 @@ const char mytext1[] =  "Pulsar S3       ";
 const char time_msg[] = "00:00:00        ";
 int counterTog = 0;
 
-char cadena[MAX_CHAR];
+char cadena[MAX_CHAR];		//Cadena para almacenar el marco recibido
 
 
 void ToggleTest (void)

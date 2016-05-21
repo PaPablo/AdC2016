@@ -28,11 +28,9 @@ extern volatile unsigned char adc_lcd_update;
 
 /* variables uasdas en la UART */
 extern volatile unsigned char uart_lcd_update;
-//extern volatile unsigned char caracter;
-//extern volatile unsigned char qty;
 
 
-#define MAX_CHAR 10
+#define MAX_CHAR 16
 extern char cadena[MAX_CHAR];
 
 #ifdef USAR_LCD
