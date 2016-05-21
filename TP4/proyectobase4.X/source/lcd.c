@@ -49,7 +49,7 @@ void Init_LCD( void )             // initialize LCD display
 {
 	// 15mS delay after Vdd reaches nnVdc before proceeding with LCD initialization
 	// not always required and is based on system Vdd rise rate
-	Delay(Delay_15mS_Cnt);                  // 15ms delay
+	//Delay(Delay_15mS_Cnt);                  // 15ms delay
 			
 	/* set initial states for the data and control pins */
 	LATE &= 0xFF00;	
@@ -104,27 +104,27 @@ void Init_LCD( void )             // initialize LCD display
   Inputs:        None
   Returns:       None
 -----------------------------------------------------------------------*/
-void Update_Time( void )
+/*void Update_Time( void )
 {
 
-   	/* position LCD cursor at column, row */
+   	//position LCD cursor at column, row
   	home_it();
 	hexdec( hours );
 	lcd_data(tens + 0x30);
 	lcd_data(ones + 0x30);
     
     hexdec( minutes );
-    /* position LCD cursor at column, row */
+    //position LCD cursor at column, row
     cursor_right();
 	lcd_data(tens + 0x30);
 	lcd_data(ones + 0x30);
 	 
   	hexdec( seconds );
-	/* position LCD cursor at column, row */
+	//position LCD cursor at column, row
     cursor_right();
 	lcd_data(tens + 0x30);
 	lcd_data(ones + 0x30);
-}
+}*/
 
 
 void lcd_cmd( char cmd )          // subroutiune for lcd commands

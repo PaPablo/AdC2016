@@ -49,8 +49,8 @@ void config( void )
 #endif // USAR_LCD
         
 	//Variables
-	/* Initialize some general use variables */
-	hours, minutes, seconds = 0;
+	//Initialize some general use variables
+	//hours, minutes, seconds = 0;
 
 	//Inicialización de PORTS I/O
 	/* set LEDs (D3-D10/RA0-RA7) drive state low */

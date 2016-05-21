@@ -82,7 +82,7 @@ int main ( void )
 		{
 			ToggleTest();
 #ifdef USAR_LCD
-		 	Update_Time();	//Refresco la hora
+		 	//Update_Time();	//Refresco la hora
 #endif // USAR_LCD
 		}
 #ifdef USAR_LCD
@@ -114,9 +114,10 @@ int main ( void )
   	  if ( uart_lcd_update ) 
   	  {
 		line_2();
-	  	puts_lcd( (unsigned char*) &cadena[0], sizeof(mytext1) -1 ); 
+	  	puts_lcd( (unsigned char*) &cadena[0], sizeof(cadena) -1 ); 
         //Mostramos el marco por LCD
 	    uart_lcd_update = 0;
+        IEC1bits.U2RXIE = 1;    //Volvemos a recibir datos
 	  }
       
       

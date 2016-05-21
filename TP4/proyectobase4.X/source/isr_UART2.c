@@ -47,14 +47,16 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
     
     if (qty == 0){
         qty = U2RXREG;          //Tomamos el primer caracter enviado, 
-        cantChar = qty;         //que representa la cantidad de caracteres 
+        cantChar = qty - 1 ;         //que representa la cantidad de caracteres 
     }                           //que se van a enviar, pero a este no lo encadenamos
     else{
         cadena[i++] = U2RXREG;       //encadenamos el caracter recibido
         qty--;                       //y decrementamos la cantidad de caracteres
     }
-    if (i == (cantChar - 1)){       //Preguntamos si ya termino de encadenar el msj
-        i = 0;                      //(ya recibimos todo el marco)
+    if (i == cantChar){             /*Preguntamos si ya termino de encadenar el msj
+                                    (ya recibimos todo el marco)*/
+        IEC1bits.U2RXIE = 0;        //Desactivamos interrupciones del receptor
+        i = 0;
 		Delay(6250);        		//Espera de 1 segundo
         IFS1bits.U2TXIF = 1;        //Obligo Tx*/
     }
@@ -80,6 +82,7 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
 	else{
 		uart_lcd_update = 1;	//Recien cuando se envia todo el marco se lo muestra por LCD
 		i = 0;
+        
 	}
 
 }
@@ -111,10 +114,11 @@ void InitUART2(void)
 
 	U2MODEbits.UARTEN = 1;	// And turn the peripheral on
 	U2STAbits.UTXEN = 1;	// Empieza a transmitir. Se dispara el Flag TXIF
-	U2STAbits.UTXISEL = 0; 	// Se genera interrupcion del transmisor cuando se serializa 
-							// y se comienza a enviar un caracter
+    
+	U2STAbits.UTXISEL0 = 0;	// Se genera interrupcion del transmisor cuando se serializa 
+	U2STAbits.UTXISEL1 = 0;	// y se comienza a enviar un caracter
 	U2STAbits.URXISEL = 0;	// Se genera interrupcion del receptor cuando se recibe un caracter
-
+    
 	IFS1bits.U2TXIF = 0;	// Clear the Transmit Interrupt Flag
 	IEC1bits.U2TXIE = 1;	// Enable Transmit Interrupts
     
