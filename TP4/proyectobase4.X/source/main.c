@@ -82,7 +82,7 @@ int main ( void )
 		{
 			ToggleTest();
 #ifdef USAR_LCD
-		 	//Update_Time();	//Refresco la hora
+		 	Update_Time();	//Refresco la hora
 #endif // USAR_LCD
 		}
 #ifdef USAR_LCD

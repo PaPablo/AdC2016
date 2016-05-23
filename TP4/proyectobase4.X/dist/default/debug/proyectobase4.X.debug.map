@@ -86,10 +86,10 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x17a           0x237  (567)
 .const                       0x37a                0x34            0x4e  (78)
-.text                        0x3ae               0x252           0x37b  (891)
-.dinit                       0x600                0x20            0x30  (48)
+.text                        0x3ae               0x296           0x3e1  (993)
+.dinit                       0x644                0x20            0x30  (48)
 
-                 Total program memory used (bytes):          0x630  (1584) <1%
+                 Total program memory used (bytes):          0x696  (1686) <1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -104,10 +104,10 @@ Data Memory  [Origin = 0x800, Length = 0x7800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0             0xe  (14)
-.bss                         0x80e                   0            0x10  (16)
+.nbss                        0x800                   0            0x10  (16)
+.bss                         0x810                   0            0x10  (16)
 
-                 Total data memory used (bytes):           0x1e  (30) <1%
+                 Total data memory used (bytes):           0x20  (32) <1%
 
 
 Dynamic Memory Usage
@@ -115,9 +115,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x81e                              0x77e2  (30690)
+stack                        0x820                              0x77e0  (30688)
 
-                 Maximum dynamic memory (bytes):         0x77e2  (30690)
+                 Maximum dynamic memory (bytes):         0x77e0  (30688)
 
 
 External Symbols in Data Memory (by address):
@@ -129,20 +129,26 @@ External Symbols in Data Memory (by address):
                     0x0806                  _hunds
                     0x0807                  _tens
                     0x0808                  _ones
-                    0x080a                  _temp_count
-                    0x080c                  _counterTog
-                    0x080e                  _cadena
+                    0x0809                  _hours
+                    0x080a                  _minutes
+                    0x080b                  _seconds
+                    0x080c                  _temp_count
+                    0x080e                  _counterTog
+                    0x0810                  _cadena
 
 External Symbols in Data Memory (by name):
 
-                    0x080e                  _cadena
+                    0x0810                  _cadena
                     0x0801                  _cantChar
-                    0x080c                  _counterTog
+                    0x080e                  _counterTog
+                    0x0809                  _hours
                     0x0806                  _hunds
                     0x0804                  _i
+                    0x080a                  _minutes
                     0x0808                  _ones
                     0x0800                  _qty
-                    0x080a                  _temp_count
+                    0x080b                  _seconds
+                    0x080c                  _temp_count
                     0x0807                  _tens
                     0x0802                  _uart_lcd_update
 
@@ -160,26 +166,28 @@ External Symbols in Program Memory (by address):
                   0x00038b                  _mytext1
                   0x00039c                  _time_msg
                   0x0003ae                  _Init_LCD
-                  0x000436                  _lcd_cmd
-                  0x000460                  _lcd_data
-                  0x000490                  _puts_lcd
-                  0x0004b0                  _hexdec
-                  0x0004fe                  _ToggleTest
-                  0x000526                  _main
-                  0x000576                  _config
-                  0x0005c8                  _Delay
-                  0x0005e4                  _Delay_Us
+                  0x000436                  _Update_Time
+                  0x000478                  _lcd_cmd
+                  0x0004a2                  _lcd_data
+                  0x0004d2                  _puts_lcd
+                  0x0004f2                  _hexdec
+                  0x000540                  _ToggleTest
+                  0x000568                  _main
+                  0x0005ba                  _config
+                  0x00060c                  _Delay
+                  0x000628                  _Delay_Us
                   0xf80000                  __FBS.sec
                   0xf80002                  __FSS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0005c8                  _Delay
-                  0x0005e4                  _Delay_Us
+                  0x00060c                  _Delay
+                  0x000628                  _Delay_Us
                   0x00033e                  _InitUART2
                   0x0003ae                  _Init_LCD
-                  0x0004fe                  _ToggleTest
+                  0x000540                  _ToggleTest
+                  0x000436                  _Update_Time
                   0x000376                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
@@ -190,14 +198,14 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000576                  _config
-                  0x0004b0                  _hexdec
-                  0x000436                  _lcd_cmd
-                  0x000460                  _lcd_data
-                  0x000526                  _main
+                  0x0005ba                  _config
+                  0x0004f2                  _hexdec
+                  0x000478                  _lcd_cmd
+                  0x0004a2                  _lcd_data
+                  0x000568                  _main
                   0x00037a                  _mytext
                   0x00038b                  _mytext1
-                  0x000490                  _puts_lcd
+                  0x0004d2                  _puts_lcd
                   0x00039c                  _time_msg
 
 Memory Configuration
@@ -1621,24 +1629,27 @@ __c30_signature
  __c30_signature
                   0x000024          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
 
-.nbss               0x0800          0xe
+.nbss               0x0800         0x10
  .nbss              0x0800          0x6 build/default/debug/source/isr_UART2.o
                     0x0800                  qty
                     0x0801                  cantChar
                     0x0802                  uart_lcd_update
                     0x0804                  i
- .nbss              0x0806          0x4 build/default/debug/source/lcd.o
+ .nbss              0x0806          0x6 build/default/debug/source/lcd.o
                     0x0806                  hunds
                     0x0807                  tens
                     0x0808                  ones
- .nbss              0x080a          0x2 build/default/debug/source/delay.o
-                    0x080a                  temp_count
- .nbss              0x080c          0x2 build/default/debug/source/main.o
-                    0x080c                  counterTog
+                    0x0809                  hours
+                    0x080a                  minutes
+                    0x080b                  seconds
+ .nbss              0x080c          0x2 build/default/debug/source/delay.o
+                    0x080c                  temp_count
+ .nbss              0x080e          0x2 build/default/debug/source/main.o
+                    0x080e                  counterTog
 
-.bss                0x080e         0x10
- .bss               0x080e         0x10 build/default/debug/source/main.o
-                    0x080e                  cadena
+.bss                0x0810         0x10
+ .bss               0x0810         0x10 build/default/debug/source/main.o
+                    0x0810                  cadena
 
 .ivt._U2RXInterrupt
                   0x000050          0x2
@@ -1673,21 +1684,22 @@ __c30_signature
                     0x838b                  mytext1
                     0x839c                  time_msg
 
-.text             0x0003ae        0x252
- .text            0x0003ae        0x150 build/default/debug/source/lcd.o
+.text             0x0003ae        0x296
+ .text            0x0003ae        0x192 build/default/debug/source/lcd.o
                   0x0003ae                  Init_LCD
-                  0x000436                  lcd_cmd
-                  0x000460                  lcd_data
-                  0x000490                  puts_lcd
-                  0x0004b0                  hexdec
- .text            0x0004fe         0x78 build/default/debug/source/main.o
-                  0x0004fe                  ToggleTest
-                  0x000526                  main
- .text            0x000576         0x52 build/default/debug/source/config.o
-                  0x000576                  config
- .text            0x0005c8         0x38 build/default/debug/source/delay.o
-                  0x0005c8                  Delay
-                  0x0005e4                  Delay_Us
+                  0x000436                  Update_Time
+                  0x000478                  lcd_cmd
+                  0x0004a2                  lcd_data
+                  0x0004d2                  puts_lcd
+                  0x0004f2                  hexdec
+ .text            0x000540         0x7a build/default/debug/source/main.o
+                  0x000540                  ToggleTest
+                  0x000568                  main
+ .text            0x0005ba         0x52 build/default/debug/source/config.o
+                  0x0005ba                  config
+ .text            0x00060c         0x38 build/default/debug/source/delay.o
+                  0x00060c                  Delay
+                  0x000628                  Delay_Us
 
-.dinit            0x000600         0x20
- .dinit           0x000600         0x20 data_init
+.dinit            0x000644         0x20
+ .dinit           0x000644         0x20 data_init

@@ -14,7 +14,8 @@
 
 /******	LCD FUNCTION PROTOYPES ******/
 
-void Init_LCD( void );		        // initialize display		
+void Init_LCD( void );		        // initialize display
+void Update_Time( void );
 void lcd_cmd( char cmd );	        // write command to lcd
 void lcd_data( char data );		    // write data to lcd
 void puts_lcd ( unsigned char *data, unsigned char count );

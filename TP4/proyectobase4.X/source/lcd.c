@@ -23,6 +23,10 @@ volatile unsigned char hunds;
 volatile unsigned char tens;
 volatile unsigned char ones;
 
+volatile unsigned char hours;
+volatile unsigned char minutes;
+volatile unsigned char seconds;
+
 // Control signal data pins 
 #define  RW  LATDbits.LATD5       // LCD R/W signal
 #define  RS  LATBbits.LATB15      // LCD RS signal
@@ -104,7 +108,7 @@ void Init_LCD( void )             // initialize LCD display
   Inputs:        None
   Returns:       None
 -----------------------------------------------------------------------*/
-/*void Update_Time( void )
+void Update_Time( void )
 {
 
    	//position LCD cursor at column, row
@@ -124,7 +128,7 @@ void Init_LCD( void )             // initialize LCD display
     cursor_right();
 	lcd_data(tens + 0x30);
 	lcd_data(ones + 0x30);
-}*/
+}
 
 
 void lcd_cmd( char cmd )          // subroutiune for lcd commands

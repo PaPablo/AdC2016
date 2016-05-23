@@ -13,7 +13,7 @@
 
 //Declaraciones
 void config( void );
-void Update_Time( void );
+
 void InitUART2 ( void );
 void Init_ADC( void );
 void Init_Timer4( void );
