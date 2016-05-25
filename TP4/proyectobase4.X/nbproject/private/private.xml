@@ -10,6 +10,8 @@
             <file>file:/C:/Users/Luciano/Documents/GitHub/AdC2016/TP4/proyectobase4.X/source/config.h</file>
             <file>file:/C:/Users/Luciano/Documents/GitHub/AdC2016/TP4/proyectobase4.X/source/main.c</file>
             <file>file:/C:/Users/Luciano/Documents/GitHub/AdC2016/TP4/proyectobase4.X/source/lcd.c</file>
+            <file>file:/C:/Users/Luciano/Documents/GitHub/AdC2016/TP4/proyectobase4.X/source/isr_UART2.c</file>
+            <file>file:/C:/Users/Luciano/Documents/GitHub/AdC2016/TP4/proyectobase4.X/source/delay.c</file>
         </group>
     </open-files>
 </project-private>

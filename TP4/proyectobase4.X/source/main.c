@@ -86,29 +86,6 @@ int main ( void )
 #endif // USAR_LCD
 		}
 #ifdef USAR_LCD
-      /* Hay caracteres del ADC para LCD?
-  	  if ( adc_lcd_update ) 
-  	  {
-       	 //Valores al LCD
-		 home_it();
-		 advolt( temp1 );
-       	 cursor_right();
-       	 cursor_right();
-       	 cursor_right();  
-       	 cursor_right();
-       	 cursor_right();
-       	 cursor_right();  
-       	 cursor_right();
-       	 cursor_right();
-       	 cursor_right();
-       	 cursor_right();
-		 lcd_data( adones );
-       	 cursor_right();
-	  	 lcd_data( adtens );
-	  	 lcd_data( adhunds );
-	     adc_lcd_update = 0;
-        
-	  }*/
 
       /*Hay caracteres de la UART para LCD? */
   	  if ( uart_lcd_update ) 
