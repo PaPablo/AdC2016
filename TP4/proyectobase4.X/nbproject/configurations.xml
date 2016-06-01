@@ -9,6 +9,7 @@
       <itemPath>source/lcd.h</itemPath>
       <itemPath>source/confbits.h</itemPath>
       <itemPath>source/common.h</itemPath>
+      <itemPath>source/p33FJ256GP710.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,6 +23,7 @@
       <itemPath>source/isr_UART2.c</itemPath>
       <itemPath>source/lcd.c</itemPath>
       <itemPath>source/main.c</itemPath>
+      <itemPath>source/isr_timer46.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

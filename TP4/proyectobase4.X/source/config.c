@@ -66,10 +66,17 @@ void config( void )
 	//Init_ADC();
 
 	/* Inicializar Timers necesarios */
-	//Init_Timer4();
+	Init_Timer4();
 
 #ifdef USAR_LCD
 	/* Inicializar LCD Display */
 	Init_LCD();
 #endif // USAR_LCD
+}
+
+void limpiarCad(char* cad){
+    int i;
+    for (i = 0; i < MAX_CHAR; i++){
+        cad[i] = ' ';
+    }
 }

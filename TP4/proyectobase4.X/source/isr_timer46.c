@@ -3,9 +3,9 @@
 #define ValPR4	39062
 #define ValPR6	0
 
-volatile unsigned char hours;
-volatile unsigned char minutes;
-volatile unsigned char seconds;
+extern volatile unsigned char hours;
+extern volatile unsigned char minutes;
+extern volatile unsigned char seconds;
 extern int counterTog;
 
 

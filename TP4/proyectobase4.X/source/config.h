@@ -18,5 +18,6 @@ void InitUART2 ( void );
 void Init_ADC( void );
 void Init_Timer4( void );
 void Init_Timer6( void );
+void limpiarCad(char* cad);
 
 

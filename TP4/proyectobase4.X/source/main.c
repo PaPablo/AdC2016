@@ -69,7 +69,6 @@ int main ( void )
 		;
 
 #ifdef USAR_LCD
-	/* Nuevo mensaje al LCD */
 	home_clr();
 	puts_lcd( (unsigned char*) &time_msg[0], sizeof(time_msg) -1 );
 #endif // USAR_LCD
@@ -94,6 +93,7 @@ int main ( void )
 	  	puts_lcd( (unsigned char*) &cadena[0], sizeof(cadena) -1 ); 
         //Mostramos el marco por LCD
 	    uart_lcd_update = 0;
+        limpiarCad(cadena);
         IEC1bits.U2RXIE = 1;    //Volvemos a recibir datos
 	  }
       

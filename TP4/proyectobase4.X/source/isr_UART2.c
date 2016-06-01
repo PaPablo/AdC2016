@@ -16,6 +16,7 @@
 #include "p33FJ256GP710.h"
 #include "common.h"
 #include "delay.h"
+#include "config.h"
 
 //UART
 #define FCY 40000000
@@ -41,20 +42,26 @@ int i = 0;
 -----------------------------------------------------------------------*/
 //Interrupciones de la UART2
 
+
+
+
 void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
 {
 	IFS1bits.U2RXIF = 0;
     
-    if (qty == 0){
-        qty = U2RXREG;          //Tomamos el primer caracter enviado, 
-        cantChar = qty - 1 ;         //que representa la cantidad de caracteres 
-    }                           //que se van a enviar, pero a este no lo encadenamos
+    if (qty == 0)
+    {
+        limpiarCad(cadena);
+        qty = U2RXREG;               //Tomamos el primer caracter enviado, 
+        cantChar = qty--;         //que representa la cantidad de caracteres 
+        cantChar--;
+    }                                //que se van a enviar, pero a este no lo encadenamos
     else{
         cadena[i++] = U2RXREG;       //encadenamos el caracter recibido
         qty--;                       //y decrementamos la cantidad de caracteres
     }
-    if (i == cantChar){             /*Preguntamos si ya termino de encadenar el msj
-                                    (ya recibimos todo el marco)*/
+    if (i == cantChar){             //Preguntamos si ya termino de encadenar el msj
+                                    //(ya recibimos todo el marco)
         IEC1bits.U2RXIE = 0;        //Desactivamos interrupciones del receptor
         i = 0;
 		Delay(6250);        		//Espera de 1 segundo

@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c
+SOURCEFILES_QUOTED_IF_SPACED=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c source/isr_timer46.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/source/config.o.d ${OBJECTDIR}/source/delay.o.d ${OBJECTDIR}/source/isr_UART2.o.d ${OBJECTDIR}/source/lcd.o.d ${OBJECTDIR}/source/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o ${OBJECTDIR}/source/isr_timer46.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/source/config.o.d ${OBJECTDIR}/source/delay.o.d ${OBJECTDIR}/source/isr_UART2.o.d ${OBJECTDIR}/source/lcd.o.d ${OBJECTDIR}/source/main.o.d ${OBJECTDIR}/source/isr_timer46.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o
+OBJECTFILES=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o ${OBJECTDIR}/source/isr_timer46.o
 
 # Source Files
-SOURCEFILES=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c
+SOURCEFILES=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c source/isr_timer46.c
 
 
 CFLAGS=
@@ -117,6 +117,13 @@ ${OBJECTDIR}/source/main.o: source/main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  source/main.c  -o ${OBJECTDIR}/source/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/source/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/source/isr_timer46.o: source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/source" 
+	@${RM} ${OBJECTDIR}/source/isr_timer46.o.d 
+	@${RM} ${OBJECTDIR}/source/isr_timer46.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_timer46.c  -o ${OBJECTDIR}/source/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_timer46.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/source/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/source/config.o: source/config.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/source" 
@@ -152,6 +159,13 @@ ${OBJECTDIR}/source/main.o: source/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/source/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  source/main.c  -o ${OBJECTDIR}/source/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/main.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/source/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/source/isr_timer46.o: source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/source" 
+	@${RM} ${OBJECTDIR}/source/isr_timer46.o.d 
+	@${RM} ${OBJECTDIR}/source/isr_timer46.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_timer46.c  -o ${OBJECTDIR}/source/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_timer46.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/source/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

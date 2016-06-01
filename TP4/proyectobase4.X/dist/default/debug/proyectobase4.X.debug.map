@@ -20,6 +20,7 @@ Command:
   build/default/debug/source/isr_UART2.o \
   build/default/debug/source/lcd.o \
   build/default/debug/source/main.o \
+  build/default/debug/source/isr_timer46.o \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
   --defsym=__DEBUG=1 \
@@ -84,20 +85,22 @@ Program Memory  [Origin = 0x200, Length = 0x2aa00]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x17a           0x237  (567)
-.const                       0x37a                0x34            0x4e  (78)
-.text                        0x3ae               0x296           0x3e1  (993)
-.dinit                       0x644                0x20            0x30  (48)
+.text                        0x200               0x1fc           0x2fa  (762)
+.const                       0x3fc                0x34            0x4e  (78)
+.text                        0x430               0x2bc           0x41a  (1050)
+.dinit                       0x6ec                0x20            0x30  (48)
 
-                 Total program memory used (bytes):          0x696  (1686) <1%
+                 Total program memory used (bytes):          0x792  (1938) <1%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
+.ivt._T4Interrupt             0x4a                 0x2             0x3  (3)
 .ivt._U2RXInterrupt           0x50                 0x2             0x3  (3)
 .ivt._U2TXInterrupt           0x52                 0x2             0x3  (3)
+.ivt._T6Interrupt             0x72                 0x2             0x3  (3)
 
 
 Data Memory  [Origin = 0x800, Length = 0x7800]
@@ -156,57 +159,67 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init
                   0x00023c                  __data_init_standard
+                  0x00023c                  __data_init
                   0x0002a8                  __U2RXInterrupt
-                  0x000308                  __U2TXInterrupt
-                  0x00033e                  _InitUART2
-                  0x000376                  __DefaultInterrupt
-                  0x00037a                  _mytext
-                  0x00038b                  _mytext1
-                  0x00039c                  _time_msg
-                  0x0003ae                  _Init_LCD
-                  0x000436                  _Update_Time
-                  0x000478                  _lcd_cmd
-                  0x0004a2                  _lcd_data
-                  0x0004d2                  _puts_lcd
-                  0x0004f2                  _hexdec
-                  0x000540                  _ToggleTest
-                  0x000568                  _main
-                  0x0005ba                  _config
-                  0x00060c                  _Delay
-                  0x000628                  _Delay_Us
+                  0x000314                  __U2TXInterrupt
+                  0x00034a                  _InitUART2
+                  0x000382                  __T4Interrupt
+                  0x00039c                  _Init_Timer4
+                  0x0003c0                  __T6Interrupt
+                  0x0003d6                  _Init_Timer6
+                  0x0003f8                  __DefaultInterrupt
+                  0x0003fc                  _mytext
+                  0x00040d                  _mytext1
+                  0x00041e                  _time_msg
+                  0x000430                  _Init_LCD
+                  0x0004b8                  _Update_Time
+                  0x0004fa                  _lcd_cmd
+                  0x000524                  _lcd_data
+                  0x000554                  _puts_lcd
+                  0x000574                  _hexdec
+                  0x0005c2                  _ToggleTest
+                  0x0005ea                  _main
+                  0x000640                  _config
+                  0x000694                  _limpiarCad
+                  0x0006b4                  _Delay
+                  0x0006d0                  _Delay_Us
                   0xf80000                  __FBS.sec
                   0xf80002                  __FSS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x00060c                  _Delay
-                  0x000628                  _Delay_Us
-                  0x00033e                  _InitUART2
-                  0x0003ae                  _Init_LCD
-                  0x000540                  _ToggleTest
-                  0x000436                  _Update_Time
-                  0x000376                  __DefaultInterrupt
+                  0x0006b4                  _Delay
+                  0x0006d0                  _Delay_Us
+                  0x00034a                  _InitUART2
+                  0x000430                  _Init_LCD
+                  0x00039c                  _Init_Timer4
+                  0x0003d6                  _Init_Timer6
+                  0x0005c2                  _ToggleTest
+                  0x0004b8                  _Update_Time
+                  0x0003f8                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
                   0xf80002                  __FSS.sec
+                  0x000382                  __T4Interrupt
+                  0x0003c0                  __T6Interrupt
                   0x0002a8                  __U2RXInterrupt
-                  0x000308                  __U2TXInterrupt
+                  0x000314                  __U2TXInterrupt
                   0x00023c                  __data_init
                   0x00023c                  __data_init_standard
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0005ba                  _config
-                  0x0004f2                  _hexdec
-                  0x000478                  _lcd_cmd
-                  0x0004a2                  _lcd_data
-                  0x000568                  _main
-                  0x00037a                  _mytext
-                  0x00038b                  _mytext1
-                  0x0004d2                  _puts_lcd
-                  0x00039c                  _time_msg
+                  0x000640                  _config
+                  0x000574                  _hexdec
+                  0x0004fa                  _lcd_cmd
+                  0x000524                  _lcd_data
+                  0x000694                  _limpiarCad
+                  0x0005ea                  _main
+                  0x0003fc                  _mytext
+                  0x00040d                  _mytext1
+                  0x000554                  _puts_lcd
+                  0x00041e                  _time_msg
 
 Memory Configuration
 
@@ -238,6 +251,7 @@ LOAD build/default/debug/source/delay.o
 LOAD build/default/debug/source/isr_UART2.o
 LOAD build/default/debug/source/lcd.o
 LOAD build/default/debug/source/main.o
+LOAD build/default/debug/source/isr_timer46.o
                     0x0001                  __MPLAB_BUILD = 0x1
                     0x0001                  __MPLAB_DEBUG = 0x1
                     0x0001                  __DEBUG = 0x1
@@ -272,7 +286,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libfx-coff.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x17a
+.text             0x000200        0x1fc
  *(.init)
  .init            0x000200         0x3c c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
                   0x000200                  _resetPRI
@@ -284,12 +298,17 @@ LOAD c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libfx-coff.a
  *(.user_init)
  *(.handle)
  *(.isr*)
- .isr.text        0x0002a8         0xce build/default/debug/source/isr_UART2.o
+ .isr.text        0x0002a8         0xda build/default/debug/source/isr_UART2.o
                   0x0002a8                  _U2RXInterrupt
-                  0x000308                  _U2TXInterrupt
-                  0x00033e                  InitUART2
- .isr             0x000376          0x4 default_isr
-                  0x000376                  _DefaultInterrupt
+                  0x000314                  _U2TXInterrupt
+                  0x00034a                  InitUART2
+ .isr.text        0x000382         0x76 build/default/debug/source/isr_timer46.o
+                  0x000382                  _T4Interrupt
+                  0x00039c                  Init_Timer4
+                  0x0003c0                  _T6Interrupt
+                  0x0003d6                  Init_Timer6
+ .isr             0x0003f8          0x4 default_isr
+                  0x0003f8                  _DefaultInterrupt
  *(.libc)
  *(.libm)
  *(.libdsp)
@@ -1613,7 +1632,7 @@ LOAD data_init
 LOAD default_isr
 
 __c30_signature
-                  0x000000         0x2a
+                  0x000000         0x30
  __c30_signature
                   0x000000          0x6 build/default/debug/source/config.o
  __c30_signature
@@ -1625,9 +1644,11 @@ __c30_signature
  __c30_signature
                   0x000018          0x6 build/default/debug/source/main.o
  __c30_signature
-                  0x00001e          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
+                  0x00001e          0x6 build/default/debug/source/isr_timer46.o
  __c30_signature
-                  0x000024          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
+                  0x000024          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
+ __c30_signature
+                  0x00002a          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
 
 .nbss               0x0800         0x10
  .nbss              0x0800          0x6 build/default/debug/source/isr_UART2.o
@@ -1678,28 +1699,39 @@ __c30_signature
 .config_IESO      0xf80006          0x2
  .config_IESO     0xf80006          0x2 build/default/debug/source/main.o
 
-.const              0x837a         0x34 load address 0x00037a  
- .const             0x837a         0x34 build/default/debug/source/main.o
-                    0x837a                  mytext
-                    0x838b                  mytext1
-                    0x839c                  time_msg
+.ivt._T4Interrupt
+                  0x00004a          0x2
+ .ivt._T4Interrupt
+                  0x00004a          0x2 build/default/debug/source/isr_timer46.o
 
-.text             0x0003ae        0x296
- .text            0x0003ae        0x192 build/default/debug/source/lcd.o
-                  0x0003ae                  Init_LCD
-                  0x000436                  Update_Time
-                  0x000478                  lcd_cmd
-                  0x0004a2                  lcd_data
-                  0x0004d2                  puts_lcd
-                  0x0004f2                  hexdec
- .text            0x000540         0x7a build/default/debug/source/main.o
-                  0x000540                  ToggleTest
-                  0x000568                  main
- .text            0x0005ba         0x52 build/default/debug/source/config.o
-                  0x0005ba                  config
- .text            0x00060c         0x38 build/default/debug/source/delay.o
-                  0x00060c                  Delay
-                  0x000628                  Delay_Us
+.ivt._T6Interrupt
+                  0x000072          0x2
+ .ivt._T6Interrupt
+                  0x000072          0x2 build/default/debug/source/isr_timer46.o
 
-.dinit            0x000644         0x20
- .dinit           0x000644         0x20 data_init
+.const              0x83fc         0x34 load address 0x0003fc  
+ .const             0x83fc         0x34 build/default/debug/source/main.o
+                    0x83fc                  mytext
+                    0x840d                  mytext1
+                    0x841e                  time_msg
+
+.text             0x000430        0x2bc
+ .text            0x000430        0x192 build/default/debug/source/lcd.o
+                  0x000430                  Init_LCD
+                  0x0004b8                  Update_Time
+                  0x0004fa                  lcd_cmd
+                  0x000524                  lcd_data
+                  0x000554                  puts_lcd
+                  0x000574                  hexdec
+ .text            0x0005c2         0x7e build/default/debug/source/main.o
+                  0x0005c2                  ToggleTest
+                  0x0005ea                  main
+ .text            0x000640         0x74 build/default/debug/source/config.o
+                  0x000640                  config
+                  0x000694                  limpiarCad
+ .text            0x0006b4         0x38 build/default/debug/source/delay.o
+                  0x0006b4                  Delay
+                  0x0006d0                  Delay_Us
+
+.dinit            0x0006ec         0x20
+ .dinit           0x0006ec         0x20 data_init
