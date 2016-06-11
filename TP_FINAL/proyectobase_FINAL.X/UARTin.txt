@@ -1,0 +1,5 @@
+// wait for 0 seconds, then packet "abc"
+wait 0 sec
+FE 08 02 03 00 41 12 23 45 54 66
+
+
