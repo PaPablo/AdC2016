@@ -56,9 +56,14 @@
 #define MAX_TX 256
 
 
+typedef struct{
+    unsigned char   h;
+    unsigned char   m;
+    unsigned char   s;
+}HORARIO;
 
 typedef struct{
-    unsigned char    hora[8];
+    HORARIO          hora;
     unsigned char    vel;
     unsigned char    ejes;
 }VEHICULOS;

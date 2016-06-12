@@ -14,11 +14,11 @@ void actualizoReloj(void);
 
 void accionarCamara(void);
 
-void conseguirTimeStamp(unsigned char* ts);
+void conseguirTimeStamp(HORARIO* ts);
 
-void logearVehi(unsigned char* ts, int vel, int ejes);
+void logearVehi(HORARIO ts, int vel, int ejes);
 
-void actualizarInfo(unsigned char* ts, int vel, int ejes);
+void actualizarInfo(HORARIO ts, int vel, int ejes);
 
 void chequearVelocidad (int vel);
 

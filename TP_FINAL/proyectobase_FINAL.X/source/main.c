@@ -65,7 +65,7 @@ int main ( void )
     
     int ejes;
     int velocidad;
-    unsigned char timeStamp[8];
+    HORARIO timeStamp;
     
     unsigned int ultSec = 0;
     
@@ -104,7 +104,7 @@ int main ( void )
 
   	  if( PORTDbits.RD13 ) 
   	  {
-        conseguirTimeStamp(timeStamp);
+        conseguirTimeStamp(&timeStamp);
         cantVehi++;
         while(!PORTDbits.RD6);  //primer sensor
         T4CONbits.TON = 1;

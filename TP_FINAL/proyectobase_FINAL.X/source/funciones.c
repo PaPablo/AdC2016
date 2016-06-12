@@ -34,7 +34,7 @@ int hayVehiculos(char hora, int* pos){
     int salgo = 0;
     char horaReg;
     while((dataLogger[i++].ejes > 0) && (salgo == 0)){
-        horaReg = ((dataLogger[i].hora[0] * 10) + dataLogger[i].hora[1]);
+        horaReg = (dataLogger[i].hora.h);
         if (horaReg == hora){
             salgo = 1;
             *pos = i;
@@ -49,11 +49,11 @@ void listarVehiculos(int hora, int pos, int* i){
     int salgo = 0;
     char horaReg;
     while(!salgo){
-        horaReg = ((dataLogger[pos].hora[0] * 10) + dataLogger[pos].hora[1]);
+        horaReg = (dataLogger[pos].hora.h);
         if (horaReg == hora){
-            aEnviar[*i++] = horaReg;                                                     //Hora
-            aEnviar[*i++] = ((dataLogger[pos].hora[3] * 10) + dataLogger[pos].hora[4]);  //Minutos
-            aEnviar[*i++] = ((dataLogger[pos].hora[6] * 10) + dataLogger[pos].hora[7]);  //Segundos
+            aEnviar[*i++] = horaReg;                   //Hora
+            aEnviar[*i++] = (dataLogger[pos].hora.m);  //Minutos
+            aEnviar[*i++] = (dataLogger[pos].hora.s);  //Segundos
             aEnviar[*i++] = dataLogger[pos].vel;
             aEnviar[*i] = dataLogger[pos].ejes;
         }
@@ -194,26 +194,23 @@ void accionarCamara(void){
 }
 
 
-void conseguirTimeStamp(unsigned char* ts){
-    int i;
-    for(i = 0; i <= 8; i++){
-        ts[i] = linea_1[i];
-    }
+void conseguirTimeStamp(HORARIO* ts){
+    (*ts).h = linea_1[0]*10 + linea_1[1];
+    (*ts).m = linea_1[3]*10 + linea_1[4]; //en las posiciones 2 y 5 estan los ':'
+    (*ts).s = linea_1[6]*10 + linea_1[7];
 }
 
 
-void logearVehi(unsigned char* ts, int vel, int ejes){
-    int i;
-    for(i = 0; i < 8; i++){
-        dataLogger[iData].hora[i] = ts[i]; 
-    }
+void logearVehi(HORARIO ts, int vel, int ejes){
+    
+    dataLogger[iData].hora = ts; 
     dataLogger[iData].vel = vel;
     dataLogger[iData].ejes = ejes;
     iData++;
 }
 
 
-void actualizarInfo(unsigned char* ts, int vel, int ejes){
+void actualizarInfo(HORARIO ts, int vel, int ejes){
     linea_1[12] = (cantVehi / 1000);
     linea_1[13] = ((cantVehi & 1000) / 100);
     linea_1[14] = (((cantVehi & 1000) & 100) / 10);
@@ -227,11 +224,14 @@ void actualizarInfo(unsigned char* ts, int vel, int ejes){
     linea_2[5] = ' ';
     linea_2[6] = ejes;
     linea_2[7] = ' ';
-    int i;
-    int j = 0;
-    for(i = 8; i < 16; i++){
-        linea_2[i] = ts[j++];
-    }
+    linea_2[8] = (ts.h) / 10;
+    linea_2[9] = (ts.h) & 10;
+    linea_2[10] = ':'; 
+    linea_2[11] = (ts.m) / 10;
+    linea_2[12] = (ts.m) & 10;
+    linea_2[13] = ':';
+    linea_2[14] = (ts.s) / 10;
+    linea_2[15] = (ts.s) & 10;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/

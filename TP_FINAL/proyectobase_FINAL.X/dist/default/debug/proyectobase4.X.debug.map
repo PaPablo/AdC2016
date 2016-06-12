@@ -112,11 +112,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x482           0x6c3  (1731)
 .const                       0x682                0x22            0x33  (51)
-.text                        0x6a4               0xbcc          0x11b2  (4530)
-.dinit                      0x1270                0x48            0x6c  (108)
-.text                       0x12b8                0x38            0x54  (84)
+.text                        0x6a4               0xbd0          0x11b8  (4536)
+.dinit                      0x1274                0x48            0x6c  (108)
+.text                       0x12bc                0x38            0x54  (84)
 
-                 Total program memory used (bytes):         0x1968  (6504) 2%
+                 Total program memory used (bytes):         0x196e  (6510) 2%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -134,10 +134,10 @@ Data Memory  [Origin = 0x800, Length = 0x7800]
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
 .nbss                        0x800                   0            0x18  (24)
-.bss                         0x818                   0          0x281a  (10266)
-.data                       0x3032                   0            0x20  (32)
+.bss                         0x818                   0          0x1492  (5266)
+.data                       0x1caa                   0            0x20  (32)
 
-                 Total data memory used (bytes):         0x2852  (10322) 33%
+                 Total data memory used (bytes):         0x14ca  (5322) 17%
 
 
 Dynamic Memory Usage
@@ -145,9 +145,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                       0x3052                              0x4fae  (20398)
+stack                       0x1cca                              0x6336  (25398)
 
-                 Maximum dynamic memory (bytes):         0x4fae  (20398)
+                 Maximum dynamic memory (bytes):         0x6336  (25398)
 
 
 External Symbols in Data Memory (by address):
@@ -168,14 +168,14 @@ External Symbols in Data Memory (by address):
                     0x0814                  _seg
                     0x0816                  _temp_count
                     0x0818                  _dataLogger
-                    0x2f28                  _recibido
-                    0x2f31                  _aEnviar
-                    0x3032                  _linea_1
-                    0x3042                  _linea_2
+                    0x1ba0                  _recibido
+                    0x1ba9                  _aEnviar
+                    0x1caa                  _linea_1
+                    0x1cba                  _linea_2
 
 External Symbols in Data Memory (by name):
 
-                    0x2f31                  _aEnviar
+                    0x1ba9                  _aEnviar
                     0x080e                  _cantVehi
                     0x0812                  _cont_tmr4
                     0x0818                  _dataLogger
@@ -184,13 +184,13 @@ External Symbols in Data Memory (by name):
                     0x0810                  _iData
                     0x0802                  _iRx
                     0x0804                  _iTx
-                    0x3032                  _linea_1
-                    0x3042                  _linea_2
+                    0x1caa                  _linea_1
+                    0x1cba                  _linea_2
                     0x080c                  _minutes
                     0x080a                  _ones
                     0x0800                  _paqueteRecibido
                     0x0806                  _qty
-                    0x2f28                  _recibido
+                    0x1ba0                  _recibido
                     0x080d                  _seconds
                     0x0814                  _seg
                     0x0816                  _temp_count
@@ -227,15 +227,15 @@ External Symbols in Program Memory (by address):
                   0x000693                  _mytext1
                   0x0006a4                  _obtenerVehisGrades
                   0x0006e6                  _hayVehiculos
-                  0x000756                  _listarVehiculos
-                  0x000846                  _PaqueteA
-                  0x0008cc                  _PaqueteC
-                  0x000952                  _PaqueteD
-                  0x000a00                  _actualizoReloj
-                  0x000acc                  _accionarCamara
-                  0x000ada                  _conseguirTimeStamp
-                  0x000afe                  _logearVehi
-                  0x000b58                  _actualizarInfo
+                  0x000742                  _listarVehiculos
+                  0x0007f4                  _PaqueteA
+                  0x00087a                  _PaqueteC
+                  0x000900                  _PaqueteD
+                  0x0009ae                  _actualizoReloj
+                  0x000a7a                  _accionarCamara
+                  0x000a88                  _conseguirTimeStamp
+                  0x000acc                  _logearVehi
+                  0x000b22                  _actualizarInfo
                   0x000c26                  _chequearVelocidad
                   0x000c38                  _CalcVel
                   0x000c60                  _checkDST
@@ -255,10 +255,10 @@ External Symbols in Program Memory (by address):
                   0x0010a8                  _hexdec
                   0x0010f6                  _ToggleTest
                   0x00111c                  _main
-                  0x0011de                  _InitUART2
-                  0x001216                  _config
-                  0x0012b8                  _Delay
-                  0x0012d4                  _Delay_Us
+                  0x0011e2                  _InitUART2
+                  0x00121a                  _config
+                  0x0012bc                  _Delay
+                  0x0012d8                  _Delay_Us
                   0xf80000                  __FBS.sec
                   0xf80002                  __FSS.sec
                   0xf80004                  __FGS.sec
@@ -266,15 +266,15 @@ External Symbols in Program Memory (by address):
 External Symbols in Program Memory (by name):
 
                   0x000c38                  _CalcVel
-                  0x0012b8                  _Delay
-                  0x0012d4                  _Delay_Us
-                  0x0011de                  _InitUART2
+                  0x0012bc                  _Delay
+                  0x0012d8                  _Delay_Us
+                  0x0011e2                  _InitUART2
                   0x000f64                  _Init_LCD
                   0x000386                  _Init_Timer4
                   0x0003c4                  _Init_Timer6
-                  0x000846                  _PaqueteA
-                  0x0008cc                  _PaqueteC
-                  0x000952                  _PaqueteD
+                  0x0007f4                  _PaqueteA
+                  0x00087a                  _PaqueteC
+                  0x000900                  _PaqueteD
                   0x0010f6                  _ToggleTest
                   0x000fec                  _Update_Time
                   0x0003e8                  __DefaultInterrupt
@@ -303,17 +303,17 @@ External Symbols in Program Memory (by name):
                   0x00057e                  __funpack2
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000acc                  _accionarCamara
-                  0x000b58                  _actualizarInfo
-                  0x000a00                  _actualizoReloj
+                  0x000a7a                  _accionarCamara
+                  0x000b22                  _actualizarInfo
+                  0x0009ae                  _actualizoReloj
                   0x000f04                  _armarRespuesta
                   0x000d08                  _checkBCC
                   0x000c9e                  _checkCMD
                   0x000c60                  _checkDST
                   0x000c72                  _checkSEC
                   0x000c26                  _chequearVelocidad
-                  0x001216                  _config
-                  0x000ada                  _conseguirTimeStamp
+                  0x00121a                  _config
+                  0x000a88                  _conseguirTimeStamp
                   0x000e8a                  _envioACK
                   0x000e10                  _envioNACK
                   0x0006e6                  _hayVehiculos
@@ -321,8 +321,8 @@ External Symbols in Program Memory (by name):
                   0x00102e                  _lcd_cmd
                   0x001058                  _lcd_data
                   0x000dec                  _limpiarPaquete
-                  0x000756                  _listarVehiculos
-                  0x000afe                  _logearVehi
+                  0x000742                  _listarVehiculos
+                  0x000acc                  _logearVehi
                   0x00111c                  _main
                   0x000682                  _mytext
                   0x000693                  _mytext1
@@ -1833,17 +1833,17 @@ __c30_signature
  .nbss              0x0816          0x2 build/default/debug/source/delay.o
                     0x0816                  temp_count
 
-.bss                0x0818       0x281a
- .bss               0x0818       0x2710 build/default/debug/source/main.o
+.bss                0x0818       0x1492
+ .bss               0x0818       0x1388 build/default/debug/source/main.o
                     0x0818                  dataLogger
- .bss               0x2f28        0x10a build/default/debug/source/isr_UART2.o
-                    0x2f28                  recibido
-                    0x2f31                  aEnviar
+ .bss               0x1ba0        0x10a build/default/debug/source/isr_UART2.o
+                    0x1ba0                  recibido
+                    0x1ba9                  aEnviar
 
-.data               0x3032         0x20
- .data              0x3032         0x20 build/default/debug/source/main.o
-                    0x3032                  linea_1
-                    0x3042                  linea_2
+.data               0x1caa         0x20
+ .data              0x1caa         0x20 build/default/debug/source/main.o
+                    0x1caa                  linea_1
+                    0x1cba                  linea_2
 
 .ivt._U2RXInterrupt
                   0x000050          0x2
@@ -1887,19 +1887,19 @@ __c30_signature
                     0x8682                  mytext
                     0x8693                  mytext1
 
-.text             0x0006a4        0xbcc
+.text             0x0006a4        0xbd0
  .text            0x0006a4        0x8c0 build/default/debug/source/funciones.o
                   0x0006a4                  obtenerVehisGrades
                   0x0006e6                  hayVehiculos
-                  0x000756                  listarVehiculos
-                  0x000846                  PaqueteA
-                  0x0008cc                  PaqueteC
-                  0x000952                  PaqueteD
-                  0x000a00                  actualizoReloj
-                  0x000acc                  accionarCamara
-                  0x000ada                  conseguirTimeStamp
-                  0x000afe                  logearVehi
-                  0x000b58                  actualizarInfo
+                  0x000742                  listarVehiculos
+                  0x0007f4                  PaqueteA
+                  0x00087a                  PaqueteC
+                  0x000900                  PaqueteD
+                  0x0009ae                  actualizoReloj
+                  0x000a7a                  accionarCamara
+                  0x000a88                  conseguirTimeStamp
+                  0x000acc                  logearVehi
+                  0x000b22                  actualizarInfo
                   0x000c26                  chequearVelocidad
                   0x000c38                  CalcVel
                   0x000c60                  checkDST
@@ -1918,17 +1918,17 @@ __c30_signature
                   0x001058                  lcd_data
                   0x001088                  puts_lcd
                   0x0010a8                  hexdec
- .text            0x0010f6         0xe8 build/default/debug/source/main.o
+ .text            0x0010f6         0xec build/default/debug/source/main.o
                   0x0010f6                  ToggleTest
                   0x00111c                  main
- .text            0x0011de         0x92 build/default/debug/source/config.o
-                  0x0011de                  InitUART2
-                  0x001216                  config
+ .text            0x0011e2         0x92 build/default/debug/source/config.o
+                  0x0011e2                  InitUART2
+                  0x00121a                  config
 
-.dinit            0x001270         0x48
- .dinit           0x001270         0x48 data_init
+.dinit            0x001274         0x48
+ .dinit           0x001274         0x48 data_init
 
-.text             0x0012b8         0x38
- .text            0x0012b8         0x38 build/default/debug/source/delay.o
-                  0x0012b8                  Delay
-                  0x0012d4                  Delay_Us
+.text             0x0012bc         0x38
+ .text            0x0012bc         0x38 build/default/debug/source/delay.o
+                  0x0012bc                  Delay
+                  0x0012d8                  Delay_Us
