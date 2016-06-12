@@ -57,6 +57,30 @@ c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(cr
                               (_resetPRI)
 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
                               c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o) (_data_init_standard)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsi3.o)
+                              build/default/debug/source/funciones.o (__divsi3)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatsisf.o)
+                              build/default/debug/source/funciones.o (__floatsisf)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o)
+                              build/default/debug/source/funciones.o (__divsf3)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(mulsf3.o)
+                              build/default/debug/source/funciones.o (__mulsf3)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fixsfsi.o)
+                              build/default/debug/source/funciones.o (__fixsfsi)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(udivsi3.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsi3.o) (__udivsi3)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatdisf.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatsisf.o) (__floatdisf)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack2.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o) (_funpack2)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(futil.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o) (_fPropagateNaN)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fpack.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o) (_fpack)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fixsfsi.o) (_funpack)
+c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatundisf.o)
+                              c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatdisf.o) (__floatundisf)
 
 
 Selected CodeGuard Options:
@@ -86,12 +110,13 @@ Program Memory  [Origin = 0x200, Length = 0x2aa00]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x1e0           0x2d0  (720)
-.const                       0x3e0                0x34            0x4e  (78)
-.text                        0x414               0x49a           0x6e7  (1767)
-.dinit                       0x8ae                0x20            0x30  (48)
+.text                        0x200               0x482           0x6c3  (1731)
+.const                       0x682                0x22            0x33  (51)
+.text                        0x6a4               0xbcc          0x11b2  (4530)
+.dinit                      0x1270                0x48            0x6c  (108)
+.text                       0x12b8                0x38            0x54  (84)
 
-                 Total program memory used (bytes):          0xa35  (2613) <1%
+                 Total program memory used (bytes):         0x1968  (6504) 2%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -108,10 +133,11 @@ Data Memory  [Origin = 0x800, Length = 0x7800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0            0x14  (20)
-.bss                         0x814                   0           0x10a  (266)
+.nbss                        0x800                   0            0x18  (24)
+.bss                         0x818                   0          0x281a  (10266)
+.data                       0x3032                   0            0x20  (32)
 
-                 Total data memory used (bytes):          0x11e  (286) <1%
+                 Total data memory used (bytes):         0x2852  (10322) 33%
 
 
 Dynamic Memory Usage
@@ -119,9 +145,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0x91e                              0x76e2  (30434)
+stack                       0x3052                              0x4fae  (20398)
 
-                 Maximum dynamic memory (bytes):         0x76e2  (30434)
+                 Maximum dynamic memory (bytes):         0x4fae  (20398)
 
 
 External Symbols in Data Memory (by address):
@@ -136,105 +162,173 @@ External Symbols in Data Memory (by address):
                     0x080b                  _hours
                     0x080c                  _minutes
                     0x080d                  _seconds
-                    0x080e                  _ejes
-                    0x0810                  _ultSec
-                    0x0812                  _temp_count
-                    0x0814                  _recibido
-                    0x081d                  _aEnviar
+                    0x080e                  _cantVehi
+                    0x0810                  _iData
+                    0x0812                  _cont_tmr4
+                    0x0814                  _seg
+                    0x0816                  _temp_count
+                    0x0818                  _dataLogger
+                    0x2f28                  _recibido
+                    0x2f31                  _aEnviar
+                    0x3032                  _linea_1
+                    0x3042                  _linea_2
 
 External Symbols in Data Memory (by name):
 
-                    0x081d                  _aEnviar
-                    0x080e                  _ejes
+                    0x2f31                  _aEnviar
+                    0x080e                  _cantVehi
+                    0x0812                  _cont_tmr4
+                    0x0818                  _dataLogger
                     0x080b                  _hours
                     0x0808                  _hunds
+                    0x0810                  _iData
                     0x0802                  _iRx
                     0x0804                  _iTx
+                    0x3032                  _linea_1
+                    0x3042                  _linea_2
                     0x080c                  _minutes
                     0x080a                  _ones
                     0x0800                  _paqueteRecibido
                     0x0806                  _qty
-                    0x0814                  _recibido
+                    0x2f28                  _recibido
                     0x080d                  _seconds
-                    0x0812                  _temp_count
+                    0x0814                  _seg
+                    0x0816                  _temp_count
                     0x0809                  _tens
-                    0x0810                  _ultSec
 
 External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init_standard
                   0x00023c                  __data_init
+                  0x00023c                  __data_init_standard
                   0x0002a8                  __U2RXInterrupt
                   0x000316                  __U2TXInterrupt
                   0x00036c                  __T4Interrupt
-                  0x000380                  _Init_Timer4
-                  0x0003a4                  __T6Interrupt
-                  0x0003b8                  _Init_Timer6
-                  0x0003dc                  __DefaultInterrupt
-                  0x0003e0                  _mytext
-                  0x0003f1                  _mytext1
-                  0x000402                  _time_msg
-                  0x000414                  _checkDST
-                  0x000426                  _checkSEC
-                  0x000452                  _checkCMD
-                  0x0004a8                  _checkBCC
-                  0x000564                  _limpiarPaquete
-                  0x000588                  _paqueteCorrecto
-                  0x0005b0                  _Init_LCD
-                  0x000638                  _Update_Time
-                  0x00067a                  _lcd_cmd
-                  0x0006a4                  _lcd_data
-                  0x0006d4                  _puts_lcd
-                  0x0006f4                  _hexdec
-                  0x000742                  _ToggleTest
-                  0x000768                  _main
-                  0x0007ea                  _InitUART2
-                  0x000822                  _config
-                  0x000876                  _Delay
-                  0x000892                  _Delay_Us
+                  0x000386                  _Init_Timer4
+                  0x0003aa                  __T6Interrupt
+                  0x0003c4                  _Init_Timer6
+                  0x0003e8                  __DefaultInterrupt
+                  0x0003ec                  ___divsi3
+                  0x00040a                  ___floatsisf
+                  0x000410                  ___divsf3
+                  0x000494                  ___mulsf3
+                  0x0004fc                  ___fixsfsi
+                  0x00053e                  ___udivsi3
+                  0x00055e                  ___floatdisf
+                  0x00057e                  __funpack2
+                  0x00058e                  __fPropagateNaN
+                  0x0005a0                  __fbopExit
+                  0x0005a8                  __fbopReturnNaN
+                  0x0005ae                  __fpack
+                  0x0005fa                  __funpack
+                  0x000624                  ___floatundisf
+                  0x000682                  _mytext
+                  0x000693                  _mytext1
+                  0x0006a4                  _obtenerVehisGrades
+                  0x0006e6                  _hayVehiculos
+                  0x000756                  _listarVehiculos
+                  0x000846                  _PaqueteA
+                  0x0008cc                  _PaqueteC
+                  0x000952                  _PaqueteD
+                  0x000a00                  _actualizoReloj
+                  0x000acc                  _accionarCamara
+                  0x000ada                  _conseguirTimeStamp
+                  0x000afe                  _logearVehi
+                  0x000b58                  _actualizarInfo
+                  0x000c26                  _chequearVelocidad
+                  0x000c38                  _CalcVel
+                  0x000c60                  _checkDST
+                  0x000c72                  _checkSEC
+                  0x000c9e                  _checkCMD
+                  0x000d08                  _checkBCC
+                  0x000dc4                  _paqueteCorrecto
+                  0x000dec                  _limpiarPaquete
+                  0x000e10                  _envioNACK
+                  0x000e8a                  _envioACK
+                  0x000f04                  _armarRespuesta
+                  0x000f64                  _Init_LCD
+                  0x000fec                  _Update_Time
+                  0x00102e                  _lcd_cmd
+                  0x001058                  _lcd_data
+                  0x001088                  _puts_lcd
+                  0x0010a8                  _hexdec
+                  0x0010f6                  _ToggleTest
+                  0x00111c                  _main
+                  0x0011de                  _InitUART2
+                  0x001216                  _config
+                  0x0012b8                  _Delay
+                  0x0012d4                  _Delay_Us
                   0xf80000                  __FBS.sec
                   0xf80002                  __FSS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x000876                  _Delay
-                  0x000892                  _Delay_Us
-                  0x0007ea                  _InitUART2
-                  0x0005b0                  _Init_LCD
-                  0x000380                  _Init_Timer4
-                  0x0003b8                  _Init_Timer6
-                  0x000742                  _ToggleTest
-                  0x000638                  _Update_Time
-                  0x0003dc                  __DefaultInterrupt
+                  0x000c38                  _CalcVel
+                  0x0012b8                  _Delay
+                  0x0012d4                  _Delay_Us
+                  0x0011de                  _InitUART2
+                  0x000f64                  _Init_LCD
+                  0x000386                  _Init_Timer4
+                  0x0003c4                  _Init_Timer6
+                  0x000846                  _PaqueteA
+                  0x0008cc                  _PaqueteC
+                  0x000952                  _PaqueteD
+                  0x0010f6                  _ToggleTest
+                  0x000fec                  _Update_Time
+                  0x0003e8                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
                   0xf80002                  __FSS.sec
                   0x00036c                  __T4Interrupt
-                  0x0003a4                  __T6Interrupt
+                  0x0003aa                  __T6Interrupt
                   0x0002a8                  __U2RXInterrupt
                   0x000316                  __U2TXInterrupt
+                  0x000410                  ___divsf3
+                  0x0003ec                  ___divsi3
+                  0x0004fc                  ___fixsfsi
+                  0x00055e                  ___floatdisf
+                  0x00040a                  ___floatsisf
+                  0x000624                  ___floatundisf
+                  0x000494                  ___mulsf3
+                  0x00053e                  ___udivsi3
                   0x00023c                  __data_init
                   0x00023c                  __data_init_standard
+                  0x00058e                  __fPropagateNaN
+                  0x0005a0                  __fbopExit
+                  0x0005a8                  __fbopReturnNaN
+                  0x0005ae                  __fpack
+                  0x0005fa                  __funpack
+                  0x00057e                  __funpack2
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0004a8                  _checkBCC
-                  0x000452                  _checkCMD
-                  0x000414                  _checkDST
-                  0x000426                  _checkSEC
-                  0x000822                  _config
-                  0x0006f4                  _hexdec
-                  0x00067a                  _lcd_cmd
-                  0x0006a4                  _lcd_data
-                  0x000564                  _limpiarPaquete
-                  0x000768                  _main
-                  0x0003e0                  _mytext
-                  0x0003f1                  _mytext1
-                  0x000588                  _paqueteCorrecto
-                  0x0006d4                  _puts_lcd
-                  0x000402                  _time_msg
+                  0x000acc                  _accionarCamara
+                  0x000b58                  _actualizarInfo
+                  0x000a00                  _actualizoReloj
+                  0x000f04                  _armarRespuesta
+                  0x000d08                  _checkBCC
+                  0x000c9e                  _checkCMD
+                  0x000c60                  _checkDST
+                  0x000c72                  _checkSEC
+                  0x000c26                  _chequearVelocidad
+                  0x001216                  _config
+                  0x000ada                  _conseguirTimeStamp
+                  0x000e8a                  _envioACK
+                  0x000e10                  _envioNACK
+                  0x0006e6                  _hayVehiculos
+                  0x0010a8                  _hexdec
+                  0x00102e                  _lcd_cmd
+                  0x001058                  _lcd_data
+                  0x000dec                  _limpiarPaquete
+                  0x000756                  _listarVehiculos
+                  0x000afe                  _logearVehi
+                  0x00111c                  _main
+                  0x000682                  _mytext
+                  0x000693                  _mytext1
+                  0x0006a4                  _obtenerVehisGrades
+                  0x000dc4                  _paqueteCorrecto
+                  0x001088                  _puts_lcd
 
 Memory Configuration
 
@@ -302,7 +396,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libfx-coff.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x1e0
+.text             0x000200        0x482
  *(.init)
  .init            0x000200         0x3c c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
                   0x000200                  _resetPRI
@@ -317,15 +411,41 @@ LOAD c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libfx-coff.a
  .isr.text        0x0002a8         0xc4 build/default/debug/source/isr_UART2.o
                   0x0002a8                  _U2RXInterrupt
                   0x000316                  _U2TXInterrupt
- .isr.text        0x00036c         0x70 build/default/debug/source/isr_timer46.o
+ .isr.text        0x00036c         0x7c build/default/debug/source/isr_timer46.o
                   0x00036c                  _T4Interrupt
-                  0x000380                  Init_Timer4
-                  0x0003a4                  _T6Interrupt
-                  0x0003b8                  Init_Timer6
- .isr             0x0003dc          0x4 default_isr
-                  0x0003dc                  _DefaultInterrupt
+                  0x000386                  Init_Timer4
+                  0x0003aa                  _T6Interrupt
+                  0x0003c4                  Init_Timer6
+ .isr             0x0003e8          0x4 default_isr
+                  0x0003e8                  _DefaultInterrupt
  *(.libc)
  *(.libm)
+ .libm            0x0003ec         0x1e c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsi3.o)
+                  0x0003ec                  __divsi3
+ .libm            0x00040a          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatsisf.o)
+                  0x00040a                  __floatsisf
+ .libm            0x000410         0x84 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o)
+                  0x000410                  __divsf3
+ .libm            0x000494         0x68 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(mulsf3.o)
+                  0x000494                  __mulsf3
+ .libm            0x0004fc         0x42 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fixsfsi.o)
+                  0x0004fc                  __fixsfsi
+ .libm            0x00053e         0x20 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(udivsi3.o)
+                  0x00053e                  __udivsi3
+ .libm            0x00055e         0x20 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatdisf.o)
+                  0x00055e                  __floatdisf
+ .libm            0x00057e         0x10 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack2.o)
+                  0x00057e                  _funpack2
+ .libm            0x00058e         0x20 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(futil.o)
+                  0x00058e                  _fPropagateNaN
+                  0x0005a0                  _fbopExit
+                  0x0005a8                  _fbopReturnNaN
+ .libm            0x0005ae         0x4c c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fpack.o)
+                  0x0005ae                  _fpack
+ .libm            0x0005fa         0x2a c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack.o)
+                  0x0005fa                  _funpack
+ .libm            0x000624         0x5e c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatundisf.o)
+                  0x000624                  __floatundisf
  *(.libdsp)
  *(.lib*)
 
@@ -1647,7 +1767,7 @@ LOAD data_init
 LOAD default_isr
 
 __c30_signature
-                  0x000000         0x36
+                  0x000000         0x7e
  __c30_signature
                   0x000000          0x6 build/default/debug/source/config.o
  __c30_signature
@@ -1666,8 +1786,32 @@ __c30_signature
                   0x00002a          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(crt0_standard.o)
  __c30_signature
                   0x000030          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libpic30-coff.a(data_init_standard.o)
+ __c30_signature
+                  0x000036          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsi3.o)
+ __c30_signature
+                  0x00003c          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatsisf.o)
+ __c30_signature
+                  0x000042          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(divsf3.o)
+ __c30_signature
+                  0x000048          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(mulsf3.o)
+ __c30_signature
+                  0x00004e          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fixsfsi.o)
+ __c30_signature
+                  0x000054          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(udivsi3.o)
+ __c30_signature
+                  0x00005a          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatdisf.o)
+ __c30_signature
+                  0x000060          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack2.o)
+ __c30_signature
+                  0x000066          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(futil.o)
+ __c30_signature
+                  0x00006c          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(fpack.o)
+ __c30_signature
+                  0x000072          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(funpack.o)
+ __c30_signature
+                  0x000078          0x6 c:/program files (x86)/microchip/xc16/v1.26/bin/bin/../../lib\libm-coff.a(floatundisf.o)
 
-.nbss               0x0800         0x14
+.nbss               0x0800         0x18
  .nbss              0x0800          0x8 build/default/debug/source/isr_UART2.o
                     0x0800                  paqueteRecibido
                     0x0802                  iRx
@@ -1681,15 +1825,25 @@ __c30_signature
                     0x080c                  minutes
                     0x080d                  seconds
  .nbss              0x080e          0x4 build/default/debug/source/main.o
-                    0x080e                  ejes
-                    0x0810                  ultSec
- .nbss              0x0812          0x2 build/default/debug/source/delay.o
-                    0x0812                  temp_count
+                    0x080e                  cantVehi
+                    0x0810                  iData
+ .nbss              0x0812          0x4 build/default/debug/source/isr_timer46.o
+                    0x0812                  cont_tmr4
+                    0x0814                  seg
+ .nbss              0x0816          0x2 build/default/debug/source/delay.o
+                    0x0816                  temp_count
 
-.bss                0x0814        0x10a
- .bss               0x0814        0x10a build/default/debug/source/isr_UART2.o
-                    0x0814                  recibido
-                    0x081d                  aEnviar
+.bss                0x0818       0x281a
+ .bss               0x0818       0x2710 build/default/debug/source/main.o
+                    0x0818                  dataLogger
+ .bss               0x2f28        0x10a build/default/debug/source/isr_UART2.o
+                    0x2f28                  recibido
+                    0x2f31                  aEnviar
+
+.data               0x3032         0x20
+ .data              0x3032         0x20 build/default/debug/source/main.o
+                    0x3032                  linea_1
+                    0x3042                  linea_2
 
 .ivt._U2RXInterrupt
                   0x000050          0x2
@@ -1728,36 +1882,53 @@ __c30_signature
  .ivt._T6Interrupt
                   0x000072          0x2 build/default/debug/source/isr_timer46.o
 
-.const              0x83e0         0x34 load address 0x0003e0  
- .const             0x83e0         0x34 build/default/debug/source/main.o
-                    0x83e0                  mytext
-                    0x83f1                  mytext1
-                    0x8402                  time_msg
+.const              0x8682         0x22 load address 0x000682  
+ .const             0x8682         0x22 build/default/debug/source/main.o
+                    0x8682                  mytext
+                    0x8693                  mytext1
 
-.text             0x000414        0x49a
- .text            0x000414        0x19c build/default/debug/source/funciones.o
-                  0x000414                  checkDST
-                  0x000426                  checkSEC
-                  0x000452                  checkCMD
-                  0x0004a8                  checkBCC
-                  0x000564                  limpiarPaquete
-                  0x000588                  paqueteCorrecto
- .text            0x0005b0        0x192 build/default/debug/source/lcd.o
-                  0x0005b0                  Init_LCD
-                  0x000638                  Update_Time
-                  0x00067a                  lcd_cmd
-                  0x0006a4                  lcd_data
-                  0x0006d4                  puts_lcd
-                  0x0006f4                  hexdec
- .text            0x000742         0xa8 build/default/debug/source/main.o
-                  0x000742                  ToggleTest
-                  0x000768                  main
- .text            0x0007ea         0x8c build/default/debug/source/config.o
-                  0x0007ea                  InitUART2
-                  0x000822                  config
- .text            0x000876         0x38 build/default/debug/source/delay.o
-                  0x000876                  Delay
-                  0x000892                  Delay_Us
+.text             0x0006a4        0xbcc
+ .text            0x0006a4        0x8c0 build/default/debug/source/funciones.o
+                  0x0006a4                  obtenerVehisGrades
+                  0x0006e6                  hayVehiculos
+                  0x000756                  listarVehiculos
+                  0x000846                  PaqueteA
+                  0x0008cc                  PaqueteC
+                  0x000952                  PaqueteD
+                  0x000a00                  actualizoReloj
+                  0x000acc                  accionarCamara
+                  0x000ada                  conseguirTimeStamp
+                  0x000afe                  logearVehi
+                  0x000b58                  actualizarInfo
+                  0x000c26                  chequearVelocidad
+                  0x000c38                  CalcVel
+                  0x000c60                  checkDST
+                  0x000c72                  checkSEC
+                  0x000c9e                  checkCMD
+                  0x000d08                  checkBCC
+                  0x000dc4                  paqueteCorrecto
+                  0x000dec                  limpiarPaquete
+                  0x000e10                  envioNACK
+                  0x000e8a                  envioACK
+                  0x000f04                  armarRespuesta
+ .text            0x000f64        0x192 build/default/debug/source/lcd.o
+                  0x000f64                  Init_LCD
+                  0x000fec                  Update_Time
+                  0x00102e                  lcd_cmd
+                  0x001058                  lcd_data
+                  0x001088                  puts_lcd
+                  0x0010a8                  hexdec
+ .text            0x0010f6         0xe8 build/default/debug/source/main.o
+                  0x0010f6                  ToggleTest
+                  0x00111c                  main
+ .text            0x0011de         0x92 build/default/debug/source/config.o
+                  0x0011de                  InitUART2
+                  0x001216                  config
 
-.dinit            0x0008ae         0x20
- .dinit           0x0008ae         0x20 data_init
+.dinit            0x001270         0x48
+ .dinit           0x001270         0x48 data_init
+
+.text             0x0012b8         0x38
+ .text            0x0012b8         0x38 build/default/debug/source/delay.o
+                  0x0012b8                  Delay
+                  0x0012d4                  Delay_Us

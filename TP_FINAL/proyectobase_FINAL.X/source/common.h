@@ -24,28 +24,38 @@
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
 #define SOF 0xFE
 
+#define CMD_1                   'A'
+#define CMD_2                   'B'
+#define CMD_3                   'C'
+#define CMD_4                   'D'
+#define CMD_5                   'E'
+#define CMD_6                   'F'
+#define CMD_7                   'G'
+
+
 #define POS_QTY                 1
-#define DST                     3
 #define POS_DST                 2
-#define SEC1                    0
-#define SEC2                    0x80
+#define POS_SRC                 3
 #define POS_SEC                 4
 #define POS_CMD                 5
+#define DST                     3
+#define SEC1                    0
+#define SEC2                    0x80
 #define SEC_ACK                 0x40
+#define CMD_ACK                 0x46
 #define SEC_NACK                0x60
+#define CMD_NACK                0x47
 #define DISTANCIA_SENSORES      0.3
 #define MAX_VEL                 60
 #define MAX_VEHI                1000
-
+#define MAX_LCD                 16
 //Maximo de bytes a recibir 
 #define MAX_RX 9
 
 //Maximo de bytes a enviar
 #define MAX_TX 256
 
-unsigned int seg = 0;
-unsigned char linea_1[] = "00:00:00        ";
-unsigned char linea_2[] = "                ";
+
 
 typedef struct{
     unsigned char    hora[8];
@@ -53,8 +63,7 @@ typedef struct{
     unsigned char    ejes;
 }VEHICULOS;
 
-VEHICULOS dataLogger[MAX_VEHI];
-int iData = 0;                  //indice del dataLogger
+
 
 
 #ifdef USAR_LCD

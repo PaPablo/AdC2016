@@ -32,16 +32,20 @@
 
 const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
 const char mytext1[] =  "Pulsar S3       ";
-extern unsigned char linea_1[];
 
-extern int paqueteRecibido;
-extern int cont_tmr4;
-extern char recibido[MAX_RX];
-extern char aEnviar[MAX_TX];
+extern int paqueteRecibido;         //Bandera para indicar que se completo de recibir un paquete
+extern int cont_tmr4;               //Contador del TMR utilizado para calcular la velocidad de un vehiculo
+extern char recibido[MAX_RX];       //Arreglo para armar paquete recibido
+extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respuesta)
 
-extern unsigned int seg;
+int cantVehi = 0;           //Contador de vehiculo
+extern unsigned int seg;    //Variable a usar para actualizar reloj
 
-int cantVehi = 0;
+unsigned char linea_1[MAX_LCD] = "00:00:00        ";
+unsigned char linea_2[MAX_LCD] = "                ";
+
+VEHICULOS dataLogger[MAX_VEHI];
+int iData = 0;                  //indice del dataLogger
 
 
 void ToggleTest (void)
@@ -94,6 +98,7 @@ int main ( void )
     while ( 1 ) 
     { 
 	  if (seg == 4){
+          seg = 0;
           actualizoReloj();
       }
 
@@ -119,14 +124,14 @@ int main ( void )
 
 	  }
       if (paqueteRecibido){
-        //if (paqueteCorrecto(ultSec)){
-        //  armarRespuesta();
-        //  paqueteRecibido = 0;
-        //}
-        //else{
-        //  paqueteNACK();              
-        //}
-        IEC1bits.U2TXIE = 1;
+        if (paqueteCorrecto(ultSec)){
+          armarRespuesta();
+          paqueteRecibido = 0;
+        }
+        else{
+            envioNACK();              
+        }
+        IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
         IFS1bits.U2TXIF = 1;
               
       } 

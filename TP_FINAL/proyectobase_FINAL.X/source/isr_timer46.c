@@ -3,12 +3,9 @@
 #include "common.h"
 
 
-extern volatile unsigned char hours;
-extern volatile unsigned char minutes;
-extern volatile unsigned char seconds;
 unsigned int cont_tmr4 = 0;
 
-extern unsigned int seg;
+unsigned int seg = 0;
 
 /*---------------------------------------------------------------------
   Function Name: _T4Interrupt

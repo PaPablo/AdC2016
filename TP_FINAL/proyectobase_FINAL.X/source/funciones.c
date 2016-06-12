@@ -1,13 +1,157 @@
 #include "common.h"
+#include "delay.h"
+#include "lcd.h"
 #include "p33FJ256GP710.h"
-extern int paqueteRecibido;
 extern char recibido[MAX_RX];
 extern char aEnviar[MAX_TX];
-extern unsigned char linea_1[];
+
+extern unsigned char linea_1[MAX_LCD];
+extern unsigned char linea_2[MAX_LCD];
+
 extern VEHICULOS dataLogger[];
 extern int iData;
+extern int cantVehi;
 
-void actualizoReloj(){
+
+
+
+
+int obtenerVehisGrades(void){
+    int i = 0;
+    int acum = 0;
+    while(dataLogger[i++].ejes > 0){      //recorremos el listado (si la cant ejes es cero es porque no hay vehi registrado)
+        if (dataLogger[i].ejes > 2){    
+            acum++;
+        }
+    }
+    return acum;
+}
+
+
+
+int hayVehiculos(char hora, int* pos){
+    int i = 0;
+    int salgo = 0;
+    char horaReg;
+    while((dataLogger[i++].ejes > 0) && (salgo == 0)){
+        horaReg = ((dataLogger[i].hora[0] * 10) + dataLogger[i].hora[1]);
+        if (horaReg == hora){
+            salgo = 1;
+            *pos = i;
+        }
+    }
+    return (salgo == 1);        //Si se cumple la condicion, es porque hay almenos un vehiculo
+                                //registrado que paso a la hora recibida.
+}
+
+
+void listarVehiculos(int hora, int pos, int* i){
+    int salgo = 0;
+    char horaReg;
+    while(!salgo){
+        horaReg = ((dataLogger[pos].hora[0] * 10) + dataLogger[pos].hora[1]);
+        if (horaReg == hora){
+            aEnviar[*i++] = horaReg;                                                     //Hora
+            aEnviar[*i++] = ((dataLogger[pos].hora[3] * 10) + dataLogger[pos].hora[4]);  //Minutos
+            aEnviar[*i++] = ((dataLogger[pos].hora[6] * 10) + dataLogger[pos].hora[7]);  //Segundos
+            aEnviar[*i++] = dataLogger[pos].vel;
+            aEnviar[*i] = dataLogger[pos].ejes;
+        }
+        else{
+            salgo = 1;
+        }
+        pos++;
+    }
+}
+
+
+
+
+void PaqueteA(void){
+    aEnviar[0] = SOF;
+    aEnviar[1] = 8;
+    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[3] = DST;
+    aEnviar[4] = recibido[POS_SEC];
+    aEnviar[5] = recibido[POS_CMD];
+    aEnviar[6] = cantVehi;
+    
+    int i;
+    int acum = 0;
+    for (i = 0; i < 6; i++){
+        acum = acum + (aEnviar[i] * 0x0100);
+        i++;
+        acum = acum + aEnviar[i];
+    }
+    aEnviar[6] = acum / 100;
+    aEnviar[7] = acum & 100;
+}
+
+
+void PaqueteC(void){
+    aEnviar[0] = SOF;
+    aEnviar[1] = 8;
+    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[3] = DST;
+    aEnviar[4] = recibido[POS_SEC];
+    aEnviar[5] = recibido[POS_CMD];
+    aEnviar[6] = obtenerVehisGrades();
+    
+    int i;
+    int acum = 0;
+    for (i = 0; i < 6; i++){
+        acum = acum + (aEnviar[i] * 0x0100);
+        i++;
+        acum = acum + aEnviar[i];
+    }
+    aEnviar[6] = acum / 100;
+    aEnviar[7] = acum & 100;
+}
+
+
+void PaqueteD(void){
+    aEnviar[0] = SOF;
+    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[3] = DST;
+    aEnviar[4] = recibido[POS_SEC];
+    aEnviar[5] = recibido[POS_CMD];
+    int i = 6;
+    int pos;
+    if(hayVehiculos(recibido[POS_CMD + 1], &pos)){
+        listarVehiculos(recibido[POS_CMD + 1], pos, &i);         // E/S int i, devuelve en donde se quedo el indice
+    }
+    else{
+        aEnviar[i] = 0;
+    }
+    
+    int j;
+    int acum = 0;
+    for (j = 0; j < 6; j++){
+        acum = acum + (aEnviar[j] * 0x0100);
+        j++;
+        acum = acum + aEnviar[j];
+    }
+    aEnviar[i++] = acum / 100;
+    aEnviar[i] = acum & 100;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void actualizoReloj(void){
     unsigned int horas = linea_1[0] * 10 + linea_1[1];
     unsigned int minutos = linea_1[3] * 10 + linea_1[4];
     unsigned int segundos = linea_1[6] * 10 + linea_1[7];
@@ -42,18 +186,20 @@ void actualizoReloj(){
     
 }
 
+
 void accionarCamara(void){
     LATAbits.LATA0 = 1;
     Delay(10);
     LATAbits.LATA0 = 0;
 }
-void conseguirTimeStamp(char* ts){
+
+
+void conseguirTimeStamp(unsigned char* ts){
     int i;
     for(i = 0; i <= 8; i++){
         ts[i] = linea_1[i];
     }
 }
-
 
 
 void logearVehi(unsigned char* ts, int vel, int ejes){
@@ -63,10 +209,11 @@ void logearVehi(unsigned char* ts, int vel, int ejes){
     }
     dataLogger[iData].vel = vel;
     dataLogger[iData].ejes = ejes;
+    iData++;
 }
 
 
-void actualizarInfo(char* ts, int vel, int ejes){
+void actualizarInfo(unsigned char* ts, int vel, int ejes){
     linea_1[12] = (cantVehi / 1000);
     linea_1[13] = ((cantVehi & 1000) / 100);
     linea_1[14] = (((cantVehi & 1000) & 100) / 10);
@@ -89,13 +236,20 @@ void actualizarInfo(char* ts, int vel, int ejes){
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/
     
+    home_it();
+	puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
+	line_2();
+	puts_lcd( (unsigned char*) &linea_2[0], sizeof(linea_2) -1 );
+    
 }
+
 
 void chequearVelocidad (int vel){
     if(vel >= MAX_VEL){
         accionarCamara();
     }
 }
+
 
 int CalcVel (int cant){
     return ((DISTANCIA_SENSORES / ((cant * ((ValPR4 * 256)/ FCY)) + ((TMR4 * 256)/FCY))) * (3600/1000));
@@ -105,6 +259,7 @@ int CalcVel (int cant){
 int checkDST(void){
     return (recibido[POS_DST] == DST);
 }
+
 
 int checkSEC(unsigned int *dirSec){
     if (*dirSec == SEC1){
@@ -122,8 +277,9 @@ int checkSEC(unsigned int *dirSec){
     }
 }
 
+
 int checkCMD(void){
-    if( (recibido[POS_CMD] == 'A') || (recibido[POS_CMD] == 'B') || (recibido[POS_CMD] == 'C') || (recibido[POS_CMD] == 'E') ){
+    if( (recibido[POS_CMD] == CMD_1) || (recibido[POS_CMD] == CMD_2) || (recibido[POS_CMD] == CMD_3) || (recibido[POS_CMD] == CMD_5) || (recibido[POS_CMD] == CMD_6) || (recibido[POS_CMD] == CMD_7) ){
         return 1;
     }
     else{
@@ -135,6 +291,7 @@ int checkCMD(void){
         }
     }
 }
+
 
 int checkBCC(void){
     int qty = recibido[POS_QTY];
@@ -162,6 +319,11 @@ int checkBCC(void){
         
 }
 
+int paqueteCorrecto(unsigned int sec){
+    return (checkDST() && checkSEC(&sec) && checkCMD() && checkBCC());
+}
+
+
 void limpiarPaquete(char* cad, int tope){
     int i;
     for (i = 0; i < tope; i++){
@@ -169,6 +331,72 @@ void limpiarPaquete(char* cad, int tope){
     }
 }
 
-int paqueteCorrecto(unsigned int sec){
-    return (checkDST() && checkSEC(&sec) && checkCMD() && checkBCC());
+
+void envioNACK (void){
+    aEnviar[0] = 0x00FE;
+    aEnviar[1] = 8;
+    aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
+    aEnviar[3] = DST;
+    aEnviar[4] = SEC_NACK;
+    aEnviar[5] = CMD_NACK;
+    
+    int i;
+    int acum = 0;
+    for (i = 0; i < 6; i++){
+        acum = acum + (aEnviar[i] * 0x0100);
+        i++;
+        acum = acum + aEnviar[i];
+    }
+    aEnviar[6] = acum / 100;
+    aEnviar[7] = acum & 100;
 }
+
+
+void envioACK (void){
+    aEnviar[0] = 0x00FE;
+    aEnviar[1] = 8;
+    aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
+    aEnviar[3] = DST;
+    aEnviar[4] = SEC_ACK;
+    aEnviar[5] = CMD_ACK;
+    
+    int i;
+    int acum = 0;
+    for (i = 0; i < 6; i++){
+        acum = acum + (aEnviar[i] * 0x0100);
+        i++;
+        acum = acum + aEnviar[i];
+    }
+    aEnviar[6] = acum / 100;
+    aEnviar[7] = acum & 100;
+}
+
+
+void armarRespuesta(void){
+    switch(recibido[POS_CMD]){
+        case (CMD_1): 
+            PaqueteA();
+            break;
+        case (CMD_2):
+            iData = 0;
+            cantVehi = 0;
+            envioACK();
+            break;
+        case (CMD_3):
+            PaqueteC();
+            break;
+        case (CMD_4): 
+            PaqueteD();
+            break;
+        case (CMD_5):
+            accionarCamara();
+            break;
+        case (CMD_6):
+            envioACK();
+            break;
+        case(CMD_7):
+            envioNACK();
+            break;
+    }
+}
+

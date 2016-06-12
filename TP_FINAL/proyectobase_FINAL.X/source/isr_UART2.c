@@ -19,7 +19,6 @@
 #include "config.h"
 #include "funciones.h"
 
-//UART
 
 int paqueteRecibido;
 char recibido[MAX_RX];
@@ -100,12 +99,6 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
     }
 }
 
-/*---------------------------------------------------------------------
-  Function Name: InitUART2
-  Description:   Inicializar UART2
-  Inputs:        None
-  Returns:       None
------------------------------------------------------------------------*/
 
 
 
