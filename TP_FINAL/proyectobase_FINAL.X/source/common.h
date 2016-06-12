@@ -35,6 +35,7 @@
 #define SEC_NACK                0x60
 #define DISTANCIA_SENSORES      0.3
 #define MAX_VEL                 60
+#define MAX_VEHI                1000
 
 //Maximo de bytes a recibir 
 #define MAX_RX 9
@@ -42,15 +43,18 @@
 //Maximo de bytes a enviar
 #define MAX_TX 256
 
-/* variables used in Timer 1 ISR */
-extern volatile unsigned char hours;
-extern volatile unsigned char minutes;
-extern volatile unsigned char seconds;
-
-
 unsigned int seg = 0;
-
 unsigned char linea_1[] = "00:00:00        ";
+unsigned char linea_2[] = "                ";
+
+typedef struct{
+    unsigned char    hora[8];
+    unsigned char    vel;
+    unsigned char    ejes;
+}VEHICULOS;
+
+VEHICULOS dataLogger[MAX_VEHI];
+int iData = 0;                  //indice del dataLogger
 
 
 #ifdef USAR_LCD

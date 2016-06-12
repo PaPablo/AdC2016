@@ -5,11 +5,8 @@
  Processor:       dsPIC33F
  Compiler:        MPLAB® C30 v2.01 or higher
 
- Ejemplo de funcionamiento de:
- 	Timer1
- 	LCD
- 	PORT A Output
- 	PORT D Input
+ Trabajo Final Arquitectura de Computadoras
+ UNPSJB Sede Trelew, 2016
 
  REVISION HISTORY:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,7 +61,7 @@ int main ( void )
     
     int ejes;
     int velocidad;
-    char timeStamp[8];
+    unsigned char timeStamp[8];
     
     unsigned int ultSec = 0;
     
@@ -105,9 +102,9 @@ int main ( void )
         conseguirTimeStamp(timeStamp);
         cantVehi++;
         while(!PORTDbits.RD6);  //primer sensor
-        T4CON.TON = 1;
+        T4CONbits.TON = 1;
         while(!PORTDbits.RD7);  //segundo sensor
-        T4CON.TON = 0;
+        T4CONbits.TON = 0;
         velocidad = CalcVel(cont_tmr4);
         ejes = 1;
         while(PORTDbits.RD13){  //preguntamos si sigue activo el lazo
@@ -117,8 +114,8 @@ int main ( void )
         }
         
         chequearVelocidad(velocidad);                  //acciona camar si velocidad >60km/h
-        //logearVehi(velocidad, timeStamp, ejes);        //registra vehiculo en el logger
-        //actualizarInfo();                              //actualizar info en LCD
+        logearVehi(timeStamp, velocidad, ejes);        //registra vehiculo en el logger
+        actualizarInfo(timeStamp, velocidad, ejes);    //actualizar info en LCD
 
 	  }
       if (paqueteRecibido){

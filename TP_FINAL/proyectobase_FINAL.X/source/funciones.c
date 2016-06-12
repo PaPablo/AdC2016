@@ -4,6 +4,8 @@ extern int paqueteRecibido;
 extern char recibido[MAX_RX];
 extern char aEnviar[MAX_TX];
 extern unsigned char linea_1[];
+extern VEHICULOS dataLogger[];
+extern int iData;
 
 void actualizoReloj(){
     unsigned int horas = linea_1[0] * 10 + linea_1[1];
@@ -52,6 +54,42 @@ void conseguirTimeStamp(char* ts){
     }
 }
 
+
+
+void logearVehi(unsigned char* ts, int vel, int ejes){
+    int i;
+    for(i = 0; i < 8; i++){
+        dataLogger[iData].hora[i] = ts[i]; 
+    }
+    dataLogger[iData].vel = vel;
+    dataLogger[iData].ejes = ejes;
+}
+
+
+void actualizarInfo(char* ts, int vel, int ejes){
+    linea_1[12] = (cantVehi / 1000);
+    linea_1[13] = ((cantVehi & 1000) / 100);
+    linea_1[14] = (((cantVehi & 1000) & 100) / 10);
+    linea_1[15] = (((cantVehi & 1000) & 100) & 10);
+    
+    linea_2[0] = (vel / 100);
+    linea_2[1] = ((vel & 100) / 10);
+    linea_2[2] = ((vel & 100) & 10);
+    linea_2[3] = 'K';
+    linea_2[4] = 'H';
+    linea_2[5] = ' ';
+    linea_2[6] = ejes;
+    linea_2[7] = ' ';
+    int i;
+    int j = 0;
+    for(i = 8; i < 16; i++){
+        linea_2[i] = ts[j++];
+    }
+    
+    /*HH:MM:SS    CCCC*/
+    /*VVVKH E HH:MM:SS*/
+    
+}
 
 void chequearVelocidad (int vel){
     if(vel >= MAX_VEL){

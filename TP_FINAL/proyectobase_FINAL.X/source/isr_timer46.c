@@ -1,5 +1,6 @@
 #include "p33FJ256GP710.h"
 #include "config.h"
+#include "common.h"
 
 
 extern volatile unsigned char hours;
