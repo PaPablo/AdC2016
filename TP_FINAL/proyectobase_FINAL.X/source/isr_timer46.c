@@ -1,13 +1,13 @@
 #include "p33FJ256GP710.h"
 #include "config.h"
-#define ValPR4	39062
-#define ValPR6	0
+
 
 extern volatile unsigned char hours;
 extern volatile unsigned char minutes;
 extern volatile unsigned char seconds;
-extern int counterTog;
+unsigned int cont_tmr4 = 0;
 
+extern unsigned int seg;
 
 /*---------------------------------------------------------------------
   Function Name: _T4Interrupt
@@ -19,9 +19,9 @@ void __attribute__((interrupt, auto_psv)) _T4Interrupt( void )
 {
 	/* reset Timer 4 interrupt flag */
  	IFS1bits.T4IF = 0;
-	//T4CONbits.TON = 0; 	//Deshabilito Timer
-	counterTog ++;
-
+	cont_tmr4++;
+    
+    
 }
 
 /*---------------------------------------------------------------------
@@ -60,7 +60,7 @@ void __attribute__((interrupt, auto_psv)) _T6Interrupt( void )
 {
 	/* reset Timer 6 interrupt flag */
  	IFS2bits.T6IF = 0;
-	T6CONbits.TON = 0;	//Deshabilito Timer6
+    seg++;   
 
 }
 
@@ -74,13 +74,13 @@ void Init_Timer6( void )
 	
 	/* ensure Timer 6 is in reset state */
 	T6CON = 0;
-	T6CONbits.TCKPS = 1; //Prescaler 8
+	T6CONbits.TCKPS = 3; //Prescaler 256
 
 	/* reset Timer 6 interrupt flag */
  	IFS2bits.T6IF = 0;
  	
  	/* set Timer interrupt priority level */
-	IPC11bits.T6IP = 5;
+	IPC11bits.T6IP = 6;
 
 	/* enable Timer interrupt */
  	IEC2bits.T6IE = 1;

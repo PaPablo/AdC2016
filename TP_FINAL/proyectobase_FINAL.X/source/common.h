@@ -13,12 +13,28 @@
 **********************************************************************/
 #define USAR_LCD
 
+
+#define ValPR4	39062
+#define ValPR6	39062
 #define FCY 40000000
 #define BAUDRATE 9600
 #define BRGVAL ((FCY / BAUDRATE) / 16) -1
 #define ESPERA_1BIT (1/BAUDRATE)
 #define CANT_BITSxBYTE 10
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
+#define SOF 0xFE
+
+#define POS_QTY                 1
+#define DST                     3
+#define POS_DST                 2
+#define SEC1                    0
+#define SEC2                    0x80
+#define POS_SEC                 4
+#define POS_CMD                 5
+#define SEC_ACK                 0x40
+#define SEC_NACK                0x60
+#define DISTANCIA_SENSORES      0.3
+#define MAX_VEL                 60
 
 //Maximo de bytes a recibir 
 #define MAX_RX 9
@@ -31,21 +47,10 @@ extern volatile unsigned char hours;
 extern volatile unsigned char minutes;
 extern volatile unsigned char seconds;
 
-/* variables used in raw ADC data to hex */
-extern void advolt( unsigned int adc_conv_data );
-extern volatile unsigned char adones;
-extern volatile unsigned char adtens;
-extern volatile unsigned char adhunds;
-extern volatile unsigned int temp1;
-extern volatile unsigned char adc_lcd_update;
 
-/* variables uasdas en la UART */
-extern volatile unsigned char uart_lcd_update;
+unsigned int seg = 0;
 
-
-#define MAX_CHAR 16
-extern char cadena[MAX_CHAR];
-
+unsigned char linea_1[] = "00:00:00        ";
 
 
 #ifdef USAR_LCD
@@ -58,3 +63,5 @@ extern char cadena[MAX_CHAR];
 #define line_2()        lcd_cmd( 0xC0 ) // (0xC0)
 
 #endif // USAR_LCD
+
+

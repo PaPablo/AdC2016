@@ -29,20 +29,24 @@
 #include "p33FJ256GP710.h"
 #include "lcd.h"
 #include "config.h"
+#include "funciones.h"
+
 
 
 const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
 const char mytext1[] =  "Pulsar S3       ";
-const char time_msg[] = "00:00:00        ";
-int counterTog = 0;
-
-char cadena[MAX_CHAR];		//Cadena para almacenar el marco recibido
+extern unsigned char linea_1[];
 
 extern int paqueteRecibido;
+extern int cont_tmr4;
 extern char recibido[MAX_RX];
 extern char aEnviar[MAX_TX];
 
-int ejes = 0;
+extern unsigned int seg;
+
+int cantVehi = 0;
+
+
 void ToggleTest (void)
 {
 			__builtin_btg((unsigned int *)&LATA, 7);
@@ -53,14 +57,20 @@ void ToggleTest (void)
 			__builtin_btg((unsigned int *)&LATA, 2);	
 			__builtin_btg((unsigned int *)&LATA, 1);
 			__builtin_btg((unsigned int *)&LATA, 0);
-			counterTog = 0;
 }
 
 int main ( void )
 {
+    
+    int ejes;
+    int velocidad;
+    char timeStamp[8];
+    
+    unsigned int ultSec = 0;
+    
    	config();
     
-    //config timer 1 y 2
+    //config timer 4 y 6
     //UART 9600 8n1
     //PORTD RD6, RD7 (piezoelectricos)
     //PORTD RD13 (lazo inductivo)
@@ -80,48 +90,52 @@ int main ( void )
 
 #ifdef USAR_LCD
 	home_clr();
-	puts_lcd( (unsigned char*) &time_msg[0], sizeof(time_msg) -1 );
+	puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
 #endif // USAR_LCD
 
 	 /* Loop infinito */
     while ( 1 ) 
     { 
-	  
-     //IMPLEMENTAR ACTUALIZACION DE HORA Y RELOJ
-     //DALE IMPLEMENTADOR DALE
+	  if (seg == 4){
+          actualizoReloj();
+      }
 
   	  if( PORTDbits.RD13 ) 
   	  {
-        //conseguirTimeStamp
+        conseguirTimeStamp(timeStamp);
+        cantVehi++;
         while(!PORTDbits.RD6);  //primer sensor
-        //prendemo timer
+        T4CON.TON = 1;
         while(!PORTDbits.RD7);  //segundo sensor
-        //apagamo timer
-        //calculo velocidad
-        ejes++;
+        T4CON.TON = 0;
+        velocidad = CalcVel(cont_tmr4);
+        ejes = 1;
         while(PORTDbits.RD13){  //preguntamos si sigue activo el lazo
             if(PORTDbits.RD6){  //contamos los ejes
                 ejes++;
             }
         }
-        //chequearVelocidad(); //acciona camar si velocidad >60km/h
-        //logearVehi();        //registra vehiculo en el logger
-        //actualizarInfo();   // actualizar info en LCD
+        
+        chequearVelocidad(velocidad);                  //acciona camar si velocidad >60km/h
+        //logearVehi(velocidad, timeStamp, ejes);        //registra vehiculo en el logger
+        //actualizarInfo();                              //actualizar info en LCD
 
 	  }
       if (paqueteRecibido){
-        //if (paqueteCorrecto()){
-        //      armarRespuesta();
-        //      paqueteRecibido = 0;
+        //if (paqueteCorrecto(ultSec)){
+        //  armarRespuesta();
+        //  paqueteRecibido = 0;
         //}
         //else{
-        //   paqueteNACK();              
+        //  paqueteNACK();              
         //}
         IEC1bits.U2TXIE = 1;
         IFS1bits.U2TXIF = 1;
               
-      }    
+      } 
+      
+      
+      
 	}
 }
-
 
