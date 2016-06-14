@@ -104,6 +104,7 @@ void config( void )
 
 	/* Inicializar Timers necesarios */
 	Init_Timer4();
+    Init_Timer6();
     
     
     TRISAbits.TRISA0 = 0;

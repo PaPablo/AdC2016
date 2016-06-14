@@ -22,7 +22,7 @@
 #define ESPERA_1BIT (1/BAUDRATE)
 #define CANT_BITSxBYTE 10
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
-#define SOF 0xFE
+#define SOF 0x00FE
 
 #define CMD_1                   'A'
 #define CMD_2                   'B'
@@ -45,7 +45,12 @@
 #define CMD_ACK                 0x46
 #define SEC_NACK                0x60
 #define CMD_NACK                0x47
+
+
 #define DISTANCIA_SENSORES      0.3
+
+#define OFFSET_CARAC            0x30
+
 #define MAX_VEL                 60
 #define MAX_VEHI                1000
 #define MAX_LCD                 16

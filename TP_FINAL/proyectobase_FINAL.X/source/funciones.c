@@ -16,7 +16,7 @@ extern int cantVehi;
 
 
 
-int obtenerVehisGrades(void){
+int obtenerVehisGrandes(void){
     int i = 0;
     int acum = 0;
     while(dataLogger[i++].ejes > 0){      //recorremos el listado (si la cant ejes es cero es porque no hay vehi registrado)
@@ -27,7 +27,18 @@ int obtenerVehisGrades(void){
     return acum;
 }
 
-
+void limpiarDataLogger(void){
+    iData = 0;
+    cantVehi = 0;
+    int i;
+    for(i = 0; i <= MAX_VEHI; i++){
+        dataLogger[i].ejes = 0;
+        dataLogger[i].vel = 0;
+        dataLogger[i].hora.h = 0;
+        dataLogger[i].hora.m = 0;
+        dataLogger[i].hora.s = 0;
+    }
+}
 
 int hayVehiculos(char hora, int* pos){
     int i = 0;
@@ -84,7 +95,7 @@ void PaqueteA(void){
         acum = acum + aEnviar[i];
     }
     aEnviar[6] = acum / 100;
-    aEnviar[7] = acum & 100;
+    aEnviar[7] = acum % 100;
 }
 
 
@@ -95,7 +106,7 @@ void PaqueteC(void){
     aEnviar[3] = DST;
     aEnviar[4] = recibido[POS_SEC];
     aEnviar[5] = recibido[POS_CMD];
-    aEnviar[6] = obtenerVehisGrades();
+    aEnviar[6] = obtenerVehisGrandes();
     
     int i;
     int acum = 0;
@@ -105,7 +116,7 @@ void PaqueteC(void){
         acum = acum + aEnviar[i];
     }
     aEnviar[6] = acum / 100;
-    aEnviar[7] = acum & 100;
+    aEnviar[7] = acum % 100;
 }
 
 
@@ -132,7 +143,7 @@ void PaqueteD(void){
         acum = acum + aEnviar[j];
     }
     aEnviar[i++] = acum / 100;
-    aEnviar[i] = acum & 100;
+    aEnviar[i] = acum % 100;
 }
 
 
@@ -152,9 +163,9 @@ void PaqueteD(void){
 
 
 void actualizoReloj(void){
-    unsigned int horas = linea_1[0] * 10 + linea_1[1];
-    unsigned int minutos = linea_1[3] * 10 + linea_1[4];
-    unsigned int segundos = linea_1[6] * 10 + linea_1[7];
+    unsigned char horas = (((linea_1[0] - OFFSET_CARAC) * 10) + (linea_1[1] - OFFSET_CARAC));
+    unsigned char minutos = (((linea_1[3] - OFFSET_CARAC) * 10) + (linea_1[4] - OFFSET_CARAC));
+    unsigned char segundos = (((linea_1[6] - OFFSET_CARAC) * 10) + (linea_1[7] - OFFSET_CARAC));
     
     if (segundos == 59){
         if(minutos == 59){
@@ -175,12 +186,12 @@ void actualizoReloj(void){
         segundos++;
     }
     
-    linea_1[0] = horas / 10;
-    linea_1[1] = horas & 10;
-    linea_1[3] = minutos / 10;
-    linea_1[4] = minutos & 10;
-    linea_1[6] = segundos / 10;
-    linea_1[7] = segundos & 10;
+    linea_1[0] = ((horas / 10) + OFFSET_CARAC);
+    linea_1[1] = ((horas % 10) + OFFSET_CARAC);
+    linea_1[3] = ((minutos / 10) + OFFSET_CARAC);
+    linea_1[4] = ((minutos % 10) + OFFSET_CARAC);
+    linea_1[6] = ((segundos / 10) + OFFSET_CARAC);
+    linea_1[7] = ((segundos % 10) + OFFSET_CARAC);
     
     puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
     
@@ -212,26 +223,26 @@ void logearVehi(HORARIO ts, int vel, int ejes){
 
 void actualizarInfo(HORARIO ts, int vel, int ejes){
     linea_1[12] = (cantVehi / 1000);
-    linea_1[13] = ((cantVehi & 1000) / 100);
-    linea_1[14] = (((cantVehi & 1000) & 100) / 10);
-    linea_1[15] = (((cantVehi & 1000) & 100) & 10);
+    linea_1[13] = ((cantVehi % 1000) / 100);
+    linea_1[14] = (((cantVehi % 1000) % 100) / 10);
+    linea_1[15] = (((cantVehi % 1000) % 100) % 10);
     
     linea_2[0] = (vel / 100);
-    linea_2[1] = ((vel & 100) / 10);
-    linea_2[2] = ((vel & 100) & 10);
+    linea_2[1] = ((vel % 100) / 10);
+    linea_2[2] = ((vel % 100) % 10);
     linea_2[3] = 'K';
     linea_2[4] = 'H';
     linea_2[5] = ' ';
     linea_2[6] = ejes;
     linea_2[7] = ' ';
     linea_2[8] = (ts.h) / 10;
-    linea_2[9] = (ts.h) & 10;
+    linea_2[9] = (ts.h) % 10;
     linea_2[10] = ':'; 
     linea_2[11] = (ts.m) / 10;
-    linea_2[12] = (ts.m) & 10;
+    linea_2[12] = (ts.m) % 10;
     linea_2[13] = ':';
     linea_2[14] = (ts.s) / 10;
-    linea_2[15] = (ts.s) & 10;
+    linea_2[15] = (ts.s) % 10;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/
@@ -263,13 +274,12 @@ int checkDST(void){
 
 int checkSEC(unsigned int *dirSec){
     if (*dirSec == SEC1){
-        return (recibido[POS_SEC] == SEC2);
         *dirSec = SEC2;
-        
+        return (recibido[POS_SEC] == (char)SEC2);
     }
     else if (*dirSec == SEC2){
-        return (recibido[POS_SEC] == SEC1);
         *dirSec = SEC1;
+        return (recibido[POS_SEC] == (char)SEC1);
     }
     else{
         return 0;   //Contemplamos el caso de que nos envien un valor de SEC
@@ -348,7 +358,7 @@ void envioNACK (void){
         acum = acum + aEnviar[i];
     }
     aEnviar[6] = acum / 100;
-    aEnviar[7] = acum & 100;
+    aEnviar[7] = acum % 100;
 }
 
 
@@ -368,7 +378,7 @@ void envioACK (void){
         acum = acum + aEnviar[i];
     }
     aEnviar[6] = acum / 100;
-    aEnviar[7] = acum & 100;
+    aEnviar[7] = acum % 100;
 }
 
 
@@ -378,8 +388,7 @@ void armarRespuesta(void){
             PaqueteA();
             break;
         case (CMD_2):
-            iData = 0;
-            cantVehi = 0;
+            limpiarDataLogger();
             envioACK();
             break;
         case (CMD_3):

@@ -1,4 +1,6 @@
-int obtenerVehisGrades(void);
+int obtenerVehisGrandes(void);
+
+void limpiarDataLogger(void);
 
 int hayVehiculos(char hora, int* pos);
 

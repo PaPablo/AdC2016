@@ -112,11 +112,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x482           0x6c3  (1731)
 .const                       0x682                0x22            0x33  (51)
-.text                        0x6a4               0xbd0          0x11b8  (4536)
-.dinit                      0x1274                0x48            0x6c  (108)
-.text                       0x12bc                0x38            0x54  (84)
+.text                        0x6a4               0xd2a          0x13bf  (5055)
+.dinit                      0x13ce                0x48            0x6c  (108)
+.text                       0x1416                0x38            0x54  (84)
 
-                 Total program memory used (bytes):         0x196e  (6510) 2%
+                 Total program memory used (bytes):         0x1b75  (7029) 2%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -200,8 +200,8 @@ External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
                   0x00022c                  __psv_init
-                  0x00023c                  __data_init
                   0x00023c                  __data_init_standard
+                  0x00023c                  __data_init
                   0x0002a8                  __U2RXInterrupt
                   0x000316                  __U2TXInterrupt
                   0x00036c                  __T4Interrupt
@@ -225,58 +225,59 @@ External Symbols in Program Memory (by address):
                   0x000624                  ___floatundisf
                   0x000682                  _mytext
                   0x000693                  _mytext1
-                  0x0006a4                  _obtenerVehisGrades
-                  0x0006e6                  _hayVehiculos
-                  0x000742                  _listarVehiculos
-                  0x0007f4                  _PaqueteA
-                  0x00087a                  _PaqueteC
-                  0x000900                  _PaqueteD
-                  0x0009ae                  _actualizoReloj
-                  0x000a7a                  _accionarCamara
-                  0x000a88                  _conseguirTimeStamp
-                  0x000acc                  _logearVehi
-                  0x000b22                  _actualizarInfo
-                  0x000c26                  _chequearVelocidad
-                  0x000c38                  _CalcVel
-                  0x000c60                  _checkDST
-                  0x000c72                  _checkSEC
-                  0x000c9e                  _checkCMD
-                  0x000d08                  _checkBCC
-                  0x000dc4                  _paqueteCorrecto
-                  0x000dec                  _limpiarPaquete
-                  0x000e10                  _envioNACK
-                  0x000e8a                  _envioACK
-                  0x000f04                  _armarRespuesta
-                  0x000f64                  _Init_LCD
-                  0x000fec                  _Update_Time
-                  0x00102e                  _lcd_cmd
-                  0x001058                  _lcd_data
-                  0x001088                  _puts_lcd
-                  0x0010a8                  _hexdec
-                  0x0010f6                  _ToggleTest
-                  0x00111c                  _main
-                  0x0011e2                  _InitUART2
-                  0x00121a                  _config
-                  0x0012bc                  _Delay
-                  0x0012d8                  _Delay_Us
+                  0x0006a4                  _obtenerVehisGrandes
+                  0x0006e6                  _limpiarDataLogger
+                  0x00074c                  _hayVehiculos
+                  0x0007a8                  _listarVehiculos
+                  0x00085a                  _PaqueteA
+                  0x0008e6                  _PaqueteC
+                  0x000972                  _PaqueteD
+                  0x000a28                  _actualizoReloj
+                  0x000b2a                  _accionarCamara
+                  0x000b38                  _conseguirTimeStamp
+                  0x000b7c                  _logearVehi
+                  0x000bd2                  _actualizarInfo
+                  0x000d5a                  _chequearVelocidad
+                  0x000d6c                  _CalcVel
+                  0x000d94                  _checkDST
+                  0x000da6                  _checkSEC
+                  0x000dea                  _checkCMD
+                  0x000e54                  _checkBCC
+                  0x000f10                  _paqueteCorrecto
+                  0x000f38                  _limpiarPaquete
+                  0x000f5c                  _envioNACK
+                  0x000fdc                  _envioACK
+                  0x00105c                  _armarRespuesta
+                  0x0010ba                  _Init_LCD
+                  0x001142                  _Update_Time
+                  0x001184                  _lcd_cmd
+                  0x0011ae                  _lcd_data
+                  0x0011de                  _puts_lcd
+                  0x0011fe                  _hexdec
+                  0x00124c                  _ToggleTest
+                  0x001272                  _main
+                  0x00133a                  _InitUART2
+                  0x001372                  _config
+                  0x001416                  _Delay
+                  0x001432                  _Delay_Us
                   0xf80000                  __FBS.sec
                   0xf80002                  __FSS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x000c38                  _CalcVel
-                  0x0012bc                  _Delay
-                  0x0012d8                  _Delay_Us
-                  0x0011e2                  _InitUART2
-                  0x000f64                  _Init_LCD
+                  0x000d6c                  _CalcVel
+                  0x001416                  _Delay
+                  0x001432                  _Delay_Us
+                  0x00133a                  _InitUART2
+                  0x0010ba                  _Init_LCD
                   0x000386                  _Init_Timer4
                   0x0003c4                  _Init_Timer6
-                  0x0007f4                  _PaqueteA
-                  0x00087a                  _PaqueteC
-                  0x000900                  _PaqueteD
-                  0x0010f6                  _ToggleTest
-                  0x000fec                  _Update_Time
+                  0x00085a                  _PaqueteA
+                  0x0008e6                  _PaqueteC
+                  0x000972                  _PaqueteD
+                  0x00124c                  _ToggleTest
+                  0x001142                  _Update_Time
                   0x0003e8                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
@@ -303,32 +304,33 @@ External Symbols in Program Memory (by name):
                   0x00057e                  __funpack2
                   0x00022c                  __psv_init
                   0x000200                  __resetPRI
-                  0x000a7a                  _accionarCamara
-                  0x000b22                  _actualizarInfo
-                  0x0009ae                  _actualizoReloj
-                  0x000f04                  _armarRespuesta
-                  0x000d08                  _checkBCC
-                  0x000c9e                  _checkCMD
-                  0x000c60                  _checkDST
-                  0x000c72                  _checkSEC
-                  0x000c26                  _chequearVelocidad
-                  0x00121a                  _config
-                  0x000a88                  _conseguirTimeStamp
-                  0x000e8a                  _envioACK
-                  0x000e10                  _envioNACK
-                  0x0006e6                  _hayVehiculos
-                  0x0010a8                  _hexdec
-                  0x00102e                  _lcd_cmd
-                  0x001058                  _lcd_data
-                  0x000dec                  _limpiarPaquete
-                  0x000742                  _listarVehiculos
-                  0x000acc                  _logearVehi
-                  0x00111c                  _main
+                  0x000b2a                  _accionarCamara
+                  0x000bd2                  _actualizarInfo
+                  0x000a28                  _actualizoReloj
+                  0x00105c                  _armarRespuesta
+                  0x000e54                  _checkBCC
+                  0x000dea                  _checkCMD
+                  0x000d94                  _checkDST
+                  0x000da6                  _checkSEC
+                  0x000d5a                  _chequearVelocidad
+                  0x001372                  _config
+                  0x000b38                  _conseguirTimeStamp
+                  0x000fdc                  _envioACK
+                  0x000f5c                  _envioNACK
+                  0x00074c                  _hayVehiculos
+                  0x0011fe                  _hexdec
+                  0x001184                  _lcd_cmd
+                  0x0011ae                  _lcd_data
+                  0x0006e6                  _limpiarDataLogger
+                  0x000f38                  _limpiarPaquete
+                  0x0007a8                  _listarVehiculos
+                  0x000b7c                  _logearVehi
+                  0x001272                  _main
                   0x000682                  _mytext
                   0x000693                  _mytext1
-                  0x0006a4                  _obtenerVehisGrades
-                  0x000dc4                  _paqueteCorrecto
-                  0x001088                  _puts_lcd
+                  0x0006a4                  _obtenerVehisGrandes
+                  0x000f10                  _paqueteCorrecto
+                  0x0011de                  _puts_lcd
 
 Memory Configuration
 
@@ -1887,48 +1889,49 @@ __c30_signature
                     0x8682                  mytext
                     0x8693                  mytext1
 
-.text             0x0006a4        0xbd0
- .text            0x0006a4        0x8c0 build/default/debug/source/funciones.o
-                  0x0006a4                  obtenerVehisGrades
-                  0x0006e6                  hayVehiculos
-                  0x000742                  listarVehiculos
-                  0x0007f4                  PaqueteA
-                  0x00087a                  PaqueteC
-                  0x000900                  PaqueteD
-                  0x0009ae                  actualizoReloj
-                  0x000a7a                  accionarCamara
-                  0x000a88                  conseguirTimeStamp
-                  0x000acc                  logearVehi
-                  0x000b22                  actualizarInfo
-                  0x000c26                  chequearVelocidad
-                  0x000c38                  CalcVel
-                  0x000c60                  checkDST
-                  0x000c72                  checkSEC
-                  0x000c9e                  checkCMD
-                  0x000d08                  checkBCC
-                  0x000dc4                  paqueteCorrecto
-                  0x000dec                  limpiarPaquete
-                  0x000e10                  envioNACK
-                  0x000e8a                  envioACK
-                  0x000f04                  armarRespuesta
- .text            0x000f64        0x192 build/default/debug/source/lcd.o
-                  0x000f64                  Init_LCD
-                  0x000fec                  Update_Time
-                  0x00102e                  lcd_cmd
-                  0x001058                  lcd_data
-                  0x001088                  puts_lcd
-                  0x0010a8                  hexdec
- .text            0x0010f6         0xec build/default/debug/source/main.o
-                  0x0010f6                  ToggleTest
-                  0x00111c                  main
- .text            0x0011e2         0x92 build/default/debug/source/config.o
-                  0x0011e2                  InitUART2
-                  0x00121a                  config
+.text             0x0006a4        0xd2a
+ .text            0x0006a4        0xa16 build/default/debug/source/funciones.o
+                  0x0006a4                  obtenerVehisGrandes
+                  0x0006e6                  limpiarDataLogger
+                  0x00074c                  hayVehiculos
+                  0x0007a8                  listarVehiculos
+                  0x00085a                  PaqueteA
+                  0x0008e6                  PaqueteC
+                  0x000972                  PaqueteD
+                  0x000a28                  actualizoReloj
+                  0x000b2a                  accionarCamara
+                  0x000b38                  conseguirTimeStamp
+                  0x000b7c                  logearVehi
+                  0x000bd2                  actualizarInfo
+                  0x000d5a                  chequearVelocidad
+                  0x000d6c                  CalcVel
+                  0x000d94                  checkDST
+                  0x000da6                  checkSEC
+                  0x000dea                  checkCMD
+                  0x000e54                  checkBCC
+                  0x000f10                  paqueteCorrecto
+                  0x000f38                  limpiarPaquete
+                  0x000f5c                  envioNACK
+                  0x000fdc                  envioACK
+                  0x00105c                  armarRespuesta
+ .text            0x0010ba        0x192 build/default/debug/source/lcd.o
+                  0x0010ba                  Init_LCD
+                  0x001142                  Update_Time
+                  0x001184                  lcd_cmd
+                  0x0011ae                  lcd_data
+                  0x0011de                  puts_lcd
+                  0x0011fe                  hexdec
+ .text            0x00124c         0xee build/default/debug/source/main.o
+                  0x00124c                  ToggleTest
+                  0x001272                  main
+ .text            0x00133a         0x94 build/default/debug/source/config.o
+                  0x00133a                  InitUART2
+                  0x001372                  config
 
-.dinit            0x001274         0x48
- .dinit           0x001274         0x48 data_init
+.dinit            0x0013ce         0x48
+ .dinit           0x0013ce         0x48 data_init
 
-.text             0x0012bc         0x38
- .text            0x0012bc         0x38 build/default/debug/source/delay.o
-                  0x0012bc                  Delay
-                  0x0012d8                  Delay_Us
+.text             0x001416         0x38
+ .text            0x001416         0x38 build/default/debug/source/delay.o
+                  0x001416                  Delay
+                  0x001432                  Delay_Us

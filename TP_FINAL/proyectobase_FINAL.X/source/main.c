@@ -70,6 +70,7 @@ int main ( void )
     unsigned int ultSec = 0;
     
    	config();
+    limpiarDataLogger();
     
     //config timer 4 y 6
     //UART 9600 8n1
@@ -126,11 +127,11 @@ int main ( void )
       if (paqueteRecibido){
         if (paqueteCorrecto(ultSec)){
           armarRespuesta();
-          paqueteRecibido = 0;
         }
         else{
             envioNACK();              
         }
+        paqueteRecibido = 0;
         IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
         IFS1bits.U2TXIF = 1;
               
