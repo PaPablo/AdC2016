@@ -1,5 +1,5 @@
 // wait for 0 seconds, then packet "defgh"
 wait 0 sec
-06 44 45 46 47 48
+FE 08 03 02 00 46 01 50
 
 

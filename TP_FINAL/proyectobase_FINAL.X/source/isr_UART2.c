@@ -85,6 +85,7 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
     {
         iTx = 0;
         qty = aEnviar[POS_QTY];
+        U2TXREG = aEnviar[iTx++];
     }
     else
     {

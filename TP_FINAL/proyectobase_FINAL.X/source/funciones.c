@@ -13,6 +13,26 @@ extern int iData;
 extern int cantVehi;
 
 
+int armarCheksum(int inicio, int tope, char* arreglo){
+		int i;
+        int chk = 0;
+		if (tope % 2){
+			for (i = inicio; i < (tope-1); i++){
+				chk = chk + (arreglo[i] * 0x0100);
+				i++;
+				chk = chk + arreglo[i];
+			}
+			chk = chk + arreglo[i] * 0x100;
+		}
+		else{
+			for (i = inicio; i < tope; i++){
+				chk = chk + (arreglo[i] * 0x0100);
+				i++;
+				chk = chk + arreglo[i];
+			}
+		}
+		return chk;
+	}
 
 
 
@@ -42,37 +62,38 @@ void limpiarDataLogger(void){
 
 int hayVehiculos(char hora, int* pos){
     int i = 0;
-    int salgo = 0;
-    char horaReg;
-    while((dataLogger[i++].ejes > 0) && (salgo == 0)){
-        horaReg = (dataLogger[i].hora.h);
-        if (horaReg == hora){
-            salgo = 1;
+    _Bool siHay = 0;
+    while((dataLogger[i].ejes > 0) && (!siHay)){
+        if (dataLogger[i].hora.h == (unsigned char)hora){      //buscamos en el dataLogger si hay al menos un vehiculo registrado a la hora ingresada
+            siHay = 1;
             *pos = i;
         }
+        i++;
     }
-    return (salgo == 1);        //Si se cumple la condicion, es porque hay almenos un vehiculo
+    return (siHay);        //Si se cumple la condicion, es porque hay al menos un vehiculo
                                 //registrado que paso a la hora recibida.
 }
 
 
 void listarVehiculos(int hora, int pos, int* i){
-    int salgo = 0;
-    char horaReg;
+    _Bool salgo = 0;
+    int j = *i;
     while(!salgo){
-        horaReg = (dataLogger[pos].hora.h);
-        if (horaReg == hora){
-            aEnviar[*i++] = horaReg;                   //Hora
-            aEnviar[*i++] = (dataLogger[pos].hora.m);  //Minutos
-            aEnviar[*i++] = (dataLogger[pos].hora.s);  //Segundos
-            aEnviar[*i++] = dataLogger[pos].vel;
-            aEnviar[*i] = dataLogger[pos].ejes;
+        if (dataLogger[pos].hora.h == hora){
+            //tiramos al arreglo de carac a enviar los datos registrados
+            //de los vehiculos que pasaron en la hora ingresada
+            aEnviar[j++] = dataLogger[pos].hora.h;  //Hora
+            aEnviar[j++] = dataLogger[pos].hora.m;  //Minutos
+            aEnviar[j++] = dataLogger[pos].hora.s;  //Segundos
+            aEnviar[j++] = dataLogger[pos].vel;     //Velocidad
+            aEnviar[j] = dataLogger[pos].ejes;      //Ejes
         }
         else{
             salgo = 1;
         }
         pos++;
     }
+    *i = j;
 }
 
 
@@ -80,43 +101,36 @@ void listarVehiculos(int hora, int pos, int* i){
 
 void PaqueteA(void){
     aEnviar[0] = SOF;
-    aEnviar[1] = 8;
+    aEnviar[1] = QTY_PAQ;
     aEnviar[2] = recibido[POS_SRC];
     aEnviar[3] = DST;
     aEnviar[4] = recibido[POS_SEC];
     aEnviar[5] = recibido[POS_CMD];
     aEnviar[6] = cantVehi;
     
-    int i;
-    int acum = 0;
-    for (i = 0; i < 6; i++){
-        acum = acum + (aEnviar[i] * 0x0100);
-        i++;
-        acum = acum + aEnviar[i];
-    }
-    aEnviar[6] = acum / 100;
-    aEnviar[7] = acum % 100;
+    
+    int acum = armarCheksum(0, (QTY_PAQ - 2), aEnviar);
+
+	
+    aEnviar[QTY_PAQ - 2] = (acum / 0x0100) - 1;
+    aEnviar[QTY_PAQ - 1] = acum % 0x0100;
 }
 
 
 void PaqueteC(void){
     aEnviar[0] = SOF;
-    aEnviar[1] = 8;
+    aEnviar[1] = QTY_PAQ;
     aEnviar[2] = recibido[POS_SRC];
     aEnviar[3] = DST;
     aEnviar[4] = recibido[POS_SEC];
     aEnviar[5] = recibido[POS_CMD];
     aEnviar[6] = obtenerVehisGrandes();
     
-    int i;
-    int acum = 0;
-    for (i = 0; i < 6; i++){
-        acum = acum + (aEnviar[i] * 0x0100);
-        i++;
-        acum = acum + aEnviar[i];
-    }
-    aEnviar[6] = acum / 100;
-    aEnviar[7] = acum % 100;
+    int acum = armarCheksum(0, (QTY_PAQ - 2), aEnviar);
+
+
+    aEnviar[QTY_PAQ - 2] = (acum / 0x0100) - 1;
+    aEnviar[QTY_PAQ - 1] = acum % 0x0100;
 }
 
 
@@ -132,21 +146,17 @@ void PaqueteD(void){
         listarVehiculos(recibido[POS_CMD + 1], pos, &i);         // E/S int i, devuelve en donde se quedo el indice
     }
     else{
-        aEnviar[i] = 0;
+        aEnviar[i++] = 0;	//No se registraron vehiculo en la hora ingresada
     }
+    aEnviar[1] = i+2;     //QTY, el +2 se debe a los lugares para el checksum
     
-    int j;
-    int acum = 0;
-    for (j = 0; j < 6; j++){
-        acum = acum + (aEnviar[j] * 0x0100);
-        j++;
-        acum = acum + aEnviar[j];
-    }
-    aEnviar[i++] = acum / 100;
-    aEnviar[i] = acum % 100;
+    int acum = armarCheksum(0, i, aEnviar);
+	
+    aEnviar[i++] = (acum / 0x0100);
+    aEnviar[i++] = acum % 0x0100;
+    
+    
 }
-
-
 
 
 
@@ -167,24 +177,25 @@ void actualizoReloj(void){
     unsigned char minutos = (((linea_1[3] - OFFSET_CARAC) * 10) + (linea_1[4] - OFFSET_CARAC));
     unsigned char segundos = (((linea_1[6] - OFFSET_CARAC) * 10) + (linea_1[7] - OFFSET_CARAC));
     
-    if (segundos == 59){
-        if(minutos == 59){
-            if(horas == 23){
-                horas = 0;
-            }
-            else{
-                horas++;
-            }
-            minutos = 0;
-        }
-        else{
-            minutos++;
-        }
-        segundos = 0;        
-    }
-    else{
+    if (segundos < 59){
         segundos++;
     }
+    else{
+        segundos = 0;
+        if(minutos < 59){
+            minutos++;
+        }
+        else{
+            minutos = 0;
+            if(horas < 23){
+                horas++;
+            }
+            else{
+                horas = 0;
+            }
+        }
+    }
+   
     
     linea_1[0] = ((horas / 10) + OFFSET_CARAC);
     linea_1[1] = ((horas % 10) + OFFSET_CARAC);
@@ -206,9 +217,11 @@ void accionarCamara(void){
 
 
 void conseguirTimeStamp(HORARIO* ts){
-    (*ts).h = linea_1[0]*10 + linea_1[1];
-    (*ts).m = linea_1[3]*10 + linea_1[4]; //en las posiciones 2 y 5 estan los ':'
-    (*ts).s = linea_1[6]*10 + linea_1[7];
+    
+    (*ts).h = (((linea_1[0] - OFFSET_CARAC) * 10) + (linea_1[1] - OFFSET_CARAC));
+    (*ts).m = (((linea_1[3] - OFFSET_CARAC) * 10) + (linea_1[4] - OFFSET_CARAC));//en las posiciones 2 y 5 estan los ':'
+    (*ts).s = (((linea_1[6] - OFFSET_CARAC) * 10) + (linea_1[7] - OFFSET_CARAC));
+ 
 }
 
 
@@ -222,27 +235,27 @@ void logearVehi(HORARIO ts, int vel, int ejes){
 
 
 void actualizarInfo(HORARIO ts, int vel, int ejes){
-    linea_1[12] = (cantVehi / 1000);
-    linea_1[13] = ((cantVehi % 1000) / 100);
-    linea_1[14] = (((cantVehi % 1000) % 100) / 10);
-    linea_1[15] = (((cantVehi % 1000) % 100) % 10);
+    linea_1[12] = (cantVehi / 1000) + OFFSET_CARAC;
+    linea_1[13] = ((cantVehi % 1000) / 100) + OFFSET_CARAC;
+    linea_1[14] = (((cantVehi % 1000) % 100) / 10) + OFFSET_CARAC;
+    linea_1[15] = (((cantVehi % 1000) % 100) % 10) + OFFSET_CARAC;
     
-    linea_2[0] = (vel / 100);
-    linea_2[1] = ((vel % 100) / 10);
-    linea_2[2] = ((vel % 100) % 10);
+    linea_2[0] = (vel / 100) + OFFSET_CARAC;
+    linea_2[1] = ((vel % 100) / 10) + OFFSET_CARAC;
+    linea_2[2] = ((vel % 100) % 10) + OFFSET_CARAC;
     linea_2[3] = 'K';
     linea_2[4] = 'H';
     linea_2[5] = ' ';
-    linea_2[6] = ejes;
+    linea_2[6] = ejes + OFFSET_CARAC;
     linea_2[7] = ' ';
-    linea_2[8] = (ts.h) / 10;
-    linea_2[9] = (ts.h) % 10;
+    linea_2[8] = ((ts.h) / 10) + OFFSET_CARAC;
+    linea_2[9] = ((ts.h) % 10) + OFFSET_CARAC;
     linea_2[10] = ':'; 
-    linea_2[11] = (ts.m) / 10;
-    linea_2[12] = (ts.m) % 10;
+    linea_2[11] = ((ts.m) / 10) + OFFSET_CARAC;
+    linea_2[12] = ((ts.m) % 10) + OFFSET_CARAC;
     linea_2[13] = ':';
-    linea_2[14] = (ts.s) / 10;
-    linea_2[15] = (ts.s) % 10;
+    linea_2[14] = ((ts.s) / 10) + OFFSET_CARAC;
+    linea_2[15] = ((ts.s) % 10) + OFFSET_CARAC;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/
@@ -272,7 +285,7 @@ int checkDST(void){
 }
 
 
-int checkSEC(unsigned int *dirSec){
+int checkSEC(unsigned int* dirSec){
     if (*dirSec == SEC1){
         *dirSec = SEC2;
         return (recibido[POS_SEC] == (char)SEC2);
@@ -305,32 +318,15 @@ int checkCMD(void){
 
 int checkBCC(void){
     int qty = recibido[POS_QTY];
-    int checksum = (recibido[qty - 1] * 0x0100) + (recibido[qty]);
-    unsigned int acum = 0;
-    int i;
-    if (qty % 2){
-        for (i = 0; i < (qty-3); i++){
-            acum = acum + (recibido[i] * 0x0100);
-            i++;
-            acum = acum + recibido[i];
-            
-        }
-        acum = acum + recibido[i];
-    }
-    else{
-        for (i = 0; i < (qty-2); i++){
-            acum = acum + (recibido[i] * 0x0100);
-            i++;
-            acum = acum + recibido[i];
-        }
-    }
+    int checksum = (recibido[qty - 2] * 0x0100) + (recibido[qty-1]);
+    int acum = armarCheksum(0, (qty-2), recibido);
     
     return (acum == checksum);
         
 }
 
 int paqueteCorrecto(unsigned int sec){
-    return (checkDST() && checkSEC(&sec) && checkCMD() && checkBCC());
+    return (checkDST() && checkSEC(sec) && checkCMD() && checkBCC());
 }
 
 
@@ -343,42 +339,33 @@ void limpiarPaquete(char* cad, int tope){
 
 
 void envioNACK (void){
-    aEnviar[0] = 0x00FE;
-    aEnviar[1] = 8;
+    aEnviar[0] = SOF;
+    aEnviar[1] = QTY_ACK_NACK;
     aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
     aEnviar[3] = DST;
     aEnviar[4] = SEC_NACK;
     aEnviar[5] = CMD_NACK;
     
-    int i;
-    int acum = 0;
-    for (i = 0; i < 6; i++){
-        acum = acum + (aEnviar[i] * 0x0100);
-        i++;
-        acum = acum + aEnviar[i];
-    }
-    aEnviar[6] = acum / 100;
-    aEnviar[7] = acum % 100;
+    int acum = armarCheksum(0, (QTY_ACK_NACK - 2), aEnviar);
+   
+    aEnviar[QTY_ACK_NACK - 2] = (acum / 0x0100);
+    aEnviar[QTY_ACK_NACK - 1] = acum % 0x0100;
+    
 }
 
 
 void envioACK (void){
-    aEnviar[0] = 0x00FE;
-    aEnviar[1] = 8;
+    aEnviar[0] = SOF;
+    aEnviar[1] = QTY_ACK_NACK;
     aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
     aEnviar[3] = DST;
     aEnviar[4] = SEC_ACK;
     aEnviar[5] = CMD_ACK;
     
-    int i;
-    int acum = 0;
-    for (i = 0; i < 6; i++){
-        acum = acum + (aEnviar[i] * 0x0100);
-        i++;
-        acum = acum + aEnviar[i];
-    }
-    aEnviar[6] = acum / 100;
-    aEnviar[7] = acum % 100;
+    int acum = armarCheksum(0, (QTY_ACK_NACK - 2), aEnviar);
+	
+    aEnviar[QTY_ACK_NACK - 2] = (acum / 0x0100);
+    aEnviar[QTY_ACK_NACK - 1] = acum % 0x0100;
 }
 
 
@@ -388,8 +375,8 @@ void armarRespuesta(void){
             PaqueteA();
             break;
         case (CMD_2):
-            limpiarDataLogger();
             envioACK();
+            limpiarDataLogger();
             break;
         case (CMD_3):
             PaqueteC();

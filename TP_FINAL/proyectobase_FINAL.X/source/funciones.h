@@ -1,3 +1,5 @@
+int armarCheksum(int inicio, int tope, char* arreglo);
+
 int obtenerVehisGrandes(void);
 
 void limpiarDataLogger(void);

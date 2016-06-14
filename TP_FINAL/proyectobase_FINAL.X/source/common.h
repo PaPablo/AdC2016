@@ -16,12 +16,15 @@
 
 #define ValPR4	39062
 #define ValPR6	39062
+
 #define FCY 40000000
 #define BAUDRATE 9600
 #define BRGVAL ((FCY / BAUDRATE) / 16) -1
 #define ESPERA_1BIT (1/BAUDRATE)
 #define CANT_BITSxBYTE 10
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
+
+
 #define SOF 0x00FE
 
 #define CMD_1                   'A'
@@ -32,6 +35,8 @@
 #define CMD_6                   'F'
 #define CMD_7                   'G'
 
+#define QTY_PAQ                 9
+#define QTY_ACK_NACK            8
 
 #define POS_QTY                 1
 #define POS_DST                 2

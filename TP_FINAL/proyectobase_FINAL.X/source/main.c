@@ -41,7 +41,7 @@ extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respu
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
 
-unsigned char linea_1[MAX_LCD] = "00:00:00        ";
+unsigned char linea_1[MAX_LCD] = "21:38:49        ";
 unsigned char linea_2[MAX_LCD] = "                ";
 
 VEHICULOS dataLogger[MAX_VEHI];
@@ -64,7 +64,7 @@ int main ( void )
 {
     
     int ejes;
-    int velocidad;
+    unsigned int velocidad;
     HORARIO timeStamp;
     
     unsigned int ultSec = 0;
@@ -116,6 +116,7 @@ int main ( void )
         while(PORTDbits.RD13){  //preguntamos si sigue activo el lazo
             if(PORTDbits.RD6){  //contamos los ejes
                 ejes++;
+                while(PORTDbits.RD6);   //Esperamos a que pase el eje, para no contar repetidas veces un solo eje
             }
         }
         
@@ -125,7 +126,7 @@ int main ( void )
 
 	  }
       if (paqueteRecibido){
-        if (paqueteCorrecto(ultSec)){
+        if (paqueteCorrecto(&ultSec)){
           armarRespuesta();
         }
         else{
