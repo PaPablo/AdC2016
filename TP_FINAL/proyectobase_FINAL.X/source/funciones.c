@@ -275,20 +275,7 @@ void chequearVelocidad (unsigned int vel){
 }
 
 
-unsigned int CalcVel (unsigned int cant){
-    /*double fcy = 40000000.0;
-    unsigned long int valpr = 39062;
-    unsigned long int tmr1 = TMR1;
-    double tmr_4 = 0;
-    //double tmr_4 = ((tmr1 * 256)/40.0);
-    unsigned long int interrp_tmr4 = 7;
-    unsigned long int tiempo_total = tmr_4 + interrp_tmr4;
-    unsigned long int velocidad_m_s = DISTANCIA_SENSORES / tiempo_total;
-    unsigned long int velocidad_k_h = (velocidad_m_s * (3600/1000));
-    return (unsigned int)velocidad_k_h;*/
-    
-    return (DISTANCIA_SENSORES / ((cant * (ValPR4 * 256 / FCY)) + (TMR4 * 256 / FCY)) * (3600/1000));
-}
+
 
 
 int checkDST(void){
@@ -311,7 +298,15 @@ int checkSEC(unsigned int* dirSec){
     }
 }
 
-
+float CalcVel (unsigned int cant){
+    float tR = 256.0/FCY;
+    unsigned int tmr = TMR1;
+    float t1 = (cant * (ValPR4 * tR));
+    float t2 = (tmr * tR);
+    float kmh = (3600/1000);
+    float  velocidad = ((float)DISTANCIA_SENSORES / (t1+t2)) * kmh;
+    return velocidad;
+}
 int checkCMD(void){
     if( (recibido[POS_CMD] == CMD_1) || (recibido[POS_CMD] == CMD_2) || (recibido[POS_CMD] == CMD_3) || (recibido[POS_CMD] == CMD_5) || (recibido[POS_CMD] == CMD_6) || (recibido[POS_CMD] == CMD_7) ){
         return 1;

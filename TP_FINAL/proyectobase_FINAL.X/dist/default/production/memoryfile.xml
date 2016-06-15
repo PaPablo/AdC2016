@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/debug/proyectobase_FINAL.X.debug.cof">
+  <executable name="dist/default/production/proyectobase_FINAL.X.production.cof">
     <memory name="data">
       <units>bytes</units>
       <length>30720</length>
@@ -11,8 +11,8 @@
     <memory name="program">
       <units>bytes</units>
       <length>261888</length>
-      <used>7287</used>
-      <free>254601</free>
+      <used>7245</used>
+      <free>254643</free>
     </memory>
   </executable>
 </project>

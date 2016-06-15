@@ -64,7 +64,7 @@ int main ( void )
 {
     
     int ejes;
-    unsigned int velocidad;
+    float velocidad;
     HORARIO timeStamp;
     
     unsigned int ultSec = 0;

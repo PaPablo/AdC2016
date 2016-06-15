@@ -1,4 +1,4 @@
-build/default/debug/source/main.o:  \
+build/default/production/source/main.o:  \
 source/main.c  \
 source/common.h  \
  source/confbits.h  \
