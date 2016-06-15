@@ -13,10 +13,10 @@ unsigned int seg = 0;
 
 Comments: 39062
 -----------------------------------------------------------------------*/
-void __attribute__((interrupt, auto_psv)) _T4Interrupt( void )
+void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
 {
 	/* reset Timer 4 interrupt flag */
- 	IFS1bits.T4IF = 0;
+ 	IFS0bits.T1IF = 0;
 	cont_tmr4++;
     
     
@@ -30,21 +30,21 @@ void __attribute__((interrupt, auto_psv)) _T4Interrupt( void )
 void Init_Timer4( void )
 {
 	/* ensure Timer 4 is in reset state */
-	T4CON = 0;
-	T4CONbits.TCKPS = 3; //Prescaler 256
+	T1CON = 0;
+	T1CONbits.TCKPS = 3; //Prescaler 256
 
 	/* reset Timer 4 interrupt flag */
- 	IFS1bits.T4IF = 0;
+ 	IFS0bits.T1IF = 0;
  	
  	/* set Timer interrupt priority level */
-	IPC6bits.T4IP = 5;
+	IPC0bits.T1IP = 5;
 
 	/* enable Timer interrupt */
- 	IEC1bits.T4IE = 1;
+ 	IEC0bits.T1IE = 1;
  	  	
 	/* set Timer period register */
-	PR4 = ValPR4;
-	T4CONbits.TON = 1; 	//habilito Timer
+	PR1 = ValPR4;
+	T1CONbits.TON = 1; 	//habilito Timer
 
 }
 

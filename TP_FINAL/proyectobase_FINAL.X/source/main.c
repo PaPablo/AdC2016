@@ -101,6 +101,7 @@ int main ( void )
 	  if (seg == 4){
           seg = 0;
           actualizoReloj();
+          
       }
 
   	  if( PORTDbits.RD13 ) 
@@ -108,10 +109,16 @@ int main ( void )
         conseguirTimeStamp(&timeStamp);
         cantVehi++;
         while(!PORTDbits.RD6);  //primer sensor
+        cont_tmr4 = 0;
         T4CONbits.TON = 1;
         while(!PORTDbits.RD7);  //segundo sensor
         T4CONbits.TON = 0;
+      
         velocidad = CalcVel(cont_tmr4);
+        //CNEN1bits.
+        
+        
+        
         ejes = 1;
         while(PORTDbits.RD13){  //preguntamos si sigue activo el lazo
             if(PORTDbits.RD6){  //contamos los ejes
