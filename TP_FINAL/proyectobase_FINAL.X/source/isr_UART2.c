@@ -123,6 +123,7 @@ void __attribute__ ((__interrupt__)) _CNInterrupt(void)
             }
         }
     else{       //se deja de detectar el vehiculo
+        conseguirTimeStamp(&nuevoVehi.hora);
         chequearVelocidad(nuevoVehi.vel);   //acciona camar si velocidad >60km/h
         logearVehi(nuevoVehi);              //registra vehiculo en el logger
         actualizarInfo(nuevoVehi);          //Se actualiza el LCD

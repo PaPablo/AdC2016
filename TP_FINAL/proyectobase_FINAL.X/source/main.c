@@ -40,7 +40,7 @@ extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respu
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
 
-unsigned char linea_1[MAX_LCD] = "21:38:49        ";
+unsigned char linea_1[MAX_LCD] = "21:38:12        ";
 unsigned char linea_2[MAX_LCD] = "                ";
 
 VEHICULOS dataLogger[MAX_VEHI];

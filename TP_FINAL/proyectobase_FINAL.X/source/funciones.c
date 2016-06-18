@@ -94,7 +94,7 @@ void listarVehiculos(int hora, int pos, int* i){
             aEnviar[j++] = dataLogger[pos].hora.m;  //Minutos
             aEnviar[j++] = dataLogger[pos].hora.s;  //Segundos
             aEnviar[j++] = dataLogger[pos].vel;     //Velocidad
-            aEnviar[j] = dataLogger[pos].ejes;      //Ejes
+            aEnviar[j++] = dataLogger[pos].ejes;      //Ejes
         }
         else{
             salgo = 1;
@@ -253,7 +253,7 @@ void actualizarInfo(VEHICULOS vehi){
     linea_2[3] = 'K';
     linea_2[4] = 'H';
     linea_2[5] = ' ';
-    linea_2[6] = vehi.vel + OFFSET_CARAC;
+    linea_2[6] = vehi.ejes + OFFSET_CARAC;
     linea_2[7] = ' ';
     linea_2[8] = ((vehi.hora.h) / 10) + OFFSET_CARAC;
     linea_2[9] = ((vehi.hora.h) % 10) + OFFSET_CARAC;
