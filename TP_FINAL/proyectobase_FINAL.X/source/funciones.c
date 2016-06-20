@@ -261,8 +261,8 @@ void actualizarInfo(VEHICULOS vehi){
     linea_2[11] = ((vehi.hora.m) / 10) + OFFSET_CARAC;
     linea_2[12] = ((vehi.hora.m) % 10) + OFFSET_CARAC;
     linea_2[13] = ':';
-    linea_2[14] = ((vehi.hora.m) / 10) + OFFSET_CARAC;
-    linea_2[15] = ((vehi.hora.m) % 10) + OFFSET_CARAC;
+    linea_2[14] = ((vehi.hora.s) / 10) + OFFSET_CARAC;
+    linea_2[15] = ((vehi.hora.s) % 10) + OFFSET_CARAC;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/
@@ -305,11 +305,12 @@ int checkSEC(unsigned int* dirSec){
     }
 }
 
-float CalcVel (unsigned int cant){
+unsigned char CalcVel (unsigned int cant){
+    
     /*float tR = 256.0/(float)FCY;
     float tmr = (float)TMR4;
-    float t1 = ((float)cant * ((float)ValPR4 * tR));
-    float t2 = (float)(tmr * tR);
+    float t1 = (cant * ((float)ValPR4 * TMR4));
+    float t2 = (float)(tmr * TMR4);
     float kmh = (float)(3600/1000);
     float dist = (10.0 / ((float)DISTANCIA_SENSORES));
     float tFinal = t1+t2;
