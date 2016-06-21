@@ -34,14 +34,13 @@ const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
 const char mytext1[] =  "Pulsar S3       ";
 
 extern int paqueteRecibido;         //Bandera para indicar que se completo de recibir un paquete
-extern int cont_tmr4;               //Contador del TMR utilizado para calcular la velocidad de un vehiculo
 extern char recibido[MAX_RX];       //Arreglo para armar paquete recibido
 extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respuesta)
 
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
 
-unsigned char linea_1[MAX_LCD] = "21:38:49        ";
+unsigned char linea_1[MAX_LCD] = "21:38:12        ";
 unsigned char linea_2[MAX_LCD] = "                ";
 
 VEHICULOS dataLogger[MAX_VEHI];
@@ -63,9 +62,7 @@ void ToggleTest (void)
 int main ( void )
 {
     
-    int ejes;
-    float velocidad;
-    HORARIO timeStamp;
+    limpiarRegVehi();
     
     unsigned int ultSec = 0;
     
@@ -97,41 +94,7 @@ int main ( void )
 
 	 /* Loop infinito */
     while ( 1 ) 
-    { 
-	  if (seg == 4){
-          seg = 0;
-          actualizoReloj();
-          
-      }
-
-  	  if( PORTDbits.RD13 ) 
-  	  {
-        conseguirTimeStamp(&timeStamp);
-        cantVehi++;
-        while(!PORTDbits.RD6);  //primer sensor
-        cont_tmr4 = 0;
-        T4CONbits.TON = 1;
-        while(!PORTDbits.RD7);  //segundo sensor
-        T4CONbits.TON = 0;
-      
-        velocidad = CalcVel(cont_tmr4);
-        //CNEN1bits.
-        
-        
-        
-        ejes = 1;
-        while(PORTDbits.RD13){  //preguntamos si sigue activo el lazo
-            if(PORTDbits.RD6){  //contamos los ejes
-                ejes++;
-                while(PORTDbits.RD6);   //Esperamos a que pase el eje, para no contar repetidas veces un solo eje
-            }
-        }
-        
-        chequearVelocidad(velocidad);                  //acciona camar si velocidad >60km/h
-        logearVehi(timeStamp, velocidad, ejes);        //registra vehiculo en el logger
-        actualizarInfo(timeStamp, velocidad, ejes);    //actualizar info en LCD
-
-	  }
+    {    
       if (paqueteRecibido){
         if (paqueteCorrecto(&ultSec)){
           armarRespuesta();

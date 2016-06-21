@@ -50,6 +50,13 @@ void InitUART2(void)
 							// para asegurar que la deteccion del bit de comienzo
 }
 
+void Init_CNInterrupt(void){
+    CNEN1bits.CN15IE = 1; //CN15 - RD6
+    CNEN2bits.CN16IE = 1; //CN16 - RD7
+    CNEN2bits.CN19IE = 1; //CN19 - RD13
+    IEC1bits.CNIE = 1;
+    IFS1bits.CNIF = 0;
+}
 
 
 
@@ -99,18 +106,17 @@ void config( void )
 	/* Initialize UART2*/
 	InitUART2();
 
-	/* Initialize ADC  */
-	//Init_ADC();
-
 	/* Inicializar Timers necesarios */
 	Init_Timer4();
     Init_Timer6();
     
+    /* Inicializar Change Notification*/
+    Init_CNInterrupt();
     
     TRISAbits.TRISA0 = 0;
-    //RA0 como salida
+    //RA0 como output
     TRISD = 0x20C0;
-    //RD6, 7 y 13 como entrada
+    //RD6, 7 y 13 como input
 
 #ifdef USAR_LCD
 	/* Inicializar LCD Display */

@@ -17,7 +17,7 @@
 #define ValPR4	39062
 #define ValPR6	39062
 
-#define FCY 40000000
+#define FCY 40000000.0
 #define BAUDRATE 9600
 #define BRGVAL ((FCY / BAUDRATE) / 16) -1
 #define ESPERA_1BIT (1/BAUDRATE)
@@ -52,7 +52,7 @@
 #define CMD_NACK                0x47
 
 
-#define DISTANCIA_SENSORES      0.3
+#define DISTANCIA_SENSORES      30
 
 #define OFFSET_CARAC            0x30
 

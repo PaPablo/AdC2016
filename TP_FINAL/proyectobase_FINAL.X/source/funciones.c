@@ -12,6 +12,8 @@ extern VEHICULOS dataLogger[];
 extern int iData;
 extern int cantVehi;
 
+extern VEHICULOS nuevoVehi;
+
 
 int armarCheksum(int inicio, int tope, char* arreglo){
 		int i;
@@ -34,7 +36,13 @@ int armarCheksum(int inicio, int tope, char* arreglo){
 		return chk;
 	}
 
-
+void limpiarRegVehi(void){
+    nuevoVehi.ejes = 0;
+    nuevoVehi.vel = 0;
+    nuevoVehi.hora.h = 0;
+    nuevoVehi.hora.m = 0;
+    nuevoVehi.hora.s = 0;
+}
 
 int obtenerVehisGrandes(void){
     int i = 0;
@@ -86,7 +94,7 @@ void listarVehiculos(int hora, int pos, int* i){
             aEnviar[j++] = dataLogger[pos].hora.m;  //Minutos
             aEnviar[j++] = dataLogger[pos].hora.s;  //Segundos
             aEnviar[j++] = dataLogger[pos].vel;     //Velocidad
-            aEnviar[j] = dataLogger[pos].ejes;      //Ejes
+            aEnviar[j++] = dataLogger[pos].ejes;      //Ejes
         }
         else{
             salgo = 1;
@@ -225,37 +233,36 @@ void conseguirTimeStamp(HORARIO* ts){
 }
 
 
-void logearVehi(HORARIO ts, unsigned int vel, int ejes){
+void logearVehi(VEHICULOS vehi){
     
-    dataLogger[iData].hora = ts; 
-    dataLogger[iData].vel = vel;
-    dataLogger[iData].ejes = ejes;
+    dataLogger[iData] = vehi;
     iData++;
+    cantVehi++;
 }
 
 
-void actualizarInfo(HORARIO ts, unsigned int vel, int ejes){
+void actualizarInfo(VEHICULOS vehi){
     linea_1[12] = (cantVehi / 1000) + OFFSET_CARAC;
     linea_1[13] = ((cantVehi % 1000) / 100) + OFFSET_CARAC;
     linea_1[14] = (((cantVehi % 1000) % 100) / 10) + OFFSET_CARAC;
     linea_1[15] = (((cantVehi % 1000) % 100) % 10) + OFFSET_CARAC;
     
-    linea_2[0] = (vel / 100) + OFFSET_CARAC;
-    linea_2[1] = ((vel % 100) / 10) + OFFSET_CARAC;
-    linea_2[2] = ((vel % 100) % 10) + OFFSET_CARAC;
+    linea_2[0] = (vehi.vel / 100) + OFFSET_CARAC;
+    linea_2[1] = ((vehi.vel % 100) / 10) + OFFSET_CARAC;
+    linea_2[2] = ((vehi.vel % 100) % 10) + OFFSET_CARAC;
     linea_2[3] = 'K';
     linea_2[4] = 'H';
     linea_2[5] = ' ';
-    linea_2[6] = ejes + OFFSET_CARAC;
+    linea_2[6] = vehi.ejes + OFFSET_CARAC;
     linea_2[7] = ' ';
-    linea_2[8] = ((ts.h) / 10) + OFFSET_CARAC;
-    linea_2[9] = ((ts.h) % 10) + OFFSET_CARAC;
+    linea_2[8] = ((vehi.hora.h) / 10) + OFFSET_CARAC;
+    linea_2[9] = ((vehi.hora.h) % 10) + OFFSET_CARAC;
     linea_2[10] = ':'; 
-    linea_2[11] = ((ts.m) / 10) + OFFSET_CARAC;
-    linea_2[12] = ((ts.m) % 10) + OFFSET_CARAC;
+    linea_2[11] = ((vehi.hora.m) / 10) + OFFSET_CARAC;
+    linea_2[12] = ((vehi.hora.m) % 10) + OFFSET_CARAC;
     linea_2[13] = ':';
-    linea_2[14] = ((ts.s) / 10) + OFFSET_CARAC;
-    linea_2[15] = ((ts.s) % 10) + OFFSET_CARAC;
+    linea_2[14] = ((vehi.hora.s) / 10) + OFFSET_CARAC;
+    linea_2[15] = ((vehi.hora.s) % 10) + OFFSET_CARAC;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/
@@ -298,14 +305,19 @@ int checkSEC(unsigned int* dirSec){
     }
 }
 
-float CalcVel (unsigned int cant){
-    float tR = 256.0/FCY;
-    unsigned int tmr = TMR1;
-    float t1 = (cant * (ValPR4 * tR));
-    float t2 = (tmr * tR);
-    float kmh = (3600/1000);
-    float  velocidad = ((float)DISTANCIA_SENSORES / (t1+t2)) * kmh;
-    return velocidad;
+unsigned char CalcVel (unsigned int cant){
+    
+    /*float tR = 256.0/(float)FCY;
+    float tmr = (float)TMR4;
+    float t1 = (cant * ((float)ValPR4 * TMR4));
+    float t2 = (float)(tmr * TMR4);
+    float kmh = (float)(3600/1000);
+    float dist = (10.0 / ((float)DISTANCIA_SENSORES));
+    float tFinal = t1+t2;
+    float mtss = (float)((0.3)/((float)tFinal));
+    float velocidad = ((float)mtss*kmh);
+    return velocidad;*/
+    return 0;
 }
 int checkCMD(void){
     if( (recibido[POS_CMD] == CMD_1) || (recibido[POS_CMD] == CMD_2) || (recibido[POS_CMD] == CMD_3) || (recibido[POS_CMD] == CMD_5) || (recibido[POS_CMD] == CMD_6) || (recibido[POS_CMD] == CMD_7) ){

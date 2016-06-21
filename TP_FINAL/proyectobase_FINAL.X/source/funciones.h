@@ -1,5 +1,7 @@
 int armarCheksum(int inicio, int tope, char* arreglo);
 
+void limpiarRegVehi(void);
+
 int obtenerVehisGrandes(void);
 
 void limpiarDataLogger(void);
@@ -20,11 +22,11 @@ void accionarCamara(void);
 
 void conseguirTimeStamp(HORARIO* ts);
 
-void logearVehi(HORARIO ts, int vel, int ejes);
+void logearVehi(VEHICULOS vehi);
 
-void actualizarInfo(HORARIO ts, int vel, int ejes);
+void actualizarInfo(VEHICULOS vehi);
 
-void chequearVelocidad (int vel);
+void chequearVelocidad (unsigned int vel);
 
 int CalcVel (int cant);
 
@@ -36,7 +38,7 @@ int checkCMD(void);
 
 int checkBCC(void);
 
-int paqueteCorrecto(int sec);
+int paqueteCorrecto(unsigned int sec);
 
 void limpiarPaquete(char* cad, int tope);
 

@@ -1,6 +1,7 @@
 #include "p33FJ256GP710.h"
 #include "config.h"
 #include "common.h"
+#include "funciones.h"
 
 
 unsigned int cont_tmr4 = 0;
@@ -13,10 +14,10 @@ unsigned int seg = 0;
 
 Comments: 39062
 -----------------------------------------------------------------------*/
-void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
+void __attribute__((interrupt, auto_psv)) _T4Interrupt( void )
 {
 	/* reset Timer 4 interrupt flag */
- 	IFS0bits.T1IF = 0;
+ 	IFS1bits.T4IF = 0;
 	cont_tmr4++;
     
     
@@ -30,21 +31,21 @@ void __attribute__((interrupt, auto_psv)) _T1Interrupt( void )
 void Init_Timer4( void )
 {
 	/* ensure Timer 4 is in reset state */
-	T1CON = 0;
-	T1CONbits.TCKPS = 3; //Prescaler 256
+	T4CON = 0;
+	T4CONbits.TCKPS = 3; //Prescaler 256
 
 	/* reset Timer 4 interrupt flag */
- 	IFS0bits.T1IF = 0;
+ 	IFS1bits.T4IF = 0;
  	
  	/* set Timer interrupt priority level */
-	IPC0bits.T1IP = 5;
+	IPC6bits.T4IP = 5;
 
 	/* enable Timer interrupt */
- 	IEC0bits.T1IE = 1;
+ 	IEC1bits.T4IE = 1;
  	  	
 	/* set Timer period register */
-	PR1 = ValPR4;
-	T1CONbits.TON = 1; 	//habilito Timer
+	PR4 = ValPR4;
+	T4CONbits.TON = 1; 	//habilito Timer
 
 }
 
@@ -58,7 +59,11 @@ void __attribute__((interrupt, auto_psv)) _T6Interrupt( void )
 {
 	/* reset Timer 6 interrupt flag */
  	IFS2bits.T6IF = 0;
-    seg++;   
+    seg++;  
+    if (seg == 4){
+        seg = 0;
+        actualizoReloj();
+    }
 
 }
 

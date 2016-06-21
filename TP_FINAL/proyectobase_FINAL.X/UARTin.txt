@@ -1,12 +1,6 @@
 // wait for 0 seconds, then packet "abc"
 wait 0 sec
 
-FE 08 03 02 80 47 81 51
+FE 09 03 02 80 44 15 96 4F
 
 
-
-
-
-FE08
-0302
-8045
