@@ -1,3 +1,5 @@
+void ToggleTest (void);
+
 int armarCheksum(int inicio, int tope, char* arreglo);
 
 void limpiarRegVehi(void);

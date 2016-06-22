@@ -34,7 +34,6 @@ char aEnviar[MAX_TX];
 
 int iRx, iTx;
 int qty = 0;
-_Bool pasaVehi = 0;
 VEHICULOS nuevoVehi;
 extern int cont_tmr4;               //Contador del TMR utilizado para calcular la velocidad de un vehiculo
 
@@ -43,8 +42,9 @@ extern int cont_tmr4;               //Contador del TMR utilizado para calcular l
 void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
 {
 	IFS1bits.U2RXIF = 0;
+    LATAbits.LATA0 = 1;
     
-    if ( (U2RXREG == SOF) && (recibido[0] != SOF) )
+    if ( (U2RXREG == (char)SOF) && (recibido[0] != (char)SOF) )
     {
         iRx = 0;
         recibido[iRx++] = U2RXREG;
@@ -100,6 +100,7 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
         IEC1bits.U2TXIE = 0;    //Cuando termina de enviar el paquete de respuesta
         IEC1bits.U2RXIE = 1;    //volvemos a recibir datos
         limpiarPaquete(recibido, MAX_RX);
+        __builtin_btg((unsigned int *)&LATA, 4);
     }
 }
 
@@ -110,7 +111,9 @@ void __attribute__ ((__interrupt__)) _CNInterrupt(void)
     IFS1bits.CNIF = 0; 
     
     if(PORTDbits.RD13){             //el lazo detecta el vehiculo
+        __builtin_btg((unsigned int *)&LATA, 3);
             if(PORTDbits.RD6){          //se pisa el primer piezoelectrico
+                __builtin_btg((unsigned int *)&LATA, 2);
                 if(!nuevoVehi.ejes){        //si es la primera vez que lo pisa (ruedas delanteras)
                     cont_tmr4 = 0;              //empieza a correr el timer
                     T4CONbits.TON = 1;
@@ -120,9 +123,11 @@ void __attribute__ ((__interrupt__)) _CNInterrupt(void)
             else if ((PORTDbits.RD7) && (T4CONbits.TON)){   //el RD7 nos interesa solamente para el calculo de la velocidad
                 T4CONbits.TON = 0;
                 nuevoVehi.vel = CalcVel(cont_tmr4);
+                __builtin_btg((unsigned int *)&LATA, 2);
             }
         }
     else{       //se deja de detectar el vehiculo
+        __builtin_btg((unsigned int *)&LATA, 3);
         conseguirTimeStamp(&nuevoVehi.hora);
         chequearVelocidad(nuevoVehi.vel);   //acciona camar si velocidad >60km/h
         logearVehi(nuevoVehi);              //registra vehiculo en el logger

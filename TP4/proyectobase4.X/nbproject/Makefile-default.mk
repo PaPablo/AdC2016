@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c source/isr_timer46.c
+SOURCEFILES_QUOTED_IF_SPACED=../../TP_FINAL/proyectobase_FINAL.X/source/config.c ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c ../../TP_FINAL/proyectobase_FINAL.X/source/main.c ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o ${OBJECTDIR}/source/isr_timer46.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/source/config.o.d ${OBJECTDIR}/source/delay.o.d ${OBJECTDIR}/source/isr_UART2.o.d ${OBJECTDIR}/source/lcd.o.d ${OBJECTDIR}/source/main.o.d ${OBJECTDIR}/source/isr_timer46.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/483565385/config.o ${OBJECTDIR}/_ext/483565385/delay.o ${OBJECTDIR}/_ext/483565385/funciones.o ${OBJECTDIR}/_ext/483565385/isr_ADC.o ${OBJECTDIR}/_ext/483565385/isr_UART2.o ${OBJECTDIR}/_ext/483565385/isr_timer46.o ${OBJECTDIR}/_ext/483565385/lcd.o ${OBJECTDIR}/_ext/483565385/main.o ${OBJECTDIR}/_ext/483565385/traps.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/483565385/config.o.d ${OBJECTDIR}/_ext/483565385/delay.o.d ${OBJECTDIR}/_ext/483565385/funciones.o.d ${OBJECTDIR}/_ext/483565385/isr_ADC.o.d ${OBJECTDIR}/_ext/483565385/isr_UART2.o.d ${OBJECTDIR}/_ext/483565385/isr_timer46.o.d ${OBJECTDIR}/_ext/483565385/lcd.o.d ${OBJECTDIR}/_ext/483565385/main.o.d ${OBJECTDIR}/_ext/483565385/traps.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/source/config.o ${OBJECTDIR}/source/delay.o ${OBJECTDIR}/source/isr_UART2.o ${OBJECTDIR}/source/lcd.o ${OBJECTDIR}/source/main.o ${OBJECTDIR}/source/isr_timer46.o
+OBJECTFILES=${OBJECTDIR}/_ext/483565385/config.o ${OBJECTDIR}/_ext/483565385/delay.o ${OBJECTDIR}/_ext/483565385/funciones.o ${OBJECTDIR}/_ext/483565385/isr_ADC.o ${OBJECTDIR}/_ext/483565385/isr_UART2.o ${OBJECTDIR}/_ext/483565385/isr_timer46.o ${OBJECTDIR}/_ext/483565385/lcd.o ${OBJECTDIR}/_ext/483565385/main.o ${OBJECTDIR}/_ext/483565385/traps.o
 
 # Source Files
-SOURCEFILES=source/config.c source/delay.c source/isr_UART2.c source/lcd.c source/main.c source/isr_timer46.c
+SOURCEFILES=../../TP_FINAL/proyectobase_FINAL.X/source/config.c ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c ../../TP_FINAL/proyectobase_FINAL.X/source/main.c ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c
 
 
 CFLAGS=
@@ -82,90 +82,132 @@ MP_LINKER_FILE_OPTION=,--script=p33FJ256GP710.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/source/config.o: source/config.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/config.o.d 
-	@${RM} ${OBJECTDIR}/source/config.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/config.c  -o ${OBJECTDIR}/source/config.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/config.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/config.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/config.o: ../../TP_FINAL/proyectobase_FINAL.X/source/config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/config.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/config.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/config.c  -o ${OBJECTDIR}/_ext/483565385/config.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/config.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/config.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/delay.o: source/delay.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/delay.o.d 
-	@${RM} ${OBJECTDIR}/source/delay.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/delay.c  -o ${OBJECTDIR}/source/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/delay.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/delay.o: ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/delay.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/delay.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c  -o ${OBJECTDIR}/_ext/483565385/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/delay.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/isr_UART2.o: source/isr_UART2.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/isr_UART2.o.d 
-	@${RM} ${OBJECTDIR}/source/isr_UART2.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_UART2.c  -o ${OBJECTDIR}/source/isr_UART2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_UART2.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/isr_UART2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/funciones.o: ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/funciones.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/funciones.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c  -o ${OBJECTDIR}/_ext/483565385/funciones.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/funciones.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/funciones.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/lcd.o: source/lcd.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/lcd.o.d 
-	@${RM} ${OBJECTDIR}/source/lcd.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/lcd.c  -o ${OBJECTDIR}/source/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/lcd.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_ADC.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_ADC.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_ADC.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c  -o ${OBJECTDIR}/_ext/483565385/isr_ADC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_ADC.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_ADC.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/main.o: source/main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/main.o.d 
-	@${RM} ${OBJECTDIR}/source/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/main.c  -o ${OBJECTDIR}/source/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_UART2.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_UART2.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_UART2.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c  -o ${OBJECTDIR}/_ext/483565385/isr_UART2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_UART2.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_UART2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/isr_timer46.o: source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/isr_timer46.o.d 
-	@${RM} ${OBJECTDIR}/source/isr_timer46.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_timer46.c  -o ${OBJECTDIR}/source/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_timer46.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_timer46.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_timer46.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_timer46.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c  -o ${OBJECTDIR}/_ext/483565385/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_timer46.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/lcd.o: ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/lcd.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c  -o ${OBJECTDIR}/_ext/483565385/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/lcd.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/main.o: ../../TP_FINAL/proyectobase_FINAL.X/source/main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/main.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/main.c  -o ${OBJECTDIR}/_ext/483565385/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/traps.o: ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/traps.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/traps.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c  -o ${OBJECTDIR}/_ext/483565385/traps.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/traps.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/traps.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
-${OBJECTDIR}/source/config.o: source/config.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/config.o.d 
-	@${RM} ${OBJECTDIR}/source/config.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/config.c  -o ${OBJECTDIR}/source/config.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/config.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/config.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/config.o: ../../TP_FINAL/proyectobase_FINAL.X/source/config.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/config.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/config.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/config.c  -o ${OBJECTDIR}/_ext/483565385/config.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/config.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/config.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/delay.o: source/delay.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/delay.o.d 
-	@${RM} ${OBJECTDIR}/source/delay.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/delay.c  -o ${OBJECTDIR}/source/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/delay.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/delay.o: ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/delay.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/delay.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/delay.c  -o ${OBJECTDIR}/_ext/483565385/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/delay.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/isr_UART2.o: source/isr_UART2.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/isr_UART2.o.d 
-	@${RM} ${OBJECTDIR}/source/isr_UART2.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_UART2.c  -o ${OBJECTDIR}/source/isr_UART2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_UART2.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/isr_UART2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/funciones.o: ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/funciones.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/funciones.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/funciones.c  -o ${OBJECTDIR}/_ext/483565385/funciones.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/funciones.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/funciones.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/lcd.o: source/lcd.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/lcd.o.d 
-	@${RM} ${OBJECTDIR}/source/lcd.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/lcd.c  -o ${OBJECTDIR}/source/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/lcd.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_ADC.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_ADC.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_ADC.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_ADC.c  -o ${OBJECTDIR}/_ext/483565385/isr_ADC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_ADC.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_ADC.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/main.o: source/main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/main.o.d 
-	@${RM} ${OBJECTDIR}/source/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/main.c  -o ${OBJECTDIR}/source/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/main.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_UART2.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_UART2.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_UART2.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_UART2.c  -o ${OBJECTDIR}/_ext/483565385/isr_UART2.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_UART2.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_UART2.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/source/isr_timer46.o: source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/source" 
-	@${RM} ${OBJECTDIR}/source/isr_timer46.o.d 
-	@${RM} ${OBJECTDIR}/source/isr_timer46.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  source/isr_timer46.c  -o ${OBJECTDIR}/source/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/source/isr_timer46.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/source/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/_ext/483565385/isr_timer46.o: ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_timer46.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/isr_timer46.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/isr_timer46.c  -o ${OBJECTDIR}/_ext/483565385/isr_timer46.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/isr_timer46.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/isr_timer46.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/lcd.o: ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/lcd.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/lcd.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/lcd.c  -o ${OBJECTDIR}/_ext/483565385/lcd.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/lcd.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/lcd.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/main.o: ../../TP_FINAL/proyectobase_FINAL.X/source/main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/main.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/main.c  -o ${OBJECTDIR}/_ext/483565385/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/main.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/_ext/483565385/traps.o: ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/_ext/483565385" 
+	@${RM} ${OBJECTDIR}/_ext/483565385/traps.o.d 
+	@${RM} ${OBJECTDIR}/_ext/483565385/traps.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../../TP_FINAL/proyectobase_FINAL.X/source/traps.c  -o ${OBJECTDIR}/_ext/483565385/traps.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/483565385/traps.o.d"        -g -omf=coff -no-legacy-libc  -O0 -I"../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F/h" -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/_ext/483565385/traps.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
@@ -186,7 +228,7 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/proyectobase4.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/proyectobase4.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1  -omf=coff -no-legacy-libc      -Wl,,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_SIMULATOR=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library-path="../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F",--no-force-link,--smart-io,-Map="${DISTDIR}/proyectobase4.X.${IMAGE_TYPE}.map",--report-mem,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml$(MP_EXTRA_LD_POST) 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/proyectobase4.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}      -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1  -omf=coff -no-legacy-libc   -mreserve=data@0x800:0x822   -Wl,,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PICKIT2=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--library-path="../../../../../../../../opt/microchip/xc16/v1.20/support/dsPIC33F",--no-force-link,--smart-io,-Map="${DISTDIR}/proyectobase4.X.${IMAGE_TYPE}.map",--report-mem,--memorysummary,dist/${CND_CONF}/${IMAGE_TYPE}/memoryfile.xml$(MP_EXTRA_LD_POST) 
 	
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/proyectobase4.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   

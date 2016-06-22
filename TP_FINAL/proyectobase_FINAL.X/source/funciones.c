@@ -15,6 +15,19 @@ extern int cantVehi;
 extern VEHICULOS nuevoVehi;
 
 
+void ToggleTest (void)
+{
+			__builtin_btg((unsigned int *)&LATA, 7);
+			__builtin_btg((unsigned int *)&LATA, 6);
+			__builtin_btg((unsigned int *)&LATA, 5);
+			__builtin_btg((unsigned int *)&LATA, 4);
+			__builtin_btg((unsigned int *)&LATA, 3);
+			__builtin_btg((unsigned int *)&LATA, 2);	
+			__builtin_btg((unsigned int *)&LATA, 1);
+			__builtin_btg((unsigned int *)&LATA, 0);
+}
+
+
 int armarCheksum(int inicio, int tope, char* arreglo){
 		int i;
         int chk = 0;
@@ -212,6 +225,7 @@ void actualizoReloj(void){
     linea_1[6] = ((segundos / 10) + OFFSET_CARAC);
     linea_1[7] = ((segundos % 10) + OFFSET_CARAC);
     
+    home_it();
     puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
     
 }
@@ -307,17 +321,25 @@ int checkSEC(unsigned int* dirSec){
 
 unsigned char CalcVel (unsigned int cant){
     
-    /*float tR = 256.0/(float)FCY;
-    float tmr = (float)TMR4;
-    float t1 = (cant * ((float)ValPR4 * TMR4));
-    float t2 = (float)(tmr * TMR4);
+    float tR = 256.0/(float)FCY;
+    float tiempo_parcial = (float)TMR4 * tR;
+    float t = (float)cant * (float)ValPR4 * tR;
+    float tiempo_total = tiempo_parcial + t;
+    return (unsigned char)((DISTANCIA_SENSORES / tiempo_total) * (3600/1000));
+    
+    /*tiempo total = tParcial + t
+    tParcial = TMR4 * (PRSC / FCY)
+    t = (cant * (ValPR4)) * (PRSC / FCY)
+    
+    float t1 = ((float)cant * ((float)ValPR4 * (float)TMR4));
+    float t2 = (float)(tmr * (float)TMR4);
     float kmh = (float)(3600/1000);
     float dist = (10.0 / ((float)DISTANCIA_SENSORES));
     float tFinal = t1+t2;
     float mtss = (float)((0.3)/((float)tFinal));
     float velocidad = ((float)mtss*kmh);
-    return velocidad;*/
-    return 0;
+    return velocidad;
+    return 0;*/
 }
 int checkCMD(void){
     if( (recibido[POS_CMD] == CMD_1) || (recibido[POS_CMD] == CMD_2) || (recibido[POS_CMD] == CMD_3) || (recibido[POS_CMD] == CMD_5) || (recibido[POS_CMD] == CMD_6) || (recibido[POS_CMD] == CMD_7) ){

@@ -23,7 +23,7 @@ void InitUART2(void)
 	// so we will be configuring this port only
 	// configure U2MODE
 	U2MODEbits.UARTEN = 0;	// Bit15 TX, RX DISABLED, ENABLE at end of func
-	U2MODEbits.RTSMD = 1;	// Bit11 Simplex Mode
+	//U2MODEbits.RTSMD = 1;	// Bit11 Simplex Mode
     U2MODEbits.STSEL = 0;   //1 bit de stop
     U2MODEbits.PDSEL = 0;   //8 bits de datos, sin paridad
     //8 N 1
@@ -98,10 +98,11 @@ void config( void )
 
 	//Inicialización de PORTS I/O
 	/* set LEDs (D3-D10/RA0-RA7) drive state low */
-	LATA  = 0xFF00; 
+	//LATA  = 0xFF00; 
 	/* set LED pins (D3-D10/RA0-RA7) as outputs */
 	TRISA = 0xFF00; 
-	LATA  = 0xFF0E;  //Enciendo los 1,2 y 3 
+	//LATA  = 0xFF0E;  //Enciendo los 1,2 y 3 
+    LATA = 0;
 		
 	/* Initialize UART2*/
 	InitUART2();
@@ -113,7 +114,6 @@ void config( void )
     /* Inicializar Change Notification*/
     Init_CNInterrupt();
     
-    TRISAbits.TRISA0 = 0;
     //RA0 como output
     TRISD = 0x20C0;
     //RD6, 7 y 13 como input

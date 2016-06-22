@@ -27,11 +27,12 @@
 #include "lcd.h"
 #include "config.h"
 #include "funciones.h"
+#include "delay.h"
 
 
 
 const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
-const char mytext1[] =  "Pulsar S3       ";
+const char mytext1[] =  "Pulsar S4       ";
 
 extern int paqueteRecibido;         //Bandera para indicar que se completo de recibir un paquete
 extern char recibido[MAX_RX];       //Arreglo para armar paquete recibido
@@ -40,24 +41,14 @@ extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respu
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
 
-unsigned char linea_1[MAX_LCD] = "21:38:12        ";
+unsigned char linea_1[MAX_LCD] = "18:36:00        ";
 unsigned char linea_2[MAX_LCD] = "                ";
 
 VEHICULOS dataLogger[MAX_VEHI];
 int iData = 0;                  //indice del dataLogger
 
 
-void ToggleTest (void)
-{
-			__builtin_btg((unsigned int *)&LATA, 7);
-			__builtin_btg((unsigned int *)&LATA, 6);
-			__builtin_btg((unsigned int *)&LATA, 5);
-			__builtin_btg((unsigned int *)&LATA, 4);
-			__builtin_btg((unsigned int *)&LATA, 3);
-			__builtin_btg((unsigned int *)&LATA, 2);	
-			__builtin_btg((unsigned int *)&LATA, 1);
-			__builtin_btg((unsigned int *)&LATA, 0);
-}
+
 
 int main ( void )
 {
@@ -81,29 +72,35 @@ int main ( void )
 	puts_lcd( (unsigned char*) &mytext[0], sizeof(mytext) -1 );
 	line_2();
 	puts_lcd( (unsigned char*) &mytext1[0], sizeof(mytext1) -1 );
+    Delay(6250);
 #endif // USAR_LCD
 
 	/* Espera hasta que el switch S3 es presionado (se haga 1) */
-	while ( PORTDbits.RD6 )
-		;
+	//while ( PORTDbits.RD13 );
+    
 
 #ifdef USAR_LCD
 	home_clr();
 	puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
 #endif // USAR_LCD
-
+    
+    
 	 /* Loop infinito */
     while ( 1 ) 
     {    
       if (paqueteRecibido){
+        __builtin_btg((unsigned int *)&LATA, 0);
+        __builtin_btg((unsigned int *)&LATA, 7);
         if (paqueteCorrecto(&ultSec)){
-          armarRespuesta();
+            armarRespuesta();
+            __builtin_btg((unsigned int *)&LATA, 6);
         }
         else{
             envioNACK();              
         }
         paqueteRecibido = 0;
         IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
+        __builtin_btg((unsigned int *)&LATA, 5);
         IFS1bits.U2TXIF = 1;
               
       } 

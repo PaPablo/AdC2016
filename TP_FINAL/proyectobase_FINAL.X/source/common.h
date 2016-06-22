@@ -52,7 +52,7 @@
 #define CMD_NACK                0x47
 
 
-#define DISTANCIA_SENSORES      30
+#define DISTANCIA_SENSORES      10
 
 #define OFFSET_CARAC            0x30
 
