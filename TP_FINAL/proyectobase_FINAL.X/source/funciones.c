@@ -256,27 +256,28 @@ void logearVehi(VEHICULOS vehi){
 
 
 void actualizarInfo(VEHICULOS vehi){
-    linea_1[12] = (cantVehi / 1000) + OFFSET_CARAC;
-    linea_1[13] = ((cantVehi % 1000) / 100) + OFFSET_CARAC;
+    linea_1[13] = (cantVehi / 10) + OFFSET_CARAC;
+    /*linea_1[13] = ((cantVehi % 1000) / 100) + OFFSET_CARAC;
     linea_1[14] = (((cantVehi % 1000) % 100) / 10) + OFFSET_CARAC;
-    linea_1[15] = (((cantVehi % 1000) % 100) % 10) + OFFSET_CARAC;
+    linea_1[15] = (((cantVehi % 1000) % 100) % 10) + OFFSET_CARAC;*/
+    linea_1[14] = cantVehi + OFFSET_CARAC;
     
     linea_2[0] = (vehi.vel / 100) + OFFSET_CARAC;
     linea_2[1] = ((vehi.vel % 100) / 10) + OFFSET_CARAC;
     linea_2[2] = ((vehi.vel % 100) % 10) + OFFSET_CARAC;
     linea_2[3] = 'K';
-    linea_2[4] = 'H';
-    linea_2[5] = ' ';
-    linea_2[6] = vehi.ejes + OFFSET_CARAC;
-    linea_2[7] = ' ';
-    linea_2[8] = ((vehi.hora.h) / 10) + OFFSET_CARAC;
-    linea_2[9] = ((vehi.hora.h) % 10) + OFFSET_CARAC;
-    linea_2[10] = ':'; 
-    linea_2[11] = ((vehi.hora.m) / 10) + OFFSET_CARAC;
-    linea_2[12] = ((vehi.hora.m) % 10) + OFFSET_CARAC;
-    linea_2[13] = ':';
-    linea_2[14] = ((vehi.hora.s) / 10) + OFFSET_CARAC;
-    linea_2[15] = ((vehi.hora.s) % 10) + OFFSET_CARAC;
+    //linea_2[4] = 'H';
+    linea_2[4] = ' ';
+    linea_2[5] = vehi.ejes + OFFSET_CARAC;
+    linea_2[6] = ' ';
+    linea_2[7] = ((vehi.hora.h) / 10) + OFFSET_CARAC;
+    linea_2[8] = ((vehi.hora.h) % 10) + OFFSET_CARAC;
+    linea_2[9] = ':'; 
+    linea_2[10] = ((vehi.hora.m) / 10) + OFFSET_CARAC;
+    linea_2[11] = ((vehi.hora.m) % 10) + OFFSET_CARAC;
+    linea_2[12] = ':';
+    linea_2[13] = ((vehi.hora.s) / 10) + OFFSET_CARAC;
+    linea_2[14] = ((vehi.hora.s) % 10) + OFFSET_CARAC;
     
     /*HH:MM:SS    CCCC*/
     /*VVVKH E HH:MM:SS*/

@@ -18,6 +18,7 @@
 #include "delay.h"
 #include "config.h"
 #include "funciones.h"
+#include "lcd.h"
 
 
 int paqueteRecibido;
@@ -27,13 +28,13 @@ char aEnviar[MAX_TX];
 
 /*---------------------------------------------------------------------
   Function Name: UART2Interrupt
-  Description:   UART2 Interrupt Handler
+  Description:   UART2 Interrupt Handler---
   Inputs:        None
   Returns:       None
 -----------------------------------------------------------------------*/
 
 int iRx, iTx;
-int qty = 0;
+char qty = 0;
 VEHICULOS nuevoVehi;
 extern int cont_tmr4;               //Contador del TMR utilizado para calcular la velocidad de un vehiculo
 
@@ -44,14 +45,14 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
 	IFS1bits.U2RXIF = 0;
     LATAbits.LATA0 = 1;
     
-    if ( (U2RXREG == (char)SOF) && (recibido[0] != (char)SOF) )
+    if (( U2RXREG == (char)SOF) && (recibido[0] != (char)SOF))
     {
         iRx = 0;
         recibido[iRx++] = U2RXREG;
         qty = 1; // como para que no entre la primera vez
     }
     else{
-        if (recibido[0] == (char)SOF )
+        if (recibido[0] == (char)SOF)
         {
             recibido[iRx] = U2RXREG;
             if (iRx == 1)
@@ -71,6 +72,7 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
         IEC1bits.U2RXIE = 0; //cuando se termino de recibir el paquete
                              //la recepcion no interrumpe
         paqueteRecibido = 1;
+        
     }
     
     
@@ -87,6 +89,7 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
     if(qty == 0)
     {
         iTx = 0;
+        qty = aEnviar[1];
         qty = aEnviar[POS_QTY];
         U2TXREG = aEnviar[iTx++];
     }
@@ -104,15 +107,15 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
     }
 }
 
-
+extern int cantVehi;
 void __attribute__ ((__interrupt__)) _CNInterrupt(void)
 {
     
     IFS1bits.CNIF = 0; 
     
-    if(PORTDbits.RD13){             //el lazo detecta el vehiculo
-        __builtin_btg((unsigned int *)&LATA, 3);
-            if(PORTDbits.RD6){          //se pisa el primer piezoelectrico
+    if(!PORTDbits.RD13){             //el lazo detecta el vehiculo
+        LATAbits.LATA3 = 1;
+            if(!PORTDbits.RD6){          //se pisa el primer piezoelectrico
                 __builtin_btg((unsigned int *)&LATA, 2);
                 if(!nuevoVehi.ejes){        //si es la primera vez que lo pisa (ruedas delanteras)
                     cont_tmr4 = 0;              //empieza a correr el timer
@@ -120,14 +123,14 @@ void __attribute__ ((__interrupt__)) _CNInterrupt(void)
                 }
                 nuevoVehi.ejes++;           //acumula un eje
             }
-            else if ((PORTDbits.RD7) && (T4CONbits.TON)){   //el RD7 nos interesa solamente para el calculo de la velocidad
+            else if ((!PORTDbits.RD7) && (T4CONbits.TON)){   //el RD7 nos interesa solamente para el calculo de la velocidad
                 T4CONbits.TON = 0;
                 nuevoVehi.vel = CalcVel(cont_tmr4);
                 __builtin_btg((unsigned int *)&LATA, 2);
             }
         }
     else{       //se deja de detectar el vehiculo
-        __builtin_btg((unsigned int *)&LATA, 3);
+        LATAbits.LATA3 = 0;
         conseguirTimeStamp(&nuevoVehi.hora);
         chequearVelocidad(nuevoVehi.vel);   //acciona camar si velocidad >60km/h
         logearVehi(nuevoVehi);              //registra vehiculo en el logger

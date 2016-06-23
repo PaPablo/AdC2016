@@ -23,7 +23,7 @@ void InitUART2(void)
 	// so we will be configuring this port only
 	// configure U2MODE
 	U2MODEbits.UARTEN = 0;	// Bit15 TX, RX DISABLED, ENABLE at end of func
-	//U2MODEbits.RTSMD = 1;	// Bit11 Simplex Mode
+	U2MODEbits.RTSMD = 1;	// Bit11 Simplex Mode
     U2MODEbits.STSEL = 0;   //1 bit de stop
     U2MODEbits.PDSEL = 0;   //8 bits de datos, sin paridad
     //8 N 1
@@ -109,12 +109,7 @@ void config( void )
 
 	/* Inicializar Timers necesarios */
 	Init_Timer4();
-    Init_Timer6();
     
-    /* Inicializar Change Notification*/
-    Init_CNInterrupt();
-    
-    //RA0 como output
     TRISD = 0x20C0;
     //RD6, 7 y 13 como input
 

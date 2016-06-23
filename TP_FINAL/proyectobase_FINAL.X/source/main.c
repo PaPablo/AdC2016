@@ -38,6 +38,8 @@ extern int paqueteRecibido;         //Bandera para indicar que se completo de re
 extern char recibido[MAX_RX];       //Arreglo para armar paquete recibido
 extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respuesta)
 
+extern char prueba[MAX_TX];
+
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
 
@@ -72,13 +74,15 @@ int main ( void )
 	puts_lcd( (unsigned char*) &mytext[0], sizeof(mytext) -1 );
 	line_2();
 	puts_lcd( (unsigned char*) &mytext1[0], sizeof(mytext1) -1 );
-    Delay(6250);
 #endif // USAR_LCD
 
 	/* Espera hasta que el switch S3 es presionado (se haga 1) */
-	//while ( PORTDbits.RD13 );
+	while ( PORTDbits.RD13 );
     
-
+    Init_Timer6();
+    
+    /* Inicializar Change Notification*/
+    Init_CNInterrupt();
 #ifdef USAR_LCD
 	home_clr();
 	puts_lcd( (unsigned char*) &linea_1[0], sizeof(linea_1) -1 );
@@ -99,6 +103,10 @@ int main ( void )
             envioNACK();              
         }
         paqueteRecibido = 0;
+        /*aEnviar[0] = 0xB;
+        aEnviar[1] = 0x4;
+        aEnviar[2] = 0x5;
+        aEnviar[3] = 0xA;*/
         IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
         __builtin_btg((unsigned int *)&LATA, 5);
         IFS1bits.U2TXIF = 1;

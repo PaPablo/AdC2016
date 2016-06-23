@@ -4,4 +4,5 @@ source/isr_UART2.c  \
 source/common.h  \
 source/delay.h  \
 source/config.h  \
- source/funciones.h 
+ source/funciones.h  \
+source/lcd.h 

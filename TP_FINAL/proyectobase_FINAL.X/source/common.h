@@ -25,7 +25,7 @@
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
 
 
-#define SOF 0x00FE
+#define SOF 0xFE
 
 #define CMD_1                   'A'
 #define CMD_2                   'B'
