@@ -33,18 +33,13 @@
 #define CMD_4                   'D'
 #define CMD_5                   'E'
 #define CMD_6                   'F'
-#define CMD_7                   'G'
+//#define CMD_7                   'G'
 
 #define QTY_PAQ                 9
 #define QTY_ACK_NACK            8
 
-#define POS_QTY                 1
-#define POS_DST                 2
-#define POS_SRC                 3
-#define POS_SEC                 4
-#define POS_CMD                 5
 #define DST                     3
-#define SEC1                    0
+#define SEC1                    0x20
 #define SEC2                    0x80
 #define SEC_ACK                 0x40
 #define CMD_ACK                 0x46
@@ -60,10 +55,10 @@
 #define MAX_VEHI                1000
 #define MAX_LCD                 16
 //Maximo de bytes a recibir 
-#define MAX_RX 9
+#define MAX_RX 					9
 
 //Maximo de bytes a enviar
-#define MAX_TX 256
+#define MAX_TX 					256
 
 
 typedef struct{
@@ -78,6 +73,7 @@ typedef struct{
     unsigned char    ejes;
 }VEHICULOS;
 
+typedef volatile unsigned char tipoPaquete;
 
 
 

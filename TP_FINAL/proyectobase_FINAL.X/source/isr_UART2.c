@@ -22,8 +22,8 @@
 
 
 int paqueteRecibido;
-char recibido[MAX_RX];
-char aEnviar[MAX_TX];
+tipoPaquete recibido[MAX_RX];
+tipoPaquete aEnviar[MAX_TX];
 
 
 /*---------------------------------------------------------------------
@@ -34,7 +34,7 @@ char aEnviar[MAX_TX];
 -----------------------------------------------------------------------*/
 
 int iRx, iTx;
-char qty = 0;
+tipoPaquete qty = 0;
 VEHICULOS nuevoVehi;
 extern int cont_tmr4;               //Contador del TMR utilizado para calcular la velocidad de un vehiculo
 
@@ -44,20 +44,23 @@ void __attribute__((interrupt, auto_psv)) _U2RXInterrupt( void )
 {
 	IFS1bits.U2RXIF = 0;
     LATAbits.LATA0 = 1;
+    tipoPaquete valorRecibido = (tipoPaquete)U2RXREG;
     
-    if (( U2RXREG == (char)SOF) && (recibido[0] != (char)SOF))
+    
+    if ((valorRecibido == (tipoPaquete)SOF) && (recibido[0] != (tipoPaquete)SOF))
     {
+        LATAbits.LATA0 = 0;
         iRx = 0;
-        recibido[iRx++] = U2RXREG;
+        recibido[iRx++] = valorRecibido;
         qty = 1; // como para que no entre la primera vez
     }
     else{
-        if (recibido[0] == (char)SOF)
+        if (recibido[0] == (tipoPaquete)SOF)
         {
-            recibido[iRx] = U2RXREG;
+            recibido[iRx] = valorRecibido;
             if (iRx == 1)
             {
-                qty = U2RXREG - 2; //Ya recibimos el SOF y el Qty
+                qty = valorRecibido - 2; //Ya recibimos el SOF y el Qty
             }
             else
             {
@@ -90,7 +93,7 @@ void __attribute__((interrupt, auto_psv)) _U2TXInterrupt(void)
     {
         iTx = 0;
         qty = aEnviar[1];
-        qty = aEnviar[POS_QTY];
+        //qty = aEnviar[1];
         U2TXREG = aEnviar[iTx++];
     }
     else

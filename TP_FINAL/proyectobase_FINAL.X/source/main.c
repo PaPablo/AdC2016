@@ -35,10 +35,9 @@ const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
 const char mytext1[] =  "Pulsar S4       ";
 
 extern int paqueteRecibido;         //Bandera para indicar que se completo de recibir un paquete
-extern char recibido[MAX_RX];       //Arreglo para armar paquete recibido
-extern char aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respuesta)
+extern tipoPaquete recibido[MAX_RX];       //Arreglo para armar paquete recibido
+extern tipoPaquete aEnviar[MAX_TX];        //Arreglo para armar paquete a enviar (respuesta)
 
-extern char prueba[MAX_TX];
 
 int cantVehi = 0;           //Contador de vehiculo
 extern unsigned int seg;    //Variable a usar para actualizar reloj
@@ -56,11 +55,11 @@ int main ( void )
 {
     
     limpiarRegVehi();
-    
-    unsigned int ultSec = 0;
-    
-   	config();
+    limpiarPaquete(recibido, MAX_RX);
     limpiarDataLogger();
+   
+   	config();
+    unsigned int ultSec = SEC1;
     
     //config timer 4 y 6
     //UART 9600 8n1
@@ -76,7 +75,6 @@ int main ( void )
 	puts_lcd( (unsigned char*) &mytext1[0], sizeof(mytext1) -1 );
 #endif // USAR_LCD
 
-	/* Espera hasta que el switch S3 es presionado (se haga 1) */
 	while ( PORTDbits.RD13 );
     
     Init_Timer6();
@@ -106,7 +104,7 @@ int main ( void )
         /*aEnviar[0] = 0xB;
         aEnviar[1] = 0x4;
         aEnviar[2] = 0x5;
-        aEnviar[3] = 0xA;*/
+        aEnviar[3] = recibido[1];*/
         IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
         __builtin_btg((unsigned int *)&LATA, 5);
         IFS1bits.U2TXIF = 1;

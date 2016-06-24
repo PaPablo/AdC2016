@@ -2,8 +2,8 @@
 #include "delay.h"
 #include "lcd.h"
 #include "p33FJ256GP710.h"
-extern char recibido[MAX_RX];
-extern char aEnviar[MAX_TX];
+extern tipoPaquete recibido[MAX_RX];
+extern tipoPaquete aEnviar[MAX_TX];
 
 extern unsigned char linea_1[MAX_LCD];
 extern unsigned char linea_2[MAX_LCD];
@@ -28,7 +28,7 @@ void ToggleTest (void)
 }
 
 
-int armarCheksum(int inicio, int tope, char* arreglo){
+int armarCheksum(int inicio, int tope, tipoPaquete* arreglo){
 		int i;
         int chk = 0;
 		if (tope % 2){
@@ -123,10 +123,10 @@ void listarVehiculos(int hora, int pos, int* i){
 void PaqueteA(void){
     aEnviar[0] = SOF;
     aEnviar[1] = QTY_PAQ;
-    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[2] = recibido[3];
     aEnviar[3] = DST;
-    aEnviar[4] = recibido[POS_SEC];
-    aEnviar[5] = recibido[POS_CMD];
+    aEnviar[4] = recibido[4];
+    aEnviar[5] = recibido[5];
     aEnviar[6] = cantVehi;
     
     
@@ -141,10 +141,10 @@ void PaqueteA(void){
 void PaqueteC(void){
     aEnviar[0] = SOF;
     aEnviar[1] = QTY_PAQ;
-    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[2] = recibido[3];
     aEnviar[3] = DST;
-    aEnviar[4] = recibido[POS_SEC];
-    aEnviar[5] = recibido[POS_CMD];
+    aEnviar[4] = recibido[4];
+    aEnviar[5] = recibido[5];
     aEnviar[6] = obtenerVehisGrandes();
     
     int acum = armarCheksum(0, (QTY_PAQ - 2), aEnviar);
@@ -157,14 +157,14 @@ void PaqueteC(void){
 
 void PaqueteD(void){
     aEnviar[0] = SOF;
-    aEnviar[2] = recibido[POS_SRC];
+    aEnviar[2] = recibido[3];
     aEnviar[3] = DST;
-    aEnviar[4] = recibido[POS_SEC];
-    aEnviar[5] = recibido[POS_CMD];
+    aEnviar[4] = recibido[4];
+    aEnviar[5] = recibido[5];
     int i = 6;
     int pos;
-    if(hayVehiculos(recibido[POS_CMD + 1], &pos)){
-        listarVehiculos(recibido[POS_CMD + 1], pos, &i);         // E/S int i, devuelve en donde se quedo el indice
+    if(hayVehiculos(recibido[5 + 1], &pos)){
+        listarVehiculos(recibido[5 + 1], pos, &i);         // E/S int i, devuelve en donde se quedo el indice
     }
     else{
         aEnviar[i++] = 0;	//No se registraron vehiculo en la hora ingresada
@@ -233,7 +233,7 @@ void actualizoReloj(void){
 
 void accionarCamara(void){
     LATAbits.LATA0 = 1;
-    Delay(10);
+    Delay(100);
     LATAbits.LATA0 = 0;
 }
 
@@ -260,7 +260,7 @@ void actualizarInfo(VEHICULOS vehi){
     /*linea_1[13] = ((cantVehi % 1000) / 100) + OFFSET_CARAC;
     linea_1[14] = (((cantVehi % 1000) % 100) / 10) + OFFSET_CARAC;
     linea_1[15] = (((cantVehi % 1000) % 100) % 10) + OFFSET_CARAC;*/
-    linea_1[14] = cantVehi + OFFSET_CARAC;
+    linea_1[14] = (cantVehi % 10) + OFFSET_CARAC;
     
     linea_2[0] = (vehi.vel / 100) + OFFSET_CARAC;
     linea_2[1] = ((vehi.vel % 100) / 10) + OFFSET_CARAC;
@@ -301,23 +301,24 @@ void chequearVelocidad (unsigned int vel){
 
 
 int checkDST(void){
-    return (recibido[POS_DST] == DST);
+    return (recibido[2] == (tipoPaquete)DST);
 }
 
 
 int checkSEC(unsigned int* dirSec){
     if (*dirSec == SEC1){
         *dirSec = SEC2;
-        return (recibido[POS_SEC] == (char)SEC2);
+        return (recibido[4] == (tipoPaquete)SEC2);
     }
     else if (*dirSec == SEC2){
         *dirSec = SEC1;
-        return (recibido[POS_SEC] == (char)SEC1);
+        return (recibido[4] == (tipoPaquete)SEC1);
     }
     else{
         return 0;   //Contemplamos el caso de que nos envien un valor de SEC
                     //distinto de 0 y 80h
     }
+    //return 1;
 }
 
 unsigned char CalcVel (unsigned int cant){
@@ -328,41 +329,34 @@ unsigned char CalcVel (unsigned int cant){
     float tiempo_total = tiempo_parcial + t;
     return (unsigned char)((DISTANCIA_SENSORES / tiempo_total) * (3600/1000));
     
-    /*tiempo total = tParcial + t
-    tParcial = TMR4 * (PRSC / FCY)
-    t = (cant * (ValPR4)) * (PRSC / FCY)
-    
-    float t1 = ((float)cant * ((float)ValPR4 * (float)TMR4));
-    float t2 = (float)(tmr * (float)TMR4);
-    float kmh = (float)(3600/1000);
-    float dist = (10.0 / ((float)DISTANCIA_SENSORES));
-    float tFinal = t1+t2;
-    float mtss = (float)((0.3)/((float)tFinal));
-    float velocidad = ((float)mtss*kmh);
-    return velocidad;
-    return 0;*/
+   
+    //return 0;
 }
 int checkCMD(void){
-    if( (recibido[POS_CMD] == CMD_1) || (recibido[POS_CMD] == CMD_2) || (recibido[POS_CMD] == CMD_3) || (recibido[POS_CMD] == CMD_5) || (recibido[POS_CMD] == CMD_6) || (recibido[POS_CMD] == CMD_7) ){
+    if((recibido[5] == (tipoPaquete)CMD_1) || (recibido[5] == (tipoPaquete)CMD_2) ||
+            (recibido[5] == (tipoPaquete)CMD_3) || (recibido[5] == (tipoPaquete)CMD_5) ||
+            (recibido[5] == (tipoPaquete)CMD_6)){
         return 1;
     }
     else{
-        if(recibido[POS_CMD] == 'D'){
-            return ( (recibido[POS_CMD + 1] >= 0) && (recibido[POS_CMD + 1] <= 23) );
+        if(recibido[5] == (tipoPaquete)CMD_4){
+            return ( (recibido[5 + 1] >= 0) && (recibido[5 + 1] <= 23) );
         }
         else{
             return 0;
         }
     }
+    //return 1;
 }
 
 
 int checkBCC(void){
-    int qty = recibido[POS_QTY];
+    int qty = recibido[1];
     int checksum = (recibido[qty - 2] * 0x0100) + (recibido[qty-1]);
     int acum = armarCheksum(0, (qty-2), recibido);
     
     return (acum == checksum);
+    //return 1;
         
 }
 
@@ -371,7 +365,7 @@ int paqueteCorrecto(unsigned int sec){
 }
 
 
-void limpiarPaquete(char* cad, int tope){
+void limpiarPaquete(tipoPaquete* cad, int tope){
     int i;
     for (i = 0; i < tope; i++){
         cad[i] = 0;
@@ -382,7 +376,7 @@ void limpiarPaquete(char* cad, int tope){
 void envioNACK (void){
     aEnviar[0] = SOF;
     aEnviar[1] = QTY_ACK_NACK;
-    aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
+    aEnviar[2] = recibido[3];    //fuente del mensaje recibido
     aEnviar[3] = DST;
     aEnviar[4] = SEC_NACK;
     aEnviar[5] = CMD_NACK;
@@ -398,7 +392,7 @@ void envioNACK (void){
 void envioACK (void){
     aEnviar[0] = SOF;
     aEnviar[1] = QTY_ACK_NACK;
-    aEnviar[2] = recibido[POS_SRC];    //fuente del mensaje recibido
+    aEnviar[2] = recibido[3];    //fuente del mensaje recibido
     aEnviar[3] = DST;
     aEnviar[4] = SEC_ACK;
     aEnviar[5] = CMD_ACK;
@@ -411,7 +405,7 @@ void envioACK (void){
 
 
 void armarRespuesta(void){
-    switch(recibido[POS_CMD]){
+    switch(recibido[5]){
         case (CMD_1): 
             PaqueteA();
             break;
@@ -432,9 +426,9 @@ void armarRespuesta(void){
         case (CMD_6):
             envioACK();
             break;
-        case(CMD_7):
+        /*case(CMD_7):
             envioNACK();
-            break;
+            break;*/
     }
 }
 

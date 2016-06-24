@@ -27,10 +27,10 @@
 #define ESPERA_1BYTE ((ESPERA_1BIT) * CANT_BITSxBYTE)
 
 
-volatile unsigned char qty = 0;
-volatile unsigned char cantChar;
+tipoPaquete qty = 0;
+tipoPaquete cantChar;
 
-volatile unsigned char uart_lcd_update;
+tipoPaquete uart_lcd_update;
 
 int i = 0;
 
