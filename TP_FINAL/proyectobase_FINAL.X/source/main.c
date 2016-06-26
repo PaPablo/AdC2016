@@ -32,7 +32,7 @@
 
 
 const char mytext[] =   "TP FINAL AC 2016";  //Largo 16 chars
-const char mytext1[] =  "Pulsar S4       ";
+const char mytext1[] =  "Pulsar S3       ";
 
 extern int paqueteRecibido;         //Bandera para indicar que se completo de recibir un paquete
 extern tipoPaquete recibido[MAX_RX];       //Arreglo para armar paquete recibido
@@ -75,7 +75,7 @@ int main ( void )
 	puts_lcd( (unsigned char*) &mytext1[0], sizeof(mytext1) -1 );
 #endif // USAR_LCD
 
-	while ( PORTDbits.RD13 );
+	while ( PORTDbits.RD6 );
     
     Init_Timer6();
     

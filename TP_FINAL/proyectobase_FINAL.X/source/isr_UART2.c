@@ -132,7 +132,7 @@ void __attribute__ ((__interrupt__)) _CNInterrupt(void)
                 __builtin_btg((unsigned int *)&LATA, 2);
             }
         }
-    else{       //se deja de detectar el vehiculo
+    else if (!nuevoVehi.ejes){       //se deja de detectar el vehiculo
         LATAbits.LATA3 = 0;
         conseguirTimeStamp(&nuevoVehi.hora);
         chequearVelocidad(nuevoVehi.vel);   //acciona camar si velocidad >60km/h
