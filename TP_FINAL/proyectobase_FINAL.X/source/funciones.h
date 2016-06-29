@@ -1,6 +1,6 @@
 void ToggleTest (void);
 
-int armarCheksum(int inicio, int tope, volatile unsigned char* arreglo);
+int armarCheksum(int inicio, int tope, tipoPaquete* arreglo);
 
 void limpiarRegVehi(void);
 
@@ -8,7 +8,7 @@ int obtenerVehisGrandes(void);
 
 void limpiarDataLogger(void);
 
-int hayVehiculos(char hora, int* pos);
+int hayVehiculos(tipoPaquete hora, int* pos);
 
 void listarVehiculos(int hora, int pos, int* i);
 
@@ -42,7 +42,7 @@ int checkBCC(void);
 
 int paqueteCorrecto(unsigned int sec);
 
-void limpiarPaquete(volatile unsigned char * cad, int tope);
+void limpiarPaquete(tipoPaquete* cad, int tope);
 
 void envioNACK(void);
 

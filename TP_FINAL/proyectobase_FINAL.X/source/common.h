@@ -1,11 +1,5 @@
 /* REVISION HISTORY:
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Author            Date      Comments on this revision
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Richard Fischer   07/14/05  general variable linkage information
-* Priyabrata Sinha  01/27/06  Ported to non-prototype devices
-*
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+common.h
 *
 * ADDITIONAL NOTES:
 * 1. This file contains definitions commonly used in this project.

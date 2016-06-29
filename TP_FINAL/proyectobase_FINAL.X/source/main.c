@@ -8,17 +8,6 @@
  Trabajo Final Arquitectura de Computadoras
  UNPSJB Sede Trelew, 2016
 
- REVISION HISTORY:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- Author            Date      Comments on this revision
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- Richard Fischer   07/14/05  Initial Release
- Priyabrata Sinha  01/27/06  Ported to non-prototype devices 
- Ricardo López     05/24/10  Adaptación para uso general
- Sebastián Wahler  08/05/13  Nuevas adaptaciones
- Marcelo Gómez     09/03/14  Portado a MPLAB.X
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **********************************************************************/
 #include "common.h"
 #include <xc.h>
@@ -101,10 +90,6 @@ int main ( void )
             envioNACK();              
         }
         paqueteRecibido = 0;
-        /*aEnviar[0] = 0xB;
-        aEnviar[1] = 0x4;
-        aEnviar[2] = 0x5;
-        aEnviar[3] = recibido[1];*/
         IEC1bits.U2TXIE = 1;    //Empezamos a transmitir
         __builtin_btg((unsigned int *)&LATA, 5);
         IFS1bits.U2TXIF = 1;

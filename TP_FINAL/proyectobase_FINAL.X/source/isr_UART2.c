@@ -1,13 +1,6 @@
 /* REVISION HISTORY:
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Author            Date      Comments on this revision
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* Ricardo López   11/6/10  UART2C module interrupt handler
-* Marcelo Gómez   09/03/14 Portado a MPLAB.X
-* Marcelo Gómez   20/05/15 Portado a MPLAB.X
-*
-*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*
+isr_UART2.c
+
 * ADDITIONAL NOTES:
 *
 *

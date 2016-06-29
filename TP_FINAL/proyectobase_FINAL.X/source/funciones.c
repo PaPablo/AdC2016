@@ -1,3 +1,5 @@
+/*funciones.c*/
+
 #include "common.h"
 #include "delay.h"
 #include "lcd.h"
@@ -81,9 +83,9 @@ void limpiarDataLogger(void){
     }
 }
 
-int hayVehiculos(char hora, int* pos){
+int hayVehiculos(tipoPaquete hora, int* pos){
     int i = 0;
-    _Bool siHay = 0;
+    int siHay = 0;
     while((dataLogger[i].ejes > 0) && (!siHay)){
         if (dataLogger[i].hora.h == (unsigned char)hora){      //buscamos en el dataLogger si hay al menos un vehiculo registrado a la hora ingresada
             siHay = 1;
@@ -96,18 +98,18 @@ int hayVehiculos(char hora, int* pos){
 }
 
 
-void listarVehiculos(int hora, int pos, int* i){
+void listarVehiculos(tipoPaquete hora, int pos, int* i){
     _Bool salgo = 0;
     int j = *i;
     while(!salgo){
-        if (dataLogger[pos].hora.h == hora){
+        if (dataLogger[pos].hora.h == (unsigned char)hora){
             //tiramos al arreglo de carac a enviar los datos registrados
             //de los vehiculos que pasaron en la hora ingresada
-            aEnviar[j++] = dataLogger[pos].hora.h;  //Hora
-            aEnviar[j++] = dataLogger[pos].hora.m;  //Minutos
-            aEnviar[j++] = dataLogger[pos].hora.s;  //Segundos
-            aEnviar[j++] = dataLogger[pos].vel;     //Velocidad
-            aEnviar[j++] = dataLogger[pos].ejes;      //Ejes
+            aEnviar[j++] = (tipoPaquete)dataLogger[pos].hora.h;  //Hora
+            aEnviar[j++] = (tipoPaquete)dataLogger[pos].hora.m;  //Minutos
+            aEnviar[j++] = (tipoPaquete)dataLogger[pos].hora.s;  //Segundos
+            aEnviar[j++] = (tipoPaquete)dataLogger[pos].vel;     //Velocidad
+            aEnviar[j++] = (tipoPaquete)dataLogger[pos].ejes;      //Ejes
         }
         else{
             salgo = 1;
